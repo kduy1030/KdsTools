@@ -1,538 +1,232 @@
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>My Profile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kd's Tools - Bộ công cụ miễn phí dành cho học tập và lập trình.">
+    <title>Kd's Tools | Personal Toolbox</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script src="script.js" defer></script>
 </head>
 <body>
+    <header class="header">
+        <a href="#" class="logo">Kd’s <span>Tools</span></a>
+        <p class="header-subtitle">
+            Bộ công cụ nhỏ gọn dành cho học tập và công việc.
+        </p>
+    </header>
 
-<!-- Sidebar -->
-<div class="sidebar" id="sidebar">
-    <a href="#home"         class="sidebar-link" data-tooltip="Mở đầu">    <i data-lucide="home"></i></a>
-    <a href="#about"        class="sidebar-link" data-tooltip="About me">   <i data-lucide="user"></i></a>
-    <a href="#skills"       class="sidebar-link" data-tooltip="Skills">     <i data-lucide="zap"></i></a>
-    <a href="#achievements" class="sidebar-link" data-tooltip="Thành tích"> <i data-lucide="trophy"></i></a>
-    <a href="#projects"     class="sidebar-link" data-tooltip="Projects">   <i data-lucide="code-2"></i></a>
-    <a href="#contact"      class="sidebar-link" data-tooltip="Contact">    <i data-lucide="mail"></i></a>
-</div>
-
-<div class="container">
-
-    <!-- ── HERO ── -->
-    <section id="home" class="section hero">
-        <canvas id="particles"></canvas>
-        <canvas id="waves"></canvas>
-
-        <!-- Code / math floating text overlay -->
-        <div class="hero-code-overlay" aria-hidden="true">
-            <span>#include &lt;iostream&gt;</span>
-            <span>∇f(x) = 0</span>
-            <span>int main() {</span>
-            <span>Ax = λx</span>
-            <span>for(int i=0; i&lt;n; i++)</span>
-            <span>∫₀¹ f(x)dx</span>
-            <span>cout &lt;&lt; "Hello";</span>
-            <span>det(A) ≠ 0</span>
-            <span>return 0;</span>
-            <span>lim x→∞</span>
-            <span>vector&lt;int&gt; v;</span>
-            <span>∂²u/∂t²</span>
-            <span>while(true) {</span>
-            <span>rank(A) = n</span>
-        </div>
-
-        <!-- Pixel art SVG decorations -->
-        <div class="hero-pixels" aria-hidden="true">
-            <!-- Pixel computer / terminal -->
-            <svg class="px-item px-terminal" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-                <rect x="2" y="4" width="28" height="18" rx="2" fill="none" stroke="rgba(122,170,206,0.5)" stroke-width="2"/>
-                <rect x="5" y="7" width="22" height="12" fill="rgba(122,170,206,0.12)"/>
-                <rect x="6" y="9" width="4" height="1" fill="rgba(0,255,150,0.6)"/>
-                <rect x="6" y="11" width="7" height="1" fill="rgba(0,255,150,0.4)"/>
-                <rect x="6" y="13" width="5" height="1" fill="rgba(0,255,150,0.4)"/>
-                <rect x="12" y="22" width="8" height="3" fill="rgba(122,170,206,0.4)"/>
-                <rect x="8" y="25" width="16" height="2" rx="1" fill="rgba(122,170,206,0.35)"/>
-            </svg>
-            <!-- Pixel math sigma -->
-            <svg class="px-item px-sigma" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <text x="2" y="20" font-size="22" font-weight="900" fill="rgba(122,170,206,0.45)" font-family="serif">Σ</text>
-            </svg>
-            <!-- Pixel coffee cup -->
-            <svg class="px-item px-coffee" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <rect x="4" y="10" width="12" height="10" rx="1" fill="none" stroke="rgba(122,170,206,0.45)" stroke-width="1.5"/>
-                <path d="M16 12 Q20 12 20 15 Q20 18 16 18" fill="none" stroke="rgba(122,170,206,0.4)" stroke-width="1.5"/>
-                <rect x="3" y="20" width="14" height="2" rx="1" fill="rgba(122,170,206,0.3)"/>
-                <path d="M8 8 Q8 5 10 5 Q10 3 12 3" fill="none" stroke="rgba(122,170,206,0.3)" stroke-width="1.2"/>
-            </svg>
-            <!-- Pixel brackets {} -->
-            <svg class="px-item px-brackets" viewBox="0 0 32 24" xmlns="http://www.w3.org/2000/svg">
-                <text x="1" y="19" font-size="20" font-weight="900" fill="rgba(0,255,150,0.2)" font-family="monospace">{ }</text>
-            </svg>
-        </div>
-
-        <div class="hero-content">
-            <div class="avatar-static">
-                <img src="avatar.jpg" alt="Avatar" class="avatar-img" loading="lazy">
-            </div>
-
-            <h2 class="hero-name">kduy1030</h2>
-            <p class="hero-tag"><span class="hero-tag-hl">IT1-07</span> </p>
-            <p class="hero-quote">"First, solve the problem. Then, write the code."</p>
-        </div>
-    </section>
-
-    <!-- ── ABOUT ── -->
-<!-- ── ABOUT ── -->
-<section id="about" class="section about-section">
-
-    <!-- Marquee giữ nguyên -->
-    <div class="about-marquee" aria-hidden="true">
-        <div class="marquee-track">
-            <span>ABOUT ME</span><span>DEVELOPER</span><span>STUDENT</span><span>CREATOR</span>
-            <span>ABOUT ME</span><span>DEVELOPER</span><span>STUDENT</span><span>CREATOR</span>
-            <span>ABOUT ME</span><span>DEVELOPER</span><span>STUDENT</span><span>CREATOR</span>
-        </div>
-        <div class="marquee-track marquee-track-2">
-            <span>IT1-07</span><span>HANOI</span><span>CODE</span><span>LEARN</span><span>BUILD</span>
-            <span>IT1-07</span><span>HANOI</span><span>CODE</span><span>LEARN</span><span>BUILD</span>
-            <span>IT1-07</span><span>HANOI</span><span>CODE</span><span>LEARN</span><span>BUILD</span>
-        </div>
-    </div>
-
-    <!-- Bento Grid -->
-    <div class="bento-grid">
-
-        <!-- Cell 1: Avatar -->
-        <div class="bento-cell bento-avatar">
-            <div class="bento-grid-pattern" aria-hidden="true"></div>
-            <img src="conan.png" alt="Conan" class="bento-char-img" loading="lazy">
-        </div>
-
-        <!-- Cell 2: Intro (2 cột) -->
-        <div class="bento-cell bento-intro">
-            <p class="bento-eyebrow">// Hello world</p>
-            <h1 class="bento-heading">About<br><span class="bento-heading-hl">Me.</span></h1>
-            <p class="bento-desc">
-                Xin chào! Tôi là <strong>Duy</strong>, sinh viên ngành IT1-07 tại
-                Đại học Bách Khoa Hà Nội. Tôi yêu thích lập trình và đang từng
-                bước trở thành developer.
+    <main class="container">
+        <section class="search-section">
+            <label class="search-box">
+                <span class="search-icon" aria-hidden="true">⌕</span>
+                <input
+                    type="search"
+                    id="searchInput"
+                    placeholder="Tìm kiếm công cụ..."
+                    aria-label="Tìm kiếm công cụ"
+                >
+                <kbd>Ctrl K</kbd>
+            </label>
+            <p id="resultCount" class="result-count">
+                Khám phá các công cụ hữu ích
             </p>
-            <div class="bento-divider"></div>
-            <p class="bento-meta">HUST · IT1-07 · K70</p>
-        </div>
+        </section>
 
-        <!-- Cell 3: Info Ribbon (2 cột) -->
-        <div class="bento-cell bento-ribbon">
-            <p class="bento-cell-label">// INFO</p>
-            <div class="ribbon-track">
-                <button class="ribbon-item" onclick="openAboutModal('age')">
-                    <span class="ribbon-icon"><i data-lucide="cake"></i></span>
-                    <span class="ribbon-line"></span>
-                    <span class="ribbon-text">19 tuổi</span>
-                </button>
-                <div class="ribbon-sep"></div>
-                <button class="ribbon-item" onclick="openAboutModal('student')">
-                    <span class="ribbon-icon"><i data-lucide="graduation-cap"></i></span>
-                    <span class="ribbon-line"></span>
-                    <span class="ribbon-text">Sinh viên<br>năm hai</span>
-                </button>
-                <div class="ribbon-sep"></div>
-                <button class="ribbon-item" onclick="openAboutModal('location')">
-                    <span class="ribbon-icon"><i data-lucide="map-pin"></i></span>
-                    <span class="ribbon-line"></span>
-                    <span class="ribbon-text">Nghệ An<br>Việt Nam</span>
-                </button>
-                <div class="ribbon-sep"></div>
-                <button class="ribbon-item" onclick="openAboutModal('hobbies')">
-                    <span class="ribbon-icon"><i data-lucide="heart"></i></span>
-                    <span class="ribbon-line"></span>
-                    <span class="ribbon-text">Code · Music<br>Game</span>
-                </button>
-            </div>
-        </div>
-
-        <!-- Cell 4: Mini Dashboard (1 cột, 2 hàng) -->
-        <div class="bento-cell bento-dashboard">
-            <p class="bento-cell-label">// STACK</p>
-
-            <div class="dash-section">
-                <div class="dash-heading">
-                    <span class="dash-dot learn-dot"></span>
-                    ĐANG HỌC
-                </div>
-                <div class="dash-tags">
-                    <span class="dash-tag learn"><i data-lucide="code-2"></i>Python</span>
-                    <span class="dash-tag learn"><i data-lucide="layout"></i>HTML / CSS</span>
-                    <span class="dash-tag learn"><i data-lucide="braces"></i>JavaScript</span>
-                    <span class="dash-tag learn"><i data-lucide="terminal"></i>C++</span>
-                    <span class="dash-tag learn"><i data-lucide="git-branch"></i>Git</span>
-                </div>
-            </div>
-
-            <div class="dash-divider"></div>
-
-            <div class="dash-section">
-                <div class="dash-heading">
-                    <span class="dash-dot goal-dot"></span>
-                    MỤC TIÊU
-                </div>
-                <div class="dash-tags">
-                    <span class="dash-tag goal"><i data-lucide="layers"></i>Fullstack Dev</span>
-                    <span class="dash-tag goal"><i data-lucide="rocket"></i>Build sản phẩm</span>
-                    <span class="dash-tag goal"><i data-lucide="briefcase"></i>Thực tập năm 3</span>
-                </div>
-            </div>
-        </div>
-
-    </div>
-</section>
-
-    <!-- ── SKILLS ── -->
-<!-- ── SKILLS ── -->
-<section id="skills" class="section skills-section">
-    <div class="skills-bento">
-
-        <!-- Header row -->
-        <div class="skills-bento-title">
-            <span class="sbento-eyebrow">// SKILL SET</span>
-            <h1>Skills</h1>
-        </div>
-
-        <!-- ── Khối 1: Frontend (cyan) ── -->
-        <div class="sbento-card sc-cyan">
-            <div class="sbento-header">
-                <i data-lucide="monitor"></i>
-                <span>Frontend</span>
-                <span class="sbento-tag">02 skills</span>
-            </div>
-
-            <div class="sbar-group">
-                <div class="sbar-item">
-                    <div class="sbar-meta">
-                        <span class="sbar-name">HTML / CSS</span>
-                        <span class="sbar-pct sc-cyan-text">70<span>%</span></span>
-                    </div>
-                    <div class="sbar-seg" data-width="70" data-color="cyan"></div>
-                </div>
-                <div class="sbar-item">
-                    <div class="sbar-meta">
-                        <span class="sbar-name">JavaScript</span>
-                        <span class="sbar-pct sc-cyan-text">45<span>%</span></span>
-                    </div>
-                    <div class="sbar-seg" data-width="45" data-color="cyan"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ── Khối 2: Backend & Core (green) ── -->
-        <div class="sbento-card sc-green">
-            <div class="sbento-header">
-                <i data-lucide="server"></i>
-                <span>Backend & Core</span>
-                <span class="sbento-tag">03 skills</span>
-            </div>
-
-            <div class="sbar-group">
-                <div class="sbar-item">
-                    <div class="sbar-meta">
-                        <span class="sbar-name">Python</span>
-                        <span class="sbar-pct sc-green-text">50<span>%</span></span>
-                    </div>
-                    <div class="sbar-seg" data-width="50" data-color="green"></div>
-                </div>
-                <div class="sbar-item">
-                    <div class="sbar-meta">
-                        <span class="sbar-name">C++</span>
-                        <span class="sbar-pct sc-green-text">35<span>%</span></span>
-                    </div>
-                    <div class="sbar-seg" data-width="35" data-color="green"></div>
-                </div>
-                <div class="sbar-item">
-                    <div class="sbar-meta">
-                        <span class="sbar-name">SQL</span>
-                        <span class="sbar-pct sc-green-text">25<span>%</span></span>
-                    </div>
-                    <div class="sbar-seg" data-width="25" data-color="green"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ── Khối 3: Tools & Workflow (amber) ── -->
-        <div class="sbento-card sc-amber">
-            <div class="sbento-header">
-                <i data-lucide="wrench"></i>
-                <span>Tools & Workflow</span>
-                <span class="sbento-tag">05 tools</span>
-            </div>
-
-            <div class="sbar-group">
-                <div class="sbar-item">
-                    <div class="sbar-meta">
-                        <span class="sbar-name">Git</span>
-                        <span class="sbar-pct sc-amber-text">40<span>%</span></span>
-                    </div>
-                    <div class="sbar-seg" data-width="40" data-color="amber"></div>
-                </div>
-            </div>
-
-            <div class="stool-divider"></div>
-
-            <div class="stool-grid">
-                <span class="stool-chip sc-amber-chip">
-                    <i data-lucide="code-2"></i>VS Code
-                </span>
-                <span class="stool-chip sc-amber-chip">
-                    <i data-lucide="terminal"></i>Linux
-                </span>
-                <span class="stool-chip sc-amber-chip">
-                    <i data-lucide="figma"></i>Figma
-                </span>
-                <span class="stool-chip sc-amber-chip">
-                    <i data-lucide="pen-tool"></i>Canva
-                </span>
-                <span class="stool-chip sc-amber-chip">
-                    <i data-lucide="github"></i>GitHub
-                </span>
-            </div>
-        </div>
-
-    </div>
-</section>
-
- <!-- ── ACHIEVEMENTS ── -->
-<!-- ── ACHIEVEMENTS ── -->
-<section id="achievements" class="section ach-section">
-
-    <div class="ach-inner">
-        <div class="ach-header">
-            <span class="ach-eyebrow">// ACHIEVEMENTS</span>
-            <h1>Thành Tích</h1>
-        </div>
-
-        <div class="ach-grid" id="achGrid">
-
-            <!-- Thẻ 1: HSG Vật Lý -->
-            <div class="ach-card" data-id="0"
-                 style="animation-delay: 0s;">
-                <div class="ach-card-inner">
-                    <div class="ach-card-top">
-                        <span class="ach-accent-bar ac-cyan"></span>
-                        <span class="ach-num ac-cyan-text">01</span>
-                    </div>
-                    <div class="ach-icon-wrap ac-cyan-border">
-                        <i data-lucide="award"></i>
-                    </div>
-                    <h3 class="ach-title">HSG Vật Lý<br>Tỉnh Nghệ An</h3>
-                    <p class="ach-sub">Học sinh giỏi cấp tỉnh</p>
-                    <div class="ach-pills">
-                        <span class="ach-pill ac-cyan-pill">Giải Ba · Lớp 9</span>
-                        <span class="ach-pill ac-cyan-pill">Giải Nhì · Lớp 12</span>
-                    </div>
-                    <span class="ach-cta">Click để xem chi tiết →</span>
-                </div>
-            </div>
-
-            <!-- Thẻ 2: Điểm thi 2025 -->
-            <div class="ach-card" data-id="1"
-                 style="animation-delay: 0.18s;">
-                <div class="ach-card-inner">
-                    <div class="ach-card-top">
-                        <span class="ach-accent-bar ac-green"></span>
-                        <span class="ach-num ac-green-text">02</span>
-                    </div>
-                    <div class="ach-icon-wrap ac-green-border">
-                        <i data-lucide="file-text"></i>
-                    </div>
-                    <h3 class="ach-title">Điểm Thi<br>2025</h3>
-                    <p class="ach-sub">Kỳ thi tuyển sinh đại học</p>
-                    <div class="ach-pills">
-                        <span class="ach-pill ac-green-pill">TSA 83.35</span>
-                        <span class="ach-pill ac-green-pill">THPT A00 27.25</span>
-                    </div>
-                    <span class="ach-cta">Click để xem chi tiết →</span>
-                </div>
-            </div>
-
-            <!-- Thẻ 3: CPA Đại học -->
-            <div class="ach-card" data-id="2"
-                 style="animation-delay: 0.36s;">
-                <div class="ach-card-inner">
-                    <div class="ach-card-top">
-                        <span class="ach-accent-bar ac-amber"></span>
-                        <span class="ach-num ac-amber-text">03</span>
-                    </div>
-                    <div class="ach-icon-wrap ac-amber-border">
-                        <i data-lucide="graduation-cap"></i>
-                    </div>
-                    <h3 class="ach-title">CPA Đại Học<br>Năm Nhất</h3>
-                    <p class="ach-sub">Đại học Bách Khoa Hà Nội</p>
-                    <div class="ach-pills">
-                        <span class="ach-pill ac-amber-pill">CPA 3.29</span>
-                        <span class="ach-pill ac-amber-pill">Kỳ 1: 3.2 · Kỳ 2: 3.38</span>
-                    </div>
-                    <span class="ach-cta">Click để xem chi tiết →</span>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    <!-- ── Achievement Detail Modal ── -->
-    <div class="ach-modal-overlay" id="achModal"
-         onclick="handleAchOverlay(event)">
-        <div class="ach-modal-box" id="achModalBox">
-            <button class="ach-modal-close" onclick="closeAchModal()">
-                <i data-lucide="x"></i>
+        <nav class="category-nav" aria-label="Danh mục công cụ">
+            <button class="category-button active" data-category="all">
+                Tất cả
             </button>
-            <div id="achModalContent"></div>
-        </div>
-    </div>
+            <button class="category-button" data-category="pdf">
+                PDF & Tài liệu
+            </button>
+            <button class="category-button" data-category="dev">
+                Developer
+            </button>
+            <button class="category-button" data-category="productivity">
+                Năng suất
+            </button>
+        </nav>
 
-</section>
-
-    <!-- ── PROJECTS ── -->
-    <section id="projects" class="section">
-        <div class="section-inner">
-            <h1>Projects</h1>
-            <div class="project-grid">
-
-                <div class="project-card">
-                    <div class="project-header">
-                        <i data-lucide="wallet"></i>
-                        <h3>App Quản Lý Chi Tiêu</h3>
-                    </div>
-                    <p class="project-desc">Ứng dụng theo dõi thu/chi cá nhân theo tháng, hỗ trợ biểu đồ thống kê và phân loại danh mục.</p>
-                    <div class="project-tags">
-                        <span>HTML</span><span>CSS</span><span>JavaScript</span>
-                    </div>
-                    <div class="project-links">
-                        <a href="#" class="proj-link"><i data-lucide="github"></i> GitHub</a>
-                        <span class="proj-status wip">Đang phát triển</span>
+        <section id="toolGroups" class="tool-groups">
+            <section class="tool-group" data-group="pdf">
+                <div class="group-heading">
+                    <span class="group-icon">📄</span>
+                    <div>
+                        <h2>PDF & Tài liệu</h2>
+                        <p>Xử lý tài liệu nhanh chóng</p>
                     </div>
                 </div>
 
-                <div class="project-card">
-                    <div class="project-header">
-                        <i data-lucide="user-circle"></i>
-                        <h3>Portfolio Website</h3>
-                    </div>
-                    <p class="project-desc">Trang profile cá nhân với hiệu ứng particles, sidebar icon, scroll animation và giao diện responsive.</p>
-                    <div class="project-tags">
-                        <span>HTML</span><span>CSS</span><span>JavaScript</span>
-                    </div>
-                    <div class="project-links">
-                        <a href="#" class="proj-link"><i data-lucide="github"></i> GitHub</a>
-                        <button class="proj-link demo" 
-                            data-modal-title="Portfolio Website"
-                            data-modal-desc="Trang profile cá nhân với hiệu ứng particles, sidebar icon, scroll animation và giao diện responsive."
-                            data-modal-tech="HTML · CSS · JavaScript"
-                            data-modal-github="#"
-                            data-modal-live="#"
-                            onclick="openModal(this)">
-                            <i data-lucide="external-link"></i> Demo
-                        </button>
+                <div class="tool-grid">
+                    <button class="tool-card"
+                        data-name="Gộp PDF"
+                        data-category="pdf"
+                        data-keywords="merge pdf nối file tài liệu">
+                        <span class="tool-icon">▤</span>
+                        <span class="tool-name">Gộp PDF</span>
+                        <span class="tool-description">Gộp nhiều file PDF thành một.</span>
+                        <span class="tool-arrow">↗</span>
+                    </button>
+
+                    <button class="tool-card"
+                        data-name="Tách PDF"
+                        data-category="pdf"
+                        data-keywords="split pdf chia trang">
+                        <span class="tool-icon">⛶</span>
+                        <span class="tool-name">Tách PDF</span>
+                        <span class="tool-description">Chia tài liệu theo trang.</span>
+                        <span class="tool-arrow">↗</span>
+                    </button>
+
+                    <button class="tool-card"
+                        data-name="Ảnh sang PDF"
+                        data-category="pdf"
+                        data-keywords="jpg png image chuyển đổi">
+                        <span class="tool-icon">▧</span>
+                        <span class="tool-name">Ảnh sang PDF</span>
+                        <span class="tool-description">Đóng gói ảnh thành tài liệu PDF.</span>
+                        <span class="tool-arrow">↗</span>
+                    </button>
+
+                    <button class="tool-card"
+                        data-name="Nén PDF"
+                        data-category="pdf"
+                        data-keywords="compress giảm dung lượng">
+                        <span class="tool-icon">⇩</span>
+                        <span class="tool-name">Nén PDF</span>
+                        <span class="tool-description">Giảm dung lượng tài liệu.</span>
+                        <span class="tool-arrow">↗</span>
+                    </button>
+                </div>
+            </section>
+
+            <section class="tool-group" data-group="dev">
+                <div class="group-heading">
+                    <span class="group-icon">⌘</span>
+                    <div>
+                        <h2>Developer Tools</h2>
+                        <p>Tiện ích dành cho lập trình viên</p>
                     </div>
                 </div>
 
-                <div class="project-card add-card">
-                    <i data-lucide="plus-circle"></i>
-                    <p>Dự án tiếp theo<br><span>Coming soon...</span></p>
+                <div class="tool-grid">
+                    <button class="tool-card"
+                        data-name="JSON Formatter"
+                        data-category="dev"
+                        data-keywords="json format validate kiểm tra dữ liệu">
+                        <span class="tool-icon">{ }</span>
+                        <span class="tool-name">JSON Formatter</span>
+                        <span class="tool-description">Định dạng và kiểm tra JSON.</span>
+                        <span class="tool-arrow">↗</span>
+                    </button>
+
+                    <button class="tool-card"
+                        data-name="Base64 Encoder"
+                        data-category="dev"
+                        data-keywords="decode encode mã hóa giải mã">
+                        <span class="tool-icon">⇄</span>
+                        <span class="tool-name">Base64 Encoder</span>
+                        <span class="tool-description">Mã hóa và giải mã văn bản.</span>
+                        <span class="tool-arrow">↗</span>
+                    </button>
+
+                    <button class="tool-card"
+                        data-name="Diff Checker"
+                        data-category="dev"
+                        data-keywords="compare so sánh code text">
+                        <span class="tool-icon">≠</span>
+                        <span class="tool-name">Diff Checker</span>
+                        <span class="tool-description">So sánh hai đoạn văn bản.</span>
+                        <span class="tool-arrow">↗</span>
+                    </button>
+
+                    <button class="tool-card"
+                        data-name="Bộ đổi hệ cơ số"
+                        data-category="dev"
+                        data-keywords="binary decimal hexadecimal nhị phân">
+                        <span class="tool-icon">01</span>
+                        <span class="tool-name">Bộ đổi hệ cơ số</span>
+                        <span class="tool-description">Đổi nhị phân, thập phân, hex.</span>
+                        <span class="tool-arrow">↗</span>
+                    </button>
+                </div>
+            </section>
+
+            <section class="tool-group" data-group="productivity">
+                <div class="group-heading">
+                    <span class="group-icon">◷</span>
+                    <div>
+                        <h2>Năng suất cá nhân</h2>
+                        <p>Học tập và quản lý thời gian</p>
+                    </div>
                 </div>
 
-            </div>
-        </div>
-    </section>
+                <div class="tool-grid">
+                    <button class="tool-card"
+                        data-name="Pomodoro Timer"
+                        data-category="productivity"
+                        data-keywords="đồng hồ tập trung học bài nghỉ ngơi">
+                        <span class="tool-icon">◷</span>
+                        <span class="tool-name">Pomodoro Timer</span>
+                        <span class="tool-description">Tập trung học theo phiên.</span>
+                        <span class="tool-arrow">↗</span>
+                    </button>
 
-    <!-- ── CONTACT ── -->
-    <section id="contact" class="section">
-        <div class="section-inner">
-            <h1>Contact</h1>
-            <p class="contact-desc">Kết nối với mình qua các kênh bên dưới nhé!</p>
+                    <button class="tool-card"
+                        data-name="Word Counter"
+                        data-category="productivity"
+                        data-keywords="đếm từ ký tự bài viết">
+                        <span class="tool-icon">Aa</span>
+                        <span class="tool-name">Word Counter</span>
+                        <span class="tool-description">Đếm từ và ký tự văn bản.</span>
+                        <span class="tool-arrow">↗</span>
+                    </button>
 
-            <div class="contact-grid">
-                <a href="/cdn-cgi/l/email-protection#621b0d171022070f030b0e4c010d0f" class="contact-card">
-                    <div class="contact-icon mail-icon"><i data-lucide="mail"></i></div>
-                    <div>
-                        <p class="contact-name">Email</p>
-                        <p class="contact-val"><span class="__cf_email__" data-cfemail="3e47514b4c7e5b535f5752105d5153">[email&#160;protected]</span></p>
-                    </div>
-                </a>
-                <a href="#" class="contact-card">
-                    <div class="contact-icon github-icon"><i data-lucide="github"></i></div>
-                    <div>
-                        <p class="contact-name">GitHub</p>
-                        <p class="contact-val">github.com/kduy1030</p>
-                    </div>
-                </a>
-                <a href="#" class="contact-card">
-                    <div class="contact-icon fb-icon"><i data-lucide="facebook"></i></div>
-                    <div>
-                        <p class="contact-name">Facebook</p>
-                        <p class="contact-val">facebook.com/kduy1030</p>
-                    </div>
-                </a>
-                <a href="#" class="contact-card">
-                    <div class="contact-icon li-icon"><i data-lucide="linkedin"></i></div>
-                    <div>
-                        <p class="contact-name">LinkedIn</p>
-                        <p class="contact-val">linkedin.com/in/kduy1030</p>
-                    </div>
-                      </a>
-            </div>
-        </div>
-    </section>
+                    <button class="tool-card"
+                        data-name="To-do List"
+                        data-category="productivity"
+                        data-keywords="checklist nhiệm vụ công việc">
+                        <span class="tool-icon">☑</span>
+                        <span class="tool-name">To-do List</span>
+                        <span class="tool-description">Theo dõi công việc cần làm.</span>
+                        <span class="tool-arrow">↗</span>
+                    </button>
 
-</div>
+                    <button class="tool-card"
+                        data-name="Ghi chú nhanh"
+                        data-category="productivity"
+                        data-keywords="notes ghi nhớ nội dung">
+                        <span class="tool-icon">✎</span>
+                        <span class="tool-name">Ghi chú nhanh</span>
+                        <span class="tool-description">Lưu lại ý tưởng và ghi chú.</span>
+                        <span class="tool-arrow">↗</span>
+                    </button>
+                </div>
+            </section>
+        </section>
 
-<script src="script.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', () => { lucide.createIcons(); });
-</script>
+        <p id="emptyState" class="empty-state" hidden>
+            Không tìm thấy công cụ phù hợp. Hãy thử từ khóa khác.
+        </p>
+    </main>
 
-<!-- ── Live Preview Modal ── -->
-<div class="modal-overlay" id="projectModal" onclick="handleOverlayClick(event)">
-    <div class="modal-box">
-        <button class="modal-close" onclick="closeModal()">
-            <i data-lucide="x"></i>
-        </button>
+    <footer class="footer">
+        <p>© 2026 Kd’s Tools · Made for learning and productivity.</p>
+        <p>Miễn phí sử dụng · Đang được phát triển</p>
+    </footer>
 
-        <div class="modal-preview">
-            <div class="modal-preview-placeholder">
-                <i data-lucide="monitor"></i>
-                <span>Preview</span>
-            </div>
-        </div>
-
-        <div class="modal-body">
-            <h3 class="modal-title" id="modalTitle"></h3>
-            <p class="modal-desc" id="modalDesc"></p>
-            <span class="modal-tech" id="modalTech"></span>
-
-            <div class="modal-actions">
-                <a id="modalGithub" href="#" class="proj-link" target="_blank">
-                    <i data-lucide="github"></i> GitHub
-                </a>
-                <a id="modalLive" href="#" class="proj-link demo" target="_blank">
-                    <i data-lucide="external-link"></i> Live site
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- ── About Info Modal ── -->
-<div class="about-modal-overlay" id="aboutModal"
-     onclick="handleAboutOverlay(event)">
-    <div class="about-modal-box">
-        <button class="about-modal-close" onclick="closeAboutModal()">
-            <i data-lucide="x"></i>
-        </button>
-        <p class="about-modal-title" id="aboutModalTitle"></p>
-        <div id="aboutModalContent"></div>
-    </div>
-</div>
-
+    <dialog id="toolDialog" class="tool-dialog">
+        <button id="closeDialog" class="close-dialog"
+            aria-label="Đóng cửa sổ">×</button>
+        <span class="dialog-label">KD’S TOOLS</span>
+        <h2 id="dialogTitle">Tên công cụ</h2>
+        <p id="dialogDescription"></p>
+        <p class="dialog-note">
+            Công cụ này sẽ được triển khai ở bước tiếp theo.
+        </p>
+        <button id="dialogOk" class="primary-button">Đã hiểu</button>
+    </dialog>
 </body>
 </html>
