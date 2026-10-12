@@ -1,0 +1,122 @@
+- generic [active] [ref=e1]:
+  - navigation "Truy cập nhanh" [ref=e2]:
+    - button "Mở danh sách công việc" [ref=e3] [cursor=pointer]: ☑
+    - button "Mở ghi chú nhanh" [ref=e4] [cursor=pointer]: ✎
+  - banner [ref=e5]:
+    - link "Kd’s Tools" [ref=e6] [cursor=pointer]:
+      - /url: "#"
+    - paragraph [ref=e7]: Bộ công cụ nhỏ gọn dành cho học tập và công việc.
+  - main [ref=e8]:
+    - generic [ref=e9]:
+      - generic [ref=e10]:
+        - generic [aria-hidden] [ref=e11]: ⌕
+        - searchbox "Tìm kiếm công cụ" [ref=e12]
+        - generic [ref=e13]: Ctrl K
+      - paragraph [ref=e14]: Hiện có 14 công cụ
+    - navigation "Danh mục công cụ" [ref=e15]:
+      - button "Tất cả" [ref=e16] [cursor=pointer]
+      - button "IT" [ref=e17] [cursor=pointer]
+      - button "PDF & Tài liệu" [ref=e18] [cursor=pointer]
+      - button "Developer" [ref=e19] [cursor=pointer]
+      - button "Năng suất" [ref=e20] [cursor=pointer]
+    - generic [ref=e21]:
+      - generic [ref=e22]:
+        - generic [ref=e23]:
+          - generic [aria-hidden] [ref=e24]: ⌘
+          - generic [ref=e25]:
+            - heading "IT" [level=2] [ref=e26]
+            - paragraph [ref=e27]: Công cụ hỗ trợ lập trình và công nghệ thông tin
+        - generic [ref=e28]:
+          - 'button "{ } Code Formatter Định dạng C, C++, Java, JavaScript và Python ngay trên thiết bị. ↗" [ref=e29] [cursor=pointer]':
+            - generic [ref=e30]: "{ }"
+            - generic [ref=e31]: Code Formatter
+            - generic [ref=e32]: Định dạng C, C++, Java, JavaScript và Python ngay trên thiết bị.
+            - generic [ref=e33]: ↗
+          - button "O(n) Big-O Calculator Ước lượng độ phức tạp thời gian và bộ nhớ từ code C/C++ cơ bản. ↗" [ref=e34] [cursor=pointer]:
+            - generic [ref=e35]: O(n)
+            - generic [ref=e36]: Big-O Calculator
+            - generic [ref=e37]: Ước lượng độ phức tạp thời gian và bộ nhớ từ code C/C++ cơ bản.
+            - generic [ref=e38]: ↗
+      - generic [ref=e39]:
+        - generic [ref=e40]:
+          - generic [ref=e41]: 📄
+          - generic [ref=e42]:
+            - heading "PDF & Tài liệu" [level=2] [ref=e43]
+            - paragraph [ref=e44]: Xử lý tài liệu nhanh chóng
+        - generic [ref=e45]:
+          - button "▤ Gộp PDF Gộp nhiều file PDF thành một. ↗" [ref=e46] [cursor=pointer]:
+            - generic [ref=e47]: ▤
+            - generic [ref=e48]: Gộp PDF
+            - generic [ref=e49]: Gộp nhiều file PDF thành một.
+            - generic [ref=e50]: ↗
+          - button "⛶ Tách PDF Chia tài liệu theo trang. ↗" [ref=e51] [cursor=pointer]:
+            - generic [ref=e52]: ⛶
+            - generic [ref=e53]: Tách PDF
+            - generic [ref=e54]: Chia tài liệu theo trang.
+            - generic [ref=e55]: ↗
+          - button "▧ Ảnh sang PDF Đóng gói ảnh thành tài liệu PDF. ↗" [ref=e56] [cursor=pointer]:
+            - generic [ref=e57]: ▧
+            - generic [ref=e58]: Ảnh sang PDF
+            - generic [ref=e59]: Đóng gói ảnh thành tài liệu PDF.
+            - generic [ref=e60]: ↗
+          - button "⇩ Nén PDF Giảm dung lượng tài liệu. ↗" [ref=e61] [cursor=pointer]:
+            - generic [ref=e62]: ⇩
+            - generic [ref=e63]: Nén PDF
+            - generic [ref=e64]: Giảm dung lượng tài liệu.
+            - generic [ref=e65]: ↗
+      - generic [ref=e66]:
+        - generic [ref=e67]:
+          - generic [ref=e68]: ⌘
+          - generic [ref=e69]:
+            - heading "Developer Tools" [level=2] [ref=e70]
+            - paragraph [ref=e71]: Tiện ích dành cho lập trình viên
+        - button "01 Bộ đổi hệ cơ số Đổi nhị phân, thập phân, hex. ↗" [ref=e73] [cursor=pointer]:
+          - generic [ref=e74]: "01"
+          - generic [ref=e75]: Bộ đổi hệ cơ số
+          - generic [ref=e76]: Đổi nhị phân, thập phân, hex.
+          - generic [ref=e77]: ↗
+      - generic [ref=e78]:
+        - generic [ref=e79]:
+          - generic [ref=e80]: ◷
+          - generic [ref=e81]:
+            - heading "Năng suất cá nhân" [level=2] [ref=e82]
+            - paragraph [ref=e83]: Học tập và quản lý thời gian
+        - generic [ref=e84]:
+          - button "◷ Pomodoro Timer Tập trung học theo phiên. ↗" [ref=e85] [cursor=pointer]:
+            - generic [ref=e86]: ◷
+            - generic [ref=e87]: Pomodoro Timer
+            - generic [ref=e88]: Tập trung học theo phiên.
+            - generic [ref=e89]: ↗
+          - button "☑ To-do List Theo dõi công việc cần làm. ↗" [ref=e90] [cursor=pointer]:
+            - generic [ref=e91]: ☑
+            - generic [ref=e92]: To-do List
+            - generic [ref=e93]: Theo dõi công việc cần làm.
+            - generic [ref=e94]: ↗
+          - button "✎ Ghi chú nhanh Lưu lại ý tưởng và ghi chú. ↗" [ref=e95] [cursor=pointer]:
+            - generic [ref=e96]: ✎
+            - generic [ref=e97]: Ghi chú nhanh
+            - generic [ref=e98]: Lưu lại ý tưởng và ghi chú.
+            - generic [ref=e99]: ↗
+          - button "⌛ Đếm ngược ngày thi Theo dõi thời gian đến kỳ thi hoặc sự kiện. ↗" [ref=e100] [cursor=pointer]:
+            - generic [ref=e101]: ⌛
+            - generic [ref=e102]: Đếm ngược ngày thi
+            - generic [ref=e103]: Theo dõi thời gian đến kỳ thi hoặc sự kiện.
+            - generic [ref=e104]: ↗
+          - button "▥ Theo dõi giờ học Ghi nhận và theo dõi giờ học mỗi ngày trong tuần. ↗" [ref=e105] [cursor=pointer]:
+            - generic [ref=e106]: ▥
+            - generic [ref=e107]: Theo dõi giờ học
+            - generic [ref=e108]: Ghi nhận và theo dõi giờ học mỗi ngày trong tuần.
+            - generic [ref=e109]: ↗
+          - button "▦ Thời khóa biểu Sắp xếp môn học và phòng theo từng tiết, từng ngày. ↗" [ref=e110] [cursor=pointer]:
+            - generic [ref=e111]: ▦
+            - generic [ref=e112]: Thời khóa biểu
+            - generic [ref=e113]: Sắp xếp môn học và phòng theo từng tiết, từng ngày.
+            - generic [ref=e114]: ↗
+          - button "₫ Chia hóa đơn Tính số tiền mỗi người, bao gồm cả tiền tip. ↗" [ref=e115] [cursor=pointer]:
+            - generic [ref=e116]: ₫
+            - generic [ref=e117]: Chia hóa đơn
+            - generic [ref=e118]: Tính số tiền mỗi người, bao gồm cả tiền tip.
+            - generic [ref=e119]: ↗
+  - contentinfo [ref=e120]:
+    - paragraph [ref=e121]: © 2026 Kd’s Tools · Made for learning and productivity.
+    - paragraph [ref=e122]: Miễn phí sử dụng · Đang được phát triển

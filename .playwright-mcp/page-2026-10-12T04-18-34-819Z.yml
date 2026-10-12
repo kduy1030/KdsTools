@@ -1,0 +1,290 @@
+- generic [ref=e1]:
+  - navigation "Truy cập nhanh" [ref=e2]:
+    - button "Mở danh sách công việc" [ref=e3] [cursor=pointer]: ☑
+    - button "Mở ghi chú nhanh" [ref=e4] [cursor=pointer]: ✎
+  - banner [ref=e5]:
+    - link "Kd’s Tools" [ref=e6] [cursor=pointer]:
+      - /url: "#"
+    - paragraph [ref=e7]: Bộ công cụ nhỏ gọn dành cho học tập và công việc.
+  - main [ref=e8]:
+    - generic [ref=e9]:
+      - generic [ref=e10]:
+        - generic [aria-hidden] [ref=e11]: ⌕
+        - searchbox "Tìm kiếm công cụ" [ref=e12]
+        - generic [ref=e13]: Ctrl K
+      - paragraph [ref=e14]: Hiện có 18 công cụ
+    - navigation "Danh mục công cụ" [ref=e15]:
+      - button "Tất cả" [ref=e16] [cursor=pointer]
+      - button "IT" [ref=e17] [cursor=pointer]
+      - button "Ảnh, video" [ref=e18] [cursor=pointer]
+      - button "PDF & Tài liệu" [ref=e19] [cursor=pointer]
+      - button "Developer" [ref=e20] [cursor=pointer]
+      - button "Năng suất" [ref=e21] [cursor=pointer]
+    - generic [ref=e22]:
+      - generic [ref=e23]:
+        - generic [ref=e24]:
+          - generic [aria-hidden] [ref=e25]: ⌘
+          - generic [ref=e26]:
+            - heading "IT" [level=2] [ref=e27]
+            - paragraph [ref=e28]: Công cụ hỗ trợ lập trình và công nghệ thông tin
+        - generic [ref=e29]:
+          - 'button "{ } Code Formatter Định dạng C, C++, Java, JavaScript và Python ngay trên thiết bị. ↗" [ref=e30] [cursor=pointer]':
+            - generic [ref=e31]: "{ }"
+            - generic [ref=e32]: Code Formatter
+            - generic [ref=e33]: Định dạng C, C++, Java, JavaScript và Python ngay trên thiết bị.
+            - generic [ref=e34]: ↗
+          - button "O(n) Big-O Calculator Ước lượng độ phức tạp thời gian và bộ nhớ từ code C/C++ cơ bản. ↗" [ref=e35] [cursor=pointer]:
+            - generic [ref=e36]: O(n)
+            - generic [ref=e37]: Big-O Calculator
+            - generic [ref=e38]: Ước lượng độ phức tạp thời gian và bộ nhớ từ code C/C++ cơ bản.
+            - generic [ref=e39]: ↗
+          - button "▶ Algorithm Visualizer Từng bước trực quan hóa sắp xếp, tìm kiếm và thuật toán đồ thị. ↗" [ref=e40] [cursor=pointer]:
+            - generic [ref=e41]: ▶
+            - generic [ref=e42]: Algorithm Visualizer
+            - generic [ref=e43]: Từng bước trực quan hóa sắp xếp, tìm kiếm và thuật toán đồ thị.
+            - generic [ref=e44]: ↗
+          - button "▦ Game Asset Helper Cắt sprite sheet, xem animation và chuẩn bị asset 2D ngay trên trình duyệt. ↗" [ref=e45] [cursor=pointer]:
+            - generic [ref=e46]: ▦
+            - generic [ref=e47]: Game Asset Helper
+            - generic [ref=e48]: Cắt sprite sheet, xem animation và chuẩn bị asset 2D ngay trên trình duyệt.
+            - generic [ref=e49]: ↗
+      - generic [ref=e50]:
+        - generic [ref=e51]:
+          - generic [aria-hidden] [ref=e52]: ▧
+          - generic [ref=e53]:
+            - heading "Ảnh, video" [level=2] [ref=e54]
+            - paragraph [ref=e55]: Công cụ chỉnh sửa và sáng tạo hình ảnh
+        - generic [ref=e56]:
+          - button "✂ Background Remover Tách chủ thể, tạo PNG trong suốt và thay nền ngay trên thiết bị. ↗" [ref=e57] [cursor=pointer]:
+            - generic [ref=e58]: ✂
+            - generic [ref=e59]: Background Remover
+            - generic [ref=e60]: Tách chủ thể, tạo PNG trong suốt và thay nền ngay trên thiết bị.
+            - generic [ref=e61]: ↗
+          - button "▦ QR Code Generator Tạo, tùy chỉnh và tải mã QR cho liên kết, văn bản hoặc thông tin liên hệ. ↗" [ref=e62] [cursor=pointer]:
+            - generic [ref=e63]: ▦
+            - generic [ref=e64]: QR Code Generator
+            - generic [ref=e65]: Tạo, tùy chỉnh và tải mã QR cho liên kết, văn bản hoặc thông tin liên hệ.
+            - generic [ref=e66]: ↗
+      - generic [ref=e67]:
+        - generic [ref=e68]:
+          - generic [ref=e69]: 📄
+          - generic [ref=e70]:
+            - heading "PDF & Tài liệu" [level=2] [ref=e71]
+            - paragraph [ref=e72]: Xử lý tài liệu nhanh chóng
+        - generic [ref=e73]:
+          - button "▤ Gộp PDF Gộp nhiều file PDF thành một. ↗" [ref=e74] [cursor=pointer]:
+            - generic [ref=e75]: ▤
+            - generic [ref=e76]: Gộp PDF
+            - generic [ref=e77]: Gộp nhiều file PDF thành một.
+            - generic [ref=e78]: ↗
+          - button "⛶ Tách PDF Chia tài liệu theo trang. ↗" [ref=e79] [cursor=pointer]:
+            - generic [ref=e80]: ⛶
+            - generic [ref=e81]: Tách PDF
+            - generic [ref=e82]: Chia tài liệu theo trang.
+            - generic [ref=e83]: ↗
+          - button "▧ Ảnh sang PDF Đóng gói ảnh thành tài liệu PDF. ↗" [ref=e84] [cursor=pointer]:
+            - generic [ref=e85]: ▧
+            - generic [ref=e86]: Ảnh sang PDF
+            - generic [ref=e87]: Đóng gói ảnh thành tài liệu PDF.
+            - generic [ref=e88]: ↗
+          - button "⇩ Nén PDF Giảm dung lượng tài liệu. ↗" [ref=e89] [cursor=pointer]:
+            - generic [ref=e90]: ⇩
+            - generic [ref=e91]: Nén PDF
+            - generic [ref=e92]: Giảm dung lượng tài liệu.
+            - generic [ref=e93]: ↗
+      - generic [ref=e94]:
+        - generic [ref=e95]:
+          - generic [ref=e96]: ⌘
+          - generic [ref=e97]:
+            - heading "Developer Tools" [level=2] [ref=e98]
+            - paragraph [ref=e99]: Tiện ích dành cho lập trình viên
+        - button "01 Bộ đổi hệ cơ số Đổi nhị phân, thập phân, hex. ↗" [ref=e101] [cursor=pointer]:
+          - generic [ref=e102]: "01"
+          - generic [ref=e103]: Bộ đổi hệ cơ số
+          - generic [ref=e104]: Đổi nhị phân, thập phân, hex.
+          - generic [ref=e105]: ↗
+      - generic [ref=e106]:
+        - generic [ref=e107]:
+          - generic [ref=e108]: ◷
+          - generic [ref=e109]:
+            - heading "Năng suất cá nhân" [level=2] [ref=e110]
+            - paragraph [ref=e111]: Học tập và quản lý thời gian
+        - generic [ref=e112]:
+          - button "◷ Pomodoro Timer Tập trung học theo phiên. ↗" [ref=e113] [cursor=pointer]:
+            - generic [ref=e114]: ◷
+            - generic [ref=e115]: Pomodoro Timer
+            - generic [ref=e116]: Tập trung học theo phiên.
+            - generic [ref=e117]: ↗
+          - button "☑ To-do List Theo dõi công việc cần làm. ↗" [ref=e118] [cursor=pointer]:
+            - generic [ref=e119]: ☑
+            - generic [ref=e120]: To-do List
+            - generic [ref=e121]: Theo dõi công việc cần làm.
+            - generic [ref=e122]: ↗
+          - button "✎ Ghi chú nhanh Lưu lại ý tưởng và ghi chú. ↗" [ref=e123] [cursor=pointer]:
+            - generic [ref=e124]: ✎
+            - generic [ref=e125]: Ghi chú nhanh
+            - generic [ref=e126]: Lưu lại ý tưởng và ghi chú.
+            - generic [ref=e127]: ↗
+          - button "⌛ Đếm ngược ngày thi Theo dõi thời gian đến kỳ thi hoặc sự kiện. ↗" [ref=e128] [cursor=pointer]:
+            - generic [ref=e129]: ⌛
+            - generic [ref=e130]: Đếm ngược ngày thi
+            - generic [ref=e131]: Theo dõi thời gian đến kỳ thi hoặc sự kiện.
+            - generic [ref=e132]: ↗
+          - button "▥ Theo dõi giờ học Ghi nhận và theo dõi giờ học mỗi ngày trong tuần. ↗" [ref=e133] [cursor=pointer]:
+            - generic [ref=e134]: ▥
+            - generic [ref=e135]: Theo dõi giờ học
+            - generic [ref=e136]: Ghi nhận và theo dõi giờ học mỗi ngày trong tuần.
+            - generic [ref=e137]: ↗
+          - button "▦ Thời khóa biểu Sắp xếp môn học và phòng theo từng tiết, từng ngày. ↗" [ref=e138] [cursor=pointer]:
+            - generic [ref=e139]: ▦
+            - generic [ref=e140]: Thời khóa biểu
+            - generic [ref=e141]: Sắp xếp môn học và phòng theo từng tiết, từng ngày.
+            - generic [ref=e142]: ↗
+          - button "₫ Chia hóa đơn Tính số tiền mỗi người, bao gồm cả tiền tip. ↗" [ref=e143] [cursor=pointer]:
+            - generic [ref=e144]: ₫
+            - generic [ref=e145]: Chia hóa đơn
+            - generic [ref=e146]: Tính số tiền mỗi người, bao gồm cả tiền tip.
+            - generic [ref=e147]: ↗
+  - contentinfo [ref=e148]:
+    - paragraph [ref=e149]: © 2026 Kd’s Tools · Made for learning and productivity.
+    - paragraph [ref=e150]: Miễn phí sử dụng · Đang được phát triển
+  - dialog [ref=e151]:
+    - button "Đóng cửa sổ" [ref=e152] [cursor=pointer]: ×
+    - text: KD’S TOOLS
+    - heading "Game Asset Helper" [level=2] [ref=e153]
+    - paragraph [ref=e154]: Cắt sprite sheet, xem animation và chuẩn bị asset 2D ngay trên trình duyệt.
+    - generic [ref=e155]:
+      - generic [ref=e156]:
+        - text: 2D GAME WORKSPACE
+        - paragraph [ref=e157]: Ảnh được xử lý cục bộ bằng Canvas. Tải sprite sheet để bắt đầu; các asset đã cắt có thể chọn, nhóm và xuất.
+      - generic [ref=e158]:
+        - generic [ref=e159]:
+          - generic [ref=e160]:
+            - heading "1. Sprite slicer" [level=3] [ref=e161]
+            - paragraph [ref=e162]: Tải một sprite sheet rồi chia theo hàng/cột hoặc kích thước frame.
+          - generic [ref=e163]: SPRITE
+        - generic [ref=e164] [cursor=pointer]:
+          - generic [aria-hidden] [ref=e165]: ⬆
+          - strong [ref=e166]: Kéo thả sprite sheet vào đây hoặc chọn tệp
+          - generic [ref=e167]: PNG, JPEG, WebP · tối đa 20 MB · tối đa 32 megapixel
+          - button "Kéo thả sprite sheet vào đây hoặc chọn tệp PNG, JPEG, WebP · tối đa 20 MB · tối đa 32 megapixel" [active] [ref=e168]
+        - paragraph [ref=e169]: Chưa chọn ảnh.
+        - generic [ref=e170]:
+          - generic [ref=e171]:
+            - generic [ref=e172]: Cách chia
+            - combobox "Cách chia" [ref=e173]:
+              - option "Số hàng và cột" [selected]
+              - option "Kích thước frame (px)"
+          - generic [ref=e174]:
+            - generic [ref=e175]:
+              - generic [ref=e176]: Hàng
+              - spinbutton "Hàng" [ref=e177]: "1"
+            - generic [ref=e178]:
+              - generic [ref=e179]: Cột
+              - spinbutton "Cột" [ref=e180]: "1"
+          - generic [ref=e181]:
+            - generic [ref=e182]: Thư mục đích
+            - combobox "Thư mục asset mới" [ref=e183]:
+              - option "Gốc" [selected]
+          - button "Cắt sprite sheet" [disabled] [ref=e184]
+        - status [ref=e185]
+        - generic [ref=e186]:
+          - generic [ref=e187]: 0 frame · 0 đang chọn
+          - button "Chọn tất cả" [disabled] [ref=e188]
+        - generic "Các frame đã cắt" [ref=e189]
+      - generic [ref=e190]:
+        - generic [ref=e191]:
+          - generic [ref=e192]:
+            - heading "2. Animation previewer" [level=3] [ref=e193]
+            - paragraph [ref=e194]: Chọn frame trong lưới bên trên để đưa vào chu kỳ hoạt ảnh.
+          - generic [ref=e195]: ANIMATION
+        - generic [ref=e196]:
+          - generic [ref=e197]: Chọn frame rồi nhấn Phát
+          - generic [ref=e198]:
+            - generic [ref=e199]:
+              - text: Tốc độ
+              - status [ref=e200]: 8 FPS
+            - slider "Tốc độ" [ref=e201]: "8"
+            - generic [ref=e202]:
+              - button "▶ Phát" [disabled] [ref=e203]
+              - button "Ⅱ Tạm dừng" [disabled] [ref=e204]
+              - button "■ Dừng" [disabled] [ref=e205]
+            - generic [ref=e206]:
+              - checkbox "Lặp lại animation" [checked] [ref=e207]
+              - text: Lặp lại animation
+            - status [ref=e208]: Chưa có frame được chọn.
+      - generic [ref=e209]:
+        - generic [ref=e210]:
+          - generic [ref=e211]:
+            - heading "3. Resize & xử lý nền" [level=3] [ref=e212]
+            - paragraph [ref=e213]: Áp dụng cho các frame đang chọn trong lưới asset.
+          - generic [ref=e214]: CANVAS
+        - generic [ref=e215]:
+          - generic [ref=e216]:
+            - generic [ref=e217]: Kích thước
+            - combobox "Kích thước" [ref=e218]:
+              - option "Theo phần trăm" [selected]
+              - option "Kích thước pixel"
+          - generic [ref=e219]:
+            - generic [ref=e220]: Tỷ lệ (%)
+            - spinbutton "Tỷ lệ (%)" [ref=e221]: "100"
+          - button "Đổi kích thước frame chọn" [disabled] [ref=e222]
+          - generic [ref=e223]:
+            - generic [ref=e224]: Xóa màu nền
+            - combobox "Xóa màu nền" [ref=e225]:
+              - option "Không xóa" [selected]
+              - option "Trắng"
+              - option "Đen"
+              - option "Màu tùy chọn"
+          - generic [ref=e226]:
+            - text: Dung sai màu
+            - status [ref=e227]: "24"
+            - slider "Dung sai màu" [ref=e228]: "24"
+          - button "Xóa nền frame chọn" [disabled] [ref=e229]
+        - status [ref=e230]
+      - generic [ref=e231]:
+        - generic [ref=e232]:
+          - generic [ref=e233]:
+            - heading "4. Gợi ý frame theo mô tả" [level=3] [ref=e234]
+            - paragraph [ref=e235]: Storyboard gợi ý nhịp chuyển động từ mô tả; không sinh pixel hoặc dùng mô hình AI.
+          - generic [ref=e236]: FRAME IDEAS
+        - generic [ref=e237]: Mô tả hoạt ảnh
+        - textbox "Mô tả hoạt ảnh" [ref=e238]:
+          - /placeholder: "Ví dụ: nhân vật chém kiếm 4 hướng, hiệu ứng lửa bùng lên..."
+        - generic [ref=e239]:
+          - generic [ref=e240]: Số gợi ý
+          - combobox "Số gợi ý" [ref=e241]:
+            - option "4 frame"
+            - option "6 frame" [selected]
+            - option "8 frame"
+          - button "Tạo storyboard gợi ý" [ref=e242] [cursor=pointer]
+        - paragraph [ref=e244]: Nhập mô tả để xem thứ tự chuẩn bị các nhịp hoạt ảnh.
+      - generic [ref=e245]:
+        - generic [ref=e246]:
+          - generic [ref=e247]:
+            - heading "5. Quản lý & xuất asset" [level=3] [ref=e248]
+            - paragraph [ref=e249]: Kéo ảnh vào vùng nhập để thêm asset đơn; gán thư mục ảo trước khi tải.
+          - generic [ref=e250]: ASSET TREE
+        - generic [ref=e251] [cursor=pointer]:
+          - generic [aria-hidden] [ref=e252]: ＋
+          - strong [ref=e253]: Thả thêm ảnh asset vào thư viện
+          - generic [ref=e254]: Ảnh được giữ trong bộ nhớ trang hiện tại.
+          - button "Thả thêm ảnh asset vào thư viện Ảnh được giữ trong bộ nhớ trang hiện tại." [ref=e255]
+        - generic [ref=e256]:
+          - generic [ref=e257]: Thêm thư mục
+          - textbox "Thêm thư mục" [ref=e258]:
+            - /placeholder: "Ví dụ: characters/player"
+          - button "＋ Tạo thư mục" [ref=e259] [cursor=pointer]
+        - generic [ref=e260]:
+          - navigation "Cây thư mục asset" [ref=e261]:
+            - button "Tất cả asset (0)" [ref=e262] [cursor=pointer]
+          - paragraph [ref=e264]: Chưa có asset. Tải và cắt một sprite sheet hoặc thêm ảnh vào thư viện.
+        - generic [ref=e265]:
+          - generic [ref=e266]: Thư mục xuất
+          - combobox "Thư mục xuất" [ref=e267]:
+            - option "Tất cả thư mục"
+            - option "Gốc" [selected]
+          - button "Tải thư mục dưới dạng ZIP" [disabled] [ref=e268]
+          - button "Tải asset đã chọn (ZIP)" [disabled] [ref=e269]
+        - status [ref=e270]
+      - paragraph [ref=e271]: Asset chỉ được xử lý trong tab hiện tại; đóng hoặc tải lại trang sẽ xóa dữ liệu chưa xuất.

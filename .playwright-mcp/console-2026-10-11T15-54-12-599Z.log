@@ -1,0 +1,2 @@
+[ 1043926ms] [WARNING] env.wasm.numThreads is set to 12, but this will not work unless you enable crossOriginIsolated mode. See https://web.dev/cross-origin-isolation-guide/ for more info. @ https://esm.sh/onnxruntime-web@1.21.0/es2022/onnxruntime-web.mjs:9
+[ 1043926ms] [WARNING] WebAssembly multi-threading is not supported in the current environment. Falling back to single-threading. @ https://esm.sh/onnxruntime-web@1.21.0/es2022/onnxruntime-web.mjs:9

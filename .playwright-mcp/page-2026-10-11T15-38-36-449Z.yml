@@ -1,0 +1,281 @@
+- generic [active] [ref=f4e1]:
+  - navigation "Truy cập nhanh" [ref=f4e2]:
+    - button "Mở danh sách công việc" [ref=f4e3] [cursor=pointer]: ☑
+    - button "Mở ghi chú nhanh" [ref=f4e4] [cursor=pointer]: ✎
+  - banner [ref=f4e5]:
+    - link "Kd’s Tools" [ref=f4e6] [cursor=pointer]:
+      - /url: "#"
+    - paragraph [ref=f4e7]: Bộ công cụ nhỏ gọn dành cho học tập và công việc.
+  - main [ref=f4e8]:
+    - generic [ref=f4e9]:
+      - generic [ref=f4e10]:
+        - generic [aria-hidden] [ref=f4e11]: ⌕
+        - searchbox "Tìm kiếm công cụ" [ref=f4e12]
+      - paragraph [ref=f4e13]: Hiện có 15 công cụ
+    - navigation "Danh mục công cụ" [ref=f4e14]:
+      - button "Tất cả" [ref=f4e15] [cursor=pointer]
+      - button "IT" [ref=f4e16] [cursor=pointer]
+      - button "PDF & Tài liệu" [ref=f4e17] [cursor=pointer]
+      - button "Developer" [ref=f4e18] [cursor=pointer]
+      - button "Năng suất" [ref=f4e19] [cursor=pointer]
+    - generic [ref=f4e20]:
+      - generic [ref=f4e21]:
+        - generic [ref=f4e22]:
+          - generic [aria-hidden] [ref=f4e23]: ⌘
+          - generic [ref=f4e24]:
+            - heading "IT" [level=2] [ref=f4e25]
+            - paragraph [ref=f4e26]: Công cụ hỗ trợ lập trình và công nghệ thông tin
+        - generic [ref=f4e27]:
+          - 'button "{ } Code Formatter Định dạng C, C++, Java, JavaScript và Python ngay trên thiết bị. ↗" [ref=f4e28] [cursor=pointer]':
+            - generic [ref=f4e29]: "{ }"
+            - generic [ref=f4e30]: Code Formatter
+            - generic [ref=f4e31]: Định dạng C, C++, Java, JavaScript và Python ngay trên thiết bị.
+            - generic [ref=f4e32]: ↗
+          - button "O(n) Big-O Calculator Ước lượng độ phức tạp thời gian và bộ nhớ từ code C/C++ cơ bản. ↗" [ref=f4e33] [cursor=pointer]:
+            - generic [ref=f4e34]: O(n)
+            - generic [ref=f4e35]: Big-O Calculator
+            - generic [ref=f4e36]: Ước lượng độ phức tạp thời gian và bộ nhớ từ code C/C++ cơ bản.
+            - generic [ref=f4e37]: ↗
+          - button "▶ Algorithm Visualizer Mô phỏng Bubble Sort và BFS theo từng bước. ↗" [ref=f4e38] [cursor=pointer]:
+            - generic [ref=f4e39]: ▶
+            - generic [ref=f4e40]: Algorithm Visualizer
+            - generic [ref=f4e41]: Mô phỏng Bubble Sort và BFS theo từng bước.
+            - generic [ref=f4e42]: ↗
+      - generic [ref=f4e43]:
+        - generic [ref=f4e44]:
+          - generic [ref=f4e45]: 📄
+          - generic [ref=f4e46]:
+            - heading "PDF & Tài liệu" [level=2] [ref=f4e47]
+            - paragraph [ref=f4e48]: Xử lý tài liệu nhanh chóng
+        - generic [ref=f4e49]:
+          - button "▤ Gộp PDF Gộp nhiều file PDF thành một. ↗" [ref=f4e50] [cursor=pointer]:
+            - generic [ref=f4e51]: ▤
+            - generic [ref=f4e52]: Gộp PDF
+            - generic [ref=f4e53]: Gộp nhiều file PDF thành một.
+            - generic [ref=f4e54]: ↗
+          - button "⛶ Tách PDF Chia tài liệu theo trang. ↗" [ref=f4e55] [cursor=pointer]:
+            - generic [ref=f4e56]: ⛶
+            - generic [ref=f4e57]: Tách PDF
+            - generic [ref=f4e58]: Chia tài liệu theo trang.
+            - generic [ref=f4e59]: ↗
+          - button "▧ Ảnh sang PDF Đóng gói ảnh thành tài liệu PDF. ↗" [ref=f4e60] [cursor=pointer]:
+            - generic [ref=f4e61]: ▧
+            - generic [ref=f4e62]: Ảnh sang PDF
+            - generic [ref=f4e63]: Đóng gói ảnh thành tài liệu PDF.
+            - generic [ref=f4e64]: ↗
+          - button "⇩ Nén PDF Giảm dung lượng tài liệu. ↗" [ref=f4e65] [cursor=pointer]:
+            - generic [ref=f4e66]: ⇩
+            - generic [ref=f4e67]: Nén PDF
+            - generic [ref=f4e68]: Giảm dung lượng tài liệu.
+            - generic [ref=f4e69]: ↗
+      - generic [ref=f4e70]:
+        - generic [ref=f4e71]:
+          - generic [ref=f4e72]: ⌘
+          - generic [ref=f4e73]:
+            - heading "Developer Tools" [level=2] [ref=f4e74]
+            - paragraph [ref=f4e75]: Tiện ích dành cho lập trình viên
+        - button "01 Bộ đổi hệ cơ số Đổi nhị phân, thập phân, hex. ↗" [ref=f4e77] [cursor=pointer]:
+          - generic [ref=f4e78]: "01"
+          - generic [ref=f4e79]: Bộ đổi hệ cơ số
+          - generic [ref=f4e80]: Đổi nhị phân, thập phân, hex.
+          - generic [ref=f4e81]: ↗
+      - generic [ref=f4e82]:
+        - generic [ref=f4e83]:
+          - generic [ref=f4e84]: ◷
+          - generic [ref=f4e85]:
+            - heading "Năng suất cá nhân" [level=2] [ref=f4e86]
+            - paragraph [ref=f4e87]: Học tập và quản lý thời gian
+        - generic [ref=f4e88]:
+          - button "◷ Pomodoro Timer Tập trung học theo phiên. ↗" [ref=f4e89] [cursor=pointer]:
+            - generic [ref=f4e90]: ◷
+            - generic [ref=f4e91]: Pomodoro Timer
+            - generic [ref=f4e92]: Tập trung học theo phiên.
+            - generic [ref=f4e93]: ↗
+          - button "☑ To-do List Theo dõi công việc cần làm. ↗" [ref=f4e94] [cursor=pointer]:
+            - generic [ref=f4e95]: ☑
+            - generic [ref=f4e96]: To-do List
+            - generic [ref=f4e97]: Theo dõi công việc cần làm.
+            - generic [ref=f4e98]: ↗
+          - button "✎ Ghi chú nhanh Lưu lại ý tưởng và ghi chú. ↗" [ref=f4e99] [cursor=pointer]:
+            - generic [ref=f4e100]: ✎
+            - generic [ref=f4e101]: Ghi chú nhanh
+            - generic [ref=f4e102]: Lưu lại ý tưởng và ghi chú.
+            - generic [ref=f4e103]: ↗
+          - button "⌛ Đếm ngược ngày thi Theo dõi thời gian đến kỳ thi hoặc sự kiện. ↗" [ref=f4e104] [cursor=pointer]:
+            - generic [ref=f4e105]: ⌛
+            - generic [ref=f4e106]: Đếm ngược ngày thi
+            - generic [ref=f4e107]: Theo dõi thời gian đến kỳ thi hoặc sự kiện.
+            - generic [ref=f4e108]: ↗
+          - button "▥ Theo dõi giờ học Ghi nhận và theo dõi giờ học mỗi ngày trong tuần. ↗" [ref=f4e109] [cursor=pointer]:
+            - generic [ref=f4e110]: ▥
+            - generic [ref=f4e111]: Theo dõi giờ học
+            - generic [ref=f4e112]: Ghi nhận và theo dõi giờ học mỗi ngày trong tuần.
+            - generic [ref=f4e113]: ↗
+          - button "▦ Thời khóa biểu Sắp xếp môn học và phòng theo từng tiết, từng ngày. ↗" [ref=f4e114] [cursor=pointer]:
+            - generic [ref=f4e115]: ▦
+            - generic [ref=f4e116]: Thời khóa biểu
+            - generic [ref=f4e117]: Sắp xếp môn học và phòng theo từng tiết, từng ngày.
+            - generic [ref=f4e118]: ↗
+          - button "₫ Chia hóa đơn Tính số tiền mỗi người, bao gồm cả tiền tip. ↗" [ref=f4e119] [cursor=pointer]:
+            - generic [ref=f4e120]: ₫
+            - generic [ref=f4e121]: Chia hóa đơn
+            - generic [ref=f4e122]: Tính số tiền mỗi người, bao gồm cả tiền tip.
+            - generic [ref=f4e123]: ↗
+  - contentinfo [ref=f4e124]:
+    - paragraph [ref=f4e125]: © 2026 Kd’s Tools · Made for learning and productivity.
+    - paragraph [ref=f4e126]: Miễn phí sử dụng · Đang được phát triển
+  - dialog [ref=f4e127]:
+    - button "Đóng cửa sổ" [ref=f4e128] [cursor=pointer]: ×
+    - text: KD’S TOOLS
+    - heading "Algorithm Visualizer" [level=2] [ref=f4e129]
+    - paragraph [ref=f4e130]: Mô phỏng Bubble Sort và BFS theo từng bước.
+    - generic [ref=f4e131]:
+      - generic [ref=f4e132]:
+        - generic [ref=f4e133]:
+          - generic [ref=f4e134]: Thuật toán
+          - combobox "Thuật toán" [ref=f4e135]:
+            - option "Bubble Sort"
+            - option "Selection Sort"
+            - option "Insertion Sort"
+            - option "Merge Sort"
+            - option "Linear Search"
+            - option "Binary Search"
+            - option "BFS — tìm kiếm theo chiều rộng"
+            - option "DFS — tìm kiếm theo chiều sâu"
+            - option "Dijkstra — đường đi ngắn nhất" [selected]
+        - generic [ref=f4e136]:
+          - text: Tốc độ
+          - status [ref=f4e137]: "5"
+          - slider "Tốc độ" [ref=f4e138]: "5"
+      - generic [ref=f4e241]:
+        - generic [ref=f4e242]:
+          - generic [ref=f4e243]:
+            - heading "Đồ thị — Dijkstra" [level=3] [ref=f4e244]
+            - paragraph [ref=f4e245]: Dijkstra tìm đường đi ngắn nhất; mọi trọng số cạnh phải là số không âm.
+          - generic [ref=f4e246]:
+            - text: Đỉnh bắt đầu
+            - combobox "Đỉnh bắt đầu" [ref=f4e247]:
+              - option "A" [selected]
+              - option "B"
+              - option "C"
+              - option "D"
+              - option "E"
+              - option "F"
+        - generic [ref=f4e248]:
+          - generic [ref=f4e249]:
+            - generic [ref=f4e250]: Thêm đỉnh
+            - generic [ref=f4e251]:
+              - textbox "Thêm đỉnh" [ref=f4e252]:
+                - /placeholder: Tên đỉnh
+              - button "Thêm" [ref=f4e253] [cursor=pointer]
+          - generic [ref=f4e254]:
+            - generic [ref=f4e255]: Xóa đỉnh
+            - generic [ref=f4e256]:
+              - combobox "Xóa đỉnh" [ref=f4e257]:
+                - option "A" [selected]
+                - option "B"
+                - option "C"
+                - option "D"
+                - option "E"
+                - option "F"
+              - button "Xóa" [ref=f4e258] [cursor=pointer]
+          - generic [ref=f4e259]:
+            - generic [ref=f4e260]: Cạnh mới
+            - generic [ref=f4e261]:
+              - generic [ref=f4e262]: Từ đỉnh
+              - combobox "Từ đỉnh" [ref=f4e263]:
+                - option "A" [selected]
+                - option "B"
+                - option "C"
+                - option "D"
+                - option "E"
+                - option "F"
+              - generic [aria-hidden] [ref=f4e264]: →
+              - generic [ref=f4e265]: Đến đỉnh
+              - combobox "Đến đỉnh" [ref=f4e266]:
+                - option "A" [selected]
+                - option "B"
+                - option "C"
+                - option "D"
+                - option "E"
+                - option "F"
+              - generic [ref=f4e267]: Trọng số
+              - spinbutton "Trọng số cạnh không âm" [ref=f4e268]: "1"
+              - button "Thêm cạnh" [ref=f4e269] [cursor=pointer]
+            - generic [ref=f4e270]:
+              - checkbox "Cạnh vô hướng" [checked] [ref=f4e271]
+              - text: Cạnh vô hướng
+        - generic "Danh sách cạnh" [ref=f4e272]:
+          - generic [ref=f4e273]:
+            - generic [ref=f4e274]: A ↔ B
+            - spinbutton "Trọng số cạnh A đến B" [ref=f4e275]: "1"
+            - button "Xóa cạnh A đến B" [ref=f4e276] [cursor=pointer]: Xóa cạnh
+          - generic [ref=f4e277]:
+            - generic [ref=f4e278]: A ↔ C
+            - spinbutton "Trọng số cạnh A đến C" [ref=f4e279]: "1"
+            - button "Xóa cạnh A đến C" [ref=f4e280] [cursor=pointer]: Xóa cạnh
+          - generic [ref=f4e281]:
+            - generic [ref=f4e282]: B ↔ D
+            - spinbutton "Trọng số cạnh B đến D" [ref=f4e283]: "1"
+            - button "Xóa cạnh B đến D" [ref=f4e284] [cursor=pointer]: Xóa cạnh
+          - generic [ref=f4e285]:
+            - generic [ref=f4e286]: B ↔ E
+            - spinbutton "Trọng số cạnh B đến E" [ref=f4e287]: "1"
+            - button "Xóa cạnh B đến E" [ref=f4e288] [cursor=pointer]: Xóa cạnh
+          - generic [ref=f4e289]:
+            - generic [ref=f4e290]: C ↔ F
+            - spinbutton "Trọng số cạnh C đến F" [ref=f4e291]: "1"
+            - button "Xóa cạnh C đến F" [ref=f4e292] [cursor=pointer]: Xóa cạnh
+      - group "Điều khiển mô phỏng" [ref=f4e145]:
+        - button "▶ Bắt đầu" [ref=f4e146] [cursor=pointer]
+        - button "Ⅱ Tạm dừng" [disabled] [ref=f4e147]
+        - button "← Lùi" [disabled] [ref=f4e148]
+        - button "Bước tiếp →" [ref=f4e149] [cursor=pointer]
+        - button "↺ Đặt lại" [ref=f4e150] [cursor=pointer]
+      - status [ref=f4e151]
+      - generic [ref=f4e152]:
+        - generic [ref=f4e153]: Bước 0 / 0
+        - generic [ref=f4e154]: Thời gian O(V² + E); bộ nhớ phụ O(V).
+      - generic [ref=f4e293]:
+        - img "Đồ thị và trạng thái duyệt BFS" [ref=f4e294]:
+          - generic [ref=f4e296]: "1"
+          - generic [ref=f4e298]: "1"
+          - generic [ref=f4e300]: "1"
+          - generic [ref=f4e302]: "1"
+          - generic [ref=f4e304]: "1"
+          - generic [ref=f4e305]:
+            - generic [ref=f4e307]: A
+            - generic [ref=f4e308]: ∞
+          - generic [ref=f4e309]:
+            - generic [ref=f4e311]: B
+            - generic [ref=f4e312]: ∞
+          - generic [ref=f4e313]:
+            - generic [ref=f4e315]: C
+            - generic [ref=f4e316]: ∞
+          - generic [ref=f4e317]:
+            - generic [ref=f4e319]: D
+            - generic [ref=f4e320]: ∞
+          - generic [ref=f4e321]:
+            - generic [ref=f4e323]: E
+            - generic [ref=f4e324]: ∞
+          - generic [ref=f4e325]:
+            - generic [ref=f4e327]: F
+            - generic [ref=f4e328]: ∞
+        - generic [ref=f4e329]:
+          - paragraph [ref=f4e330]:
+            - strong [ref=f4e331]: "Hàng đợi:"
+            - text: trống
+          - paragraph [ref=f4e332]:
+            - strong [ref=f4e333]: "Thứ tự đã thăm:"
+            - text: chưa có
+          - paragraph [ref=f4e334]:
+            - strong [ref=f4e335]: "Khoảng cách:"
+            - text: A=∞ · B=∞ · C=∞ · D=∞ · E=∞ · F=∞
+      - generic "Chú giải trạng thái" [ref=f4e181]:
+        - generic [ref=f4e182]: Chưa xử lý
+        - generic [ref=f4e184]: Đang xét
+        - generic [ref=f4e186]: Đã hoàn tất / đã thăm
+        - generic [ref=f4e188]: Đang chờ
+      - generic [ref=f4e190]:
+        - heading "Độ phức tạp" [level=3] [ref=f4e191]
+        - paragraph [ref=f4e192]: "Dijkstra chọn đỉnh chưa chốt có khoảng cách nhỏ nhất bằng quét tuyến tính: O(V² + E), bộ nhớ phụ O(V). Chỉ chấp nhận trọng số không âm."

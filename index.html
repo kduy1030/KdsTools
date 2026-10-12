@@ -1,0 +1,1191 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kd's Tools - Bộ công cụ miễn phí dành cho học tập và lập trình.">
+    <title>Kd's Tools | Personal Toolbox</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <nav class="quick-access" aria-label="Truy cập nhanh">
+        <button class="quick-access-button" type="button"
+            data-open-tool="todo-list" aria-label="Mở danh sách công việc"
+            title="To-do List">☑</button>
+        <button class="quick-access-button" type="button"
+            data-open-tool="quick-notes" aria-label="Mở ghi chú nhanh"
+            title="Ghi chú">✎</button>
+    </nav>
+    <header class="header">
+        <a href="#" class="logo">Kd’s <span>Tools</span></a>
+        <p class="header-subtitle">
+            Bộ công cụ nhỏ gọn dành cho học tập và công việc.
+        </p>
+    </header>
+
+    <main class="container">
+        <section class="search-section">
+            <label class="search-box">
+                <span class="search-icon" aria-hidden="true">⌕</span>
+                <input
+                    type="search"
+                    id="searchInput"
+                    placeholder="Tìm kiếm công cụ..."
+                    aria-label="Tìm kiếm công cụ"
+                >
+                <kbd>Ctrl K</kbd>
+            </label>
+            <p id="resultCount" class="result-count">
+                Khám phá các công cụ hữu ích
+            </p>
+        </section>
+
+        <nav class="category-nav" aria-label="Danh mục công cụ">
+            <button class="category-button active" data-category="all">
+                Tất cả
+            </button>
+            <button class="category-button" data-category="it">
+                IT
+            </button>
+            <button class="category-button" data-category="image">
+                Ảnh, video
+            </button>
+            <button class="category-button" data-category="pdf">
+                PDF & Tài liệu
+            </button>
+            <button class="category-button" data-category="dev">
+                Developer
+            </button>
+            <button class="category-button" data-category="productivity">
+                Năng suất
+            </button>
+        </nav>
+
+        <section id="toolGroups" class="tool-groups">
+            <section class="tool-group" data-group="it">
+                <div class="group-heading">
+                    <span class="group-icon" aria-hidden="true">⌘</span>
+                    <div>
+                        <h2>IT</h2>
+                        <p>Công cụ hỗ trợ lập trình và công nghệ thông tin</p>
+                    </div>
+                </div>
+
+                <div class="tool-grid">
+                    <button class="tool-card"
+                        data-tool="code-formatter"
+                        data-name="Code Formatter"
+                        data-category="it"
+                        data-keywords="format formatter định dạng code mã nguồn c cpp c++ java javascript js python">
+                        <span class="tool-icon">{ }</span>
+                        <span class="tool-name">Code Formatter</span>
+                        <span class="tool-description">Định dạng C, C++, Java, JavaScript và Python ngay trên thiết bị.</span>
+                        <span class="tool-arrow">↗</span>
+                    </button>
+                    <button class="tool-card"
+                        data-tool="big-o-calculator"
+                        data-name="Big-O Calculator"
+                        data-category="it"
+                        data-keywords="big o complexity độ phức tạp time space thuật toán algorithm analysis phân tích code c cpp c++ loop recursion vòng lặp đệ quy">
+                        <span class="tool-icon">O(n)</span>
+                        <span class="tool-name">Big-O Calculator</span>
+                        <span class="tool-description">Ước lượng độ phức tạp thời gian và bộ nhớ từ code C/C++ cơ bản.</span>
+                        <span class="tool-arrow">↗</span>
+                    </button>
+                    <button class="tool-card"
+                        data-tool="algorithm-visualizer"
+                        data-name="Algorithm Visualizer"
+                        data-category="it"
+                        data-keywords="algorithm visualizer thuật toán mô phỏng sorting sort bubble sort bfs breadth first search đồ thị graph cấu trúc dữ liệu">
+                        <span class="tool-icon">▶</span>
+                        <span class="tool-name">Algorithm Visualizer</span>
+                        <span class="tool-description">Từng bước trực quan hóa sắp xếp, tìm kiếm và thuật toán đồ thị.</span>
+                        <span class="tool-arrow">↗</span>
+                    </button>
+                    <button class="tool-card"
+                        data-tool="game-asset-helper"
+                        data-name="Game Asset Helper"
+                        data-category="it"
+                        data-keywords="game asset helper sprite sheet slicer cắt sprite frame animation hoạt ảnh fps resize đổi kích thước xóa nền background transparent asset game 2d">
+                        <span class="tool-icon">▦</span>
+                        <span class="tool-name">Game Asset Helper</span>
+                        <span class="tool-description">Cắt sprite sheet, xem animation và chuẩn bị asset 2D ngay trên trình duyệt.</span>
+                        <span class="tool-arrow">↗</span>
+                    </button>
+                </div>
+            </section>
+
+            <section class="tool-group" data-group="image">
+                <div class="group-heading">
+                    <span class="group-icon" aria-hidden="true">▧</span>
+                    <div>
+                        <h2>Ảnh, video</h2>
+                        <p>Công cụ chỉnh sửa và sáng tạo hình ảnh</p>
+                    </div>
+                </div>
+                <div class="tool-grid">
+                    <button class="tool-card"
+                        data-tool="background-remover"
+                        data-name="Background Remover"
+                        data-category="image"
+                        data-keywords="background remover xóa nền tách nền ảnh chân dung sản phẩm png trong suốt đổi nền">
+                        <span class="tool-icon">✂</span>
+                        <span class="tool-name">Background Remover</span>
+                        <span class="tool-description">Tách chủ thể, tạo PNG trong suốt và thay nền ngay trên thiết bị.</span>
+                        <span class="tool-arrow">↗</span>
+                    </button>
+                    <button class="tool-card"
+                        data-tool="qr-code-generator"
+                        data-name="QR Code Generator"
+                        data-category="image"
+                        data-keywords="qr code generator tạo mã qr url đường dẫn văn bản text email số điện thoại phone vcard liên hệ contact tải png svg">
+                        <span class="tool-icon">▦</span>
+                        <span class="tool-name">QR Code Generator</span>
+                        <span class="tool-description">Tạo, tùy chỉnh và tải mã QR cho liên kết, văn bản hoặc thông tin liên hệ.</span>
+                        <span class="tool-arrow">↗</span>
+                    </button>
+                </div>
+            </section>
+
+            <section class="tool-group" data-group="pdf">
+                <div class="group-heading">
+                    <span class="group-icon">📄</span>
+                    <div>
+                        <h2>PDF & Tài liệu</h2>
+                        <p>Xử lý tài liệu nhanh chóng</p>
+                    </div>
+                </div>
+
+                <div class="tool-grid">
+                    <button class="tool-card"
+                        data-tool="pdf-merge"
+                        data-name="Gộp PDF"
+                        data-category="pdf"
+                        data-keywords="merge pdf nối file tài liệu">
+                        <span class="tool-icon">▤</span>
+                        <span class="tool-name">Gộp PDF</span>
+                        <span class="tool-description">Gộp nhiều file PDF thành một.</span>
+                        <span class="tool-arrow">↗</span>
+                    </button>
+
+                    <button class="tool-card"
+                        data-tool="pdf-split"
+                        data-name="Tách PDF"
+                        data-category="pdf"
+                        data-keywords="split pdf chia trang">
+                        <span class="tool-icon">⛶</span>
+                        <span class="tool-name">Tách PDF</span>
+                        <span class="tool-description">Chia tài liệu theo trang.</span>
+                        <span class="tool-arrow">↗</span>
+                    </button>
+
+                    <button class="tool-card"
+                        data-tool="image-to-pdf"
+                        data-name="Ảnh sang PDF"
+                        data-category="pdf"
+                        data-keywords="jpg png image chuyển đổi">
+                        <span class="tool-icon">▧</span>
+                        <span class="tool-name">Ảnh sang PDF</span>
+                        <span class="tool-description">Đóng gói ảnh thành tài liệu PDF.</span>
+                        <span class="tool-arrow">↗</span>
+                    </button>
+
+                    <button class="tool-card"
+                        data-tool="pdf-compress"
+                        data-name="Nén PDF"
+                        data-category="pdf"
+                        data-keywords="compress giảm dung lượng">
+                        <span class="tool-icon">⇩</span>
+                        <span class="tool-name">Nén PDF</span>
+                        <span class="tool-description">Giảm dung lượng tài liệu.</span>
+                        <span class="tool-arrow">↗</span>
+                    </button>
+                </div>
+            </section>
+
+            <section class="tool-group" data-group="dev">
+                <div class="group-heading">
+                    <span class="group-icon">⌘</span>
+                    <div>
+                        <h2>Developer Tools</h2>
+                        <p>Tiện ích dành cho lập trình viên</p>
+                    </div>
+                </div>
+
+                <div class="tool-grid">
+                    <button class="tool-card"
+                        data-tool="base-converter"
+                        data-name="Bộ đổi hệ cơ số"
+                        data-category="dev"
+                        data-keywords="binary decimal hexadecimal nhị phân">
+                        <span class="tool-icon">01</span>
+                        <span class="tool-name">Bộ đổi hệ cơ số</span>
+                        <span class="tool-description">Đổi nhị phân, thập phân, hex.</span>
+                        <span class="tool-arrow">↗</span>
+                    </button>
+                </div>
+            </section>
+
+            <section class="tool-group" data-group="productivity">
+                <div class="group-heading">
+                    <span class="group-icon">◷</span>
+                    <div>
+                        <h2>Năng suất cá nhân</h2>
+                        <p>Học tập và quản lý thời gian</p>
+                    </div>
+                </div>
+
+                <div class="tool-grid">
+                    <button class="tool-card"
+                        data-tool="pomodoro"
+                        data-name="Pomodoro Timer"
+                        data-category="productivity"
+                        data-keywords="đồng hồ tập trung học bài nghỉ ngơi pomodoro nghỉ ngắn nghỉ dài">
+                        <span class="tool-icon">◷</span>
+                        <span class="tool-name">Pomodoro Timer</span>
+                        <span class="tool-description">Tập trung học theo phiên.</span>
+                        <span class="tool-arrow">↗</span>
+                    </button>
+
+                    <button class="tool-card"
+                        data-tool="todo-list"
+                        data-name="To-do List"
+                        data-category="productivity"
+                        data-keywords="checklist nhiệm vụ công việc">
+                        <span class="tool-icon">☑</span>
+                        <span class="tool-name">To-do List</span>
+                        <span class="tool-description">Theo dõi công việc cần làm.</span>
+                        <span class="tool-arrow">↗</span>
+                    </button>
+
+                    <button class="tool-card"
+                        data-tool="quick-notes"
+                        data-name="Ghi chú nhanh"
+                        data-category="productivity"
+                        data-keywords="notes ghi nhớ nội dung">
+                        <span class="tool-icon">✎</span>
+                        <span class="tool-name">Ghi chú nhanh</span>
+                        <span class="tool-description">Lưu lại ý tưởng và ghi chú.</span>
+                        <span class="tool-arrow">↗</span>
+                    </button>
+
+                    <button class="tool-card"
+                        data-tool="exam-countdown"
+                        data-name="Đếm ngược ngày thi"
+                        data-category="productivity"
+                        data-keywords="exam countdown kỳ thi sự kiện ngày giờ lịch trình">
+                        <span class="tool-icon">⌛</span>
+                        <span class="tool-name">Đếm ngược ngày thi</span>
+                        <span class="tool-description">Theo dõi thời gian đến kỳ thi hoặc sự kiện.</span>
+                        <span class="tool-arrow">↗</span>
+                    </button>
+
+                    <button class="tool-card"
+                        data-tool="study-tracker"
+                        data-name="Theo dõi giờ học"
+                        data-category="productivity"
+                        data-keywords="study tracker tuần biểu đồ thời gian học giờ">
+                        <span class="tool-icon">▥</span>
+                        <span class="tool-name">Theo dõi giờ học</span>
+                        <span class="tool-description">Ghi nhận và theo dõi giờ học mỗi ngày trong tuần.</span>
+                        <span class="tool-arrow">↗</span>
+                    </button>
+
+                    <button class="tool-card"
+                        data-tool="timetable"
+                        data-name="Thời khóa biểu"
+                        data-category="productivity"
+                        data-keywords="timetable lịch học thời khóa biểu môn học phòng">
+                        <span class="tool-icon">▦</span>
+                        <span class="tool-name">Thời khóa biểu</span>
+                        <span class="tool-description">Sắp xếp môn học và phòng theo từng tiết, từng ngày.</span>
+                        <span class="tool-arrow">↗</span>
+                    </button>
+
+                    <button class="tool-card"
+                        data-tool="bill-splitter"
+                        data-name="Chia hóa đơn"
+                        data-category="productivity"
+                        data-keywords="chi tiêu bill splitter chia hóa đơn tiền tip thanh toán">
+                        <span class="tool-icon">₫</span>
+                        <span class="tool-name">Chia hóa đơn</span>
+                        <span class="tool-description">Tính số tiền mỗi người, bao gồm cả tiền tip.</span>
+                        <span class="tool-arrow">↗</span>
+                    </button>
+                </div>
+            </section>
+        </section>
+
+        <p id="emptyState" class="empty-state" hidden>
+            Không tìm thấy công cụ phù hợp. Hãy thử từ khóa khác.
+        </p>
+    </main>
+
+    <footer class="footer">
+        <p>© 2026 Kd’s Tools · Made for learning and productivity.</p>
+        <p>Miễn phí sử dụng · Đang được phát triển</p>
+    </footer>
+
+    <dialog id="toolDialog" class="tool-dialog">
+        <button id="closeDialog" class="close-dialog"
+            aria-label="Đóng cửa sổ">×</button>
+        <span class="dialog-label">KD’S TOOLS</span>
+        <h2 id="dialogTitle">Tên công cụ</h2>
+        <p id="dialogDescription"></p>
+        <section id="codeFormatterTool" class="tool-panel code-formatter-panel"
+            data-tool="code-formatter" hidden>
+            <div class="formatter-options">
+                <div>
+                    <label for="formatterLanguage">Ngôn ngữ</label>
+                    <select id="formatterLanguage">
+                        <option value="c">C</option>
+                        <option value="cpp">C++</option>
+                        <option value="java">Java</option>
+                        <option value="javascript">JavaScript</option>
+                        <option value="python">Python</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="formatterIndent">Thụt lề</label>
+                    <select id="formatterIndent">
+                        <option value="2">2 spaces</option>
+                        <option value="4" selected>4 spaces</option>
+                    </select>
+                </div>
+                <div class="formatter-upload">
+                    <label for="formatterFile">Tải tệp code</label>
+                    <input id="formatterFile" type="file"
+                        accept=".c,.h,.cc,.cpp,.cxx,.hh,.hpp,.hxx,.java,.js,.mjs,.py,text/plain">
+                </div>
+            </div>
+            <label class="visually-hidden" for="formatterCode">Mã nguồn cần định dạng</label>
+            <div class="code-editor">
+                <pre id="formatterLineNumbers" class="code-line-numbers"
+                    aria-hidden="true">1</pre>
+                <textarea id="formatterCode" class="code-editor-input" rows="18"
+                    wrap="off" spellcheck="false" autocapitalize="off"
+                    autocomplete="off" autocorrect="off"
+                    placeholder="Dán hoặc nhập mã nguồn tại đây..."></textarea>
+            </div>
+            <div class="formatter-actions">
+                <button id="formatCodeButton" class="primary-button" type="button">Format</button>
+                <button id="copyCodeButton" class="secondary-button" type="button">Copy</button>
+                <button id="clearCodeButton" class="secondary-button" type="button">Clear</button>
+                <button id="downloadCodeButton" class="secondary-button" type="button" disabled>Download</button>
+            </div>
+            <p class="utility-hint formatter-hint">
+                Định dạng bằng clang-format (C/C++/Java/JavaScript) và Ruff (Python) qua WebAssembly.
+                Thư viện được tải từ unpkg khi dùng lần đầu; code được xử lý cục bộ, không gửi lên máy chủ.
+                Cần kết nối mạng để tải formatter.
+            </p>
+            <p id="formatterStatus" class="utility-status" role="status" aria-live="polite"></p>
+        </section>
+        <section id="bigOCalculatorTool" class="tool-panel big-o-panel"
+            data-tool="big-o-calculator" hidden>
+            <p class="utility-hint big-o-intro">
+                Dán một đoạn C/C++ để phân tích tĩnh các vòng lặp và đệ quy cơ bản.
+                Code không được thực thi. Kết quả chỉ là ước lượng theo mẫu nhận diện,
+                không phải chứng minh độ phức tạp.
+            </p>
+            <label class="visually-hidden" for="bigOCode">Mã C hoặc C++ cần phân tích</label>
+            <div class="code-editor big-o-editor">
+                <pre id="bigOLineNumbers" class="code-line-numbers"
+                    aria-hidden="true">1</pre>
+                <textarea id="bigOCode" class="code-editor-input" rows="14"
+                    wrap="off" spellcheck="false" autocapitalize="off"
+                    autocomplete="off" autocorrect="off"
+                    placeholder="Ví dụ: for (int i = 0; i < n; i++) { ... }"></textarea>
+            </div>
+            <div class="formatter-actions big-o-actions">
+                <button id="analyzeBigOButton" class="primary-button" type="button">Phân tích độ phức tạp</button>
+                <button id="clearBigOButton" class="secondary-button" type="button">Xóa code</button>
+            </div>
+            <p id="bigOStatus" class="utility-status" role="status" aria-live="polite"></p>
+            <section id="bigOResults" class="big-o-results" aria-live="polite" hidden>
+                <div class="big-o-summary">
+                    <article class="big-o-metric">
+                        <span>Thời gian ước lượng</span>
+                        <strong id="bigOTime">—</strong>
+                    </article>
+                    <article class="big-o-metric">
+                        <span>Bộ nhớ phụ ước lượng</span>
+                        <strong id="bigOSpace">—</strong>
+                    </article>
+                    <article class="big-o-metric big-o-confidence">
+                        <span>Độ tin cậy của mẫu</span>
+                        <strong id="bigOConfidence">—</strong>
+                    </article>
+                </div>
+                <div class="big-o-explanation">
+                    <h3>Các bước phân tích</h3>
+                    <ol id="bigOSteps"></ol>
+                </div>
+                <div id="bigOWarningBox" class="big-o-warning-box" hidden>
+                    <h3>Cần thận trọng</h3>
+                    <ul id="bigOWarnings"></ul>
+                </div>
+                <div class="big-o-example">
+                    <h3>Ví dụ minh họa</h3>
+                    <p id="bigOExample"></p>
+                </div>
+                <p class="big-o-disclaimer">
+                    Đây là ước lượng heuristic cho một số mẫu C/C++ phổ biến.
+                    Hàm thư viện, dữ liệu thực tế, nhánh điều kiện và cách cấp phát
+                    có thể làm thay đổi độ phức tạp. Hãy tự kiểm chứng trước khi sử dụng.
+                </p>
+            </section>
+        </section>
+        <section id="algorithmVisualizerTool" class="tool-panel algorithm-visualizer-panel"
+            data-tool="algorithm-visualizer" hidden>
+            <div class="algorithm-toolbar">
+                <div>
+                    <label for="algorithmChoice">Thuật toán</label>
+                    <select id="algorithmChoice">
+                        <option value="bubble">Bubble Sort</option>
+                        <option value="selection">Selection Sort</option>
+                        <option value="insertion">Insertion Sort</option>
+                        <option value="merge">Merge Sort</option>
+                        <option value="linear">Linear Search</option>
+                        <option value="binary">Binary Search</option>
+                        <option value="bfs">BFS — tìm kiếm theo chiều rộng</option>
+                        <option value="dfs">DFS — tìm kiếm theo chiều sâu</option>
+                        <option value="dijkstra">Dijkstra — đường đi ngắn nhất</option>
+                    </select>
+                </div>
+                <label class="algorithm-speed-control" for="algorithmSpeed">
+                    Tốc độ <output id="algorithmSpeedValue">5</output>
+                    <input id="algorithmSpeed" type="range" min="1" max="10" value="5">
+                </label>
+            </div>
+
+            <section id="sortInputControls" class="algorithm-input-card">
+                <label id="arrayInputLabel" for="sortArrayInput">Mảng số (phân cách bằng dấu phẩy hoặc khoảng trắng)</label>
+                <div class="algorithm-array-input-row">
+                    <input id="sortArrayInput" type="text" value="8, 3, 5, 1, 9, 2"
+                        autocomplete="off" inputmode="text"
+                        placeholder="Ví dụ: 8, 3, 5, 1, 9, 2">
+                    <button id="randomArrayButton" class="secondary-button" type="button">Tạo ngẫu nhiên</button>
+                </div>
+                <div id="searchTargetControl" class="search-target-control" hidden>
+                    <label for="searchTarget">Giá trị cần tìm</label>
+                    <input id="searchTarget" type="number" step="any" value="5">
+                </div>
+                <p class="utility-hint">Tối đa 30 số nguyên từ -999 đến 999 để mô phỏng mượt.</p>
+            </section>
+
+            <section id="graphInputControls" class="algorithm-input-card" hidden>
+                <div class="graph-editor-heading">
+                    <div>
+                        <h3 id="graphAlgorithmHeading">Đồ thị</h3>
+                        <p id="graphAlgorithmHint">Chọn đồ thị và thuật toán.</p>
+                    </div>
+                    <label for="bfsStartVertex">Đỉnh bắt đầu
+                        <select id="bfsStartVertex"></select>
+                    </label>
+                </div>
+                <div class="graph-editor-grid">
+                    <form id="addVertexForm" class="graph-edit-form">
+                        <label for="newVertexName">Thêm đỉnh</label>
+                        <div class="graph-form-row">
+                            <input id="newVertexName" type="text" maxlength="8"
+                                autocomplete="off" placeholder="Tên đỉnh">
+                            <button class="secondary-button" type="submit">Thêm</button>
+                        </div>
+                    </form>
+                    <div class="graph-edit-form">
+                        <label for="removeVertexSelect">Xóa đỉnh</label>
+                        <div class="graph-form-row">
+                            <select id="removeVertexSelect"></select>
+                            <button id="removeVertexButton" class="secondary-button" type="button">Xóa</button>
+                        </div>
+                    </div>
+                    <form id="addEdgeForm" class="graph-edit-form graph-edge-form">
+                        <label>Cạnh mới</label>
+                        <div class="graph-form-row graph-edge-row">
+                            <label class="visually-hidden" for="edgeFrom">Từ đỉnh</label>
+                            <select id="edgeFrom"></select>
+                            <span aria-hidden="true">→</span>
+                            <label class="visually-hidden" for="edgeTo">Đến đỉnh</label>
+                            <select id="edgeTo"></select>
+                            <label class="visually-hidden" for="edgeWeight">Trọng số</label>
+                            <input id="edgeWeight" type="number" min="0" max="999"
+                                step="1" value="1" aria-label="Trọng số cạnh không âm">
+                            <button class="secondary-button" type="submit">Thêm cạnh</button>
+                        </div>
+                        <label class="graph-checkbox-label">
+                            <input id="edgeUndirected" type="checkbox" checked>
+                            Cạnh vô hướng
+                        </label>
+                    </form>
+                </div>
+                <div id="graphEdgeList" class="graph-edge-list" aria-label="Danh sách cạnh"></div>
+            </section>
+
+            <div class="algorithm-playback" role="group" aria-label="Điều khiển mô phỏng">
+                <button id="algorithmStart" class="primary-button" type="button">▶ Bắt đầu</button>
+                <button id="algorithmPause" class="secondary-button" type="button" disabled>Ⅱ Tạm dừng</button>
+                <button id="algorithmPrevious" class="secondary-button" type="button" disabled>← Lùi</button>
+                <button id="algorithmNext" class="secondary-button" type="button" disabled>Bước tiếp →</button>
+                <button id="algorithmReset" class="secondary-button" type="button">↺ Đặt lại</button>
+            </div>
+
+            <p id="algorithmStatus" class="algorithm-status" role="status" aria-live="polite"></p>
+            <p id="algorithmOutcome" class="algorithm-outcome" hidden></p>
+            <div class="algorithm-step-meta">
+                <span id="algorithmStepCount">Bước 0 / 0</span>
+                <span id="algorithmComplexity">—</span>
+            </div>
+
+            <section id="sortVisualization" class="algorithm-visual-card">
+                <div id="sortArrayView" class="sort-array-view"
+                    role="img" aria-label="Trạng thái các phần tử trong mảng"></div>
+            </section>
+            <section id="graphVisualization" class="algorithm-visual-card" hidden>
+                <svg id="graphSvg" class="graph-svg" viewBox="0 0 600 360"
+                    role="img" aria-label="Đồ thị và trạng thái duyệt BFS"></svg>
+                <div id="graphProgress" class="bfs-progress"></div>
+            </section>
+
+            <div class="algorithm-legend" aria-label="Chú giải trạng thái">
+                <span><i class="legend-swatch legend-default"></i> Chưa xử lý</span>
+                <span><i class="legend-swatch legend-active"></i> Đang xét</span>
+                <span><i class="legend-swatch legend-sorted"></i> Đã hoàn tất / đã thăm</span>
+                <span><i class="legend-swatch legend-queued"></i> Đang chờ</span>
+            </div>
+
+            <section class="algorithm-complexity-card">
+                <h3>Độ phức tạp</h3>
+                <p id="algorithmComplexityDetails">Chọn dữ liệu và bắt đầu mô phỏng để xem kết quả.</p>
+            </section>
+        </section>
+        <section id="gameAssetTool" class="tool-panel game-asset-panel"
+            data-tool="game-asset-helper" hidden>
+            <div class="game-asset-intro">
+                <span class="panel-eyebrow">2D GAME WORKSPACE</span>
+                <p>Ảnh được xử lý cục bộ bằng Canvas. Tải sprite sheet để bắt đầu; các asset đã cắt có thể chọn, nhóm và xuất.</p>
+            </div>
+
+            <section class="asset-card">
+                <div class="asset-section-heading">
+                    <div>
+                        <h3>1. Sprite slicer</h3>
+                        <p>Tải một sprite sheet rồi chia theo hàng/cột hoặc kích thước frame.</p>
+                    </div>
+                    <span class="asset-step-badge">SPRITE</span>
+                </div>
+                <label class="asset-dropzone" id="assetSheetDropzone" for="assetSheetFile">
+                    <span aria-hidden="true">⬆</span>
+                    <strong>Kéo thả sprite sheet vào đây hoặc chọn tệp</strong>
+                    <small>PNG, JPEG, WebP · tối đa 20 MB · tối đa 32 megapixel</small>
+                    <input id="assetSheetFile" type="file"
+                        accept="image/png,image/jpeg,image/webp,.png,.jpg,.jpeg,.webp">
+                </label>
+                <p id="assetSheetInfo" class="asset-muted" aria-live="polite">Chưa chọn ảnh.</p>
+
+                <div class="asset-slice-controls">
+                    <div>
+                        <label for="assetSliceMode">Cách chia</label>
+                        <select id="assetSliceMode">
+                            <option value="grid">Số hàng và cột</option>
+                            <option value="frame">Kích thước frame (px)</option>
+                        </select>
+                    </div>
+                    <div class="asset-grid-parameters">
+                        <div>
+                            <label for="assetRows">Hàng</label>
+                            <input id="assetRows" type="number" min="1" max="200" value="1" inputmode="numeric">
+                        </div>
+                        <div>
+                            <label for="assetCols">Cột</label>
+                            <input id="assetCols" type="number" min="1" max="200" value="1" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="asset-frame-parameters" hidden>
+                        <div>
+                            <label for="assetFrameWidth">Rộng (px)</label>
+                            <input id="assetFrameWidth" type="number" min="1" value="32" inputmode="numeric">
+                        </div>
+                        <div>
+                            <label for="assetFrameHeight">Cao (px)</label>
+                            <input id="assetFrameHeight" type="number" min="1" value="32" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="assetSheetFolder">Thư mục đích</label>
+                        <select id="assetSheetFolder" aria-label="Thư mục asset mới"></select>
+                    </div>
+                    <button id="assetSliceButton" class="primary-button" type="button" disabled>Cắt sprite sheet</button>
+                </div>
+                <p id="assetSliceStatus" class="utility-status" role="status" aria-live="polite"></p>
+                <div class="asset-frame-toolbar">
+                    <span id="assetFrameCount" class="asset-muted">0 frame</span>
+                    <button id="assetSelectAllButton" class="secondary-button" type="button" disabled>Chọn tất cả</button>
+                </div>
+                <div id="assetFrameGrid" class="asset-frame-grid" aria-label="Các frame đã cắt"></div>
+            </section>
+
+            <section class="asset-card">
+                <div class="asset-section-heading">
+                    <div>
+                        <h3>2. Animation previewer</h3>
+                        <p>Chọn frame trong lưới bên trên để đưa vào chu kỳ hoạt ảnh.</p>
+                    </div>
+                    <span class="asset-step-badge">ANIMATION</span>
+                </div>
+                <div class="asset-animation-layout">
+                    <div class="asset-animation-stage">
+                        <canvas id="assetAnimationCanvas" width="256" height="256"
+                            role="img" aria-label="Bản xem trước animation"></canvas>
+                        <span id="assetAnimationPlaceholder">Chọn frame rồi nhấn Phát</span>
+                    </div>
+                    <div class="asset-animation-controls">
+                        <label for="assetFps">Tốc độ <output id="assetFpsValue">8 FPS</output></label>
+                        <input id="assetFps" type="range" min="1" max="60" value="8">
+                        <div class="asset-actions">
+                            <button id="assetPlayButton" class="primary-button" type="button" disabled>▶ Phát</button>
+                            <button id="assetPauseButton" class="secondary-button" type="button" disabled>Ⅱ Tạm dừng</button>
+                            <button id="assetStopButton" class="secondary-button" type="button" disabled>■ Dừng</button>
+                        </div>
+                        <label class="asset-loop-control" for="assetLoop">
+                            <input id="assetLoop" type="checkbox" checked>
+                            Lặp lại animation
+                        </label>
+                        <p id="assetAnimationStatus" class="utility-status" role="status" aria-live="polite">Chưa có frame được chọn.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="asset-card">
+                <div class="asset-section-heading">
+                    <div>
+                        <h3>3. Resize & xử lý nền</h3>
+                        <p>Áp dụng cho các frame đang chọn trong lưới asset.</p>
+                    </div>
+                    <span class="asset-step-badge">CANVAS</span>
+                </div>
+                <div class="asset-processing-controls">
+                    <div>
+                        <label for="assetResizeMode">Kích thước</label>
+                        <select id="assetResizeMode">
+                            <option value="percent">Theo phần trăm</option>
+                            <option value="pixels">Kích thước pixel</option>
+                        </select>
+                    </div>
+                    <div id="assetResizePercentControl">
+                        <label for="assetResizePercent">Tỷ lệ (%)</label>
+                        <input id="assetResizePercent" type="number" min="1" max="800" value="100" inputmode="numeric">
+                    </div>
+                    <div id="assetResizePixelControls" hidden>
+                        <label for="assetResizeWidth">Rộng (px)</label>
+                        <input id="assetResizeWidth" type="number" min="1" max="4096" value="32" inputmode="numeric">
+                        <label for="assetResizeHeight">Cao (px)</label>
+                        <input id="assetResizeHeight" type="number" min="1" max="4096" value="32" inputmode="numeric">
+                    </div>
+                    <button id="assetResizeButton" class="secondary-button" type="button" disabled>Đổi kích thước frame chọn</button>
+                    <div>
+                        <label for="assetBackgroundMode">Xóa màu nền</label>
+                        <select id="assetBackgroundMode">
+                            <option value="off">Không xóa</option>
+                            <option value="white">Trắng</option>
+                            <option value="black">Đen</option>
+                            <option value="custom">Màu tùy chọn</option>
+                        </select>
+                    </div>
+                    <div id="assetBackgroundColorControl" hidden>
+                        <label for="assetBackgroundColor">Màu cần xóa</label>
+                        <input id="assetBackgroundColor" type="color" value="#ffffff">
+                    </div>
+                    <label class="asset-tolerance-control" for="assetTolerance">
+                        Dung sai màu <output id="assetToleranceValue">24</output>
+                        <input id="assetTolerance" type="range" min="0" max="100" value="24">
+                    </label>
+                    <button id="assetBackgroundButton" class="secondary-button" type="button" disabled>Xóa nền frame chọn</button>
+                </div>
+                <p id="assetProcessingStatus" class="utility-status" role="status" aria-live="polite"></p>
+            </section>
+
+            <section class="asset-card">
+                <div class="asset-section-heading">
+                    <div>
+                        <h3>4. Gợi ý frame theo mô tả</h3>
+                        <p>Storyboard gợi ý nhịp chuyển động từ mô tả; không sinh pixel hoặc dùng mô hình AI.</p>
+                    </div>
+                    <span class="asset-step-badge">FRAME IDEAS</span>
+                </div>
+                <label for="assetAnimationPrompt">Mô tả hoạt ảnh</label>
+                <textarea id="assetAnimationPrompt" maxlength="500"
+                    placeholder="Ví dụ: nhân vật chém kiếm 4 hướng, hiệu ứng lửa bùng lên..."></textarea>
+                <div class="asset-prompt-controls">
+                    <label for="assetPromptFrameCount">Số gợi ý</label>
+                    <select id="assetPromptFrameCount">
+                        <option value="4">4 frame</option>
+                        <option value="6" selected>6 frame</option>
+                        <option value="8">8 frame</option>
+                    </select>
+                    <button id="assetSuggestButton" class="primary-button" type="button">Tạo storyboard gợi ý</button>
+                </div>
+                <div id="assetSuggestions" class="asset-suggestions" aria-live="polite">
+                    <p class="asset-muted">Nhập mô tả để xem thứ tự chuẩn bị các nhịp hoạt ảnh.</p>
+                </div>
+            </section>
+
+            <section class="asset-card">
+                <div class="asset-section-heading">
+                    <div>
+                        <h3>5. Quản lý & xuất asset</h3>
+                        <p>Kéo ảnh vào vùng nhập để thêm asset đơn; gán thư mục ảo trước khi tải.</p>
+                    </div>
+                    <span class="asset-step-badge">ASSET TREE</span>
+                </div>
+                <label class="asset-dropzone asset-library-dropzone" id="assetLibraryDropzone" for="assetLibraryFiles">
+                    <span aria-hidden="true">＋</span>
+                    <strong>Thả thêm ảnh asset vào thư viện</strong>
+                    <small>Ảnh được giữ trong bộ nhớ trang hiện tại.</small>
+                    <input id="assetLibraryFiles" type="file" multiple
+                        accept="image/png,image/jpeg,image/webp,.png,.jpg,.jpeg,.webp">
+                </label>
+                <form id="assetFolderForm" class="asset-folder-form">
+                    <label for="assetFolderName">Thêm thư mục</label>
+                    <input id="assetFolderName" type="text" maxlength="40"
+                        placeholder="Ví dụ: characters/player">
+                    <button class="secondary-button" type="submit">＋ Tạo thư mục</button>
+                </form>
+                <div class="asset-library-layout">
+                    <nav id="assetFolderTree" class="asset-folder-tree" aria-label="Cây thư mục asset"></nav>
+                    <div id="assetLibraryList" class="asset-library-list">
+                        <p class="asset-muted">Chưa có asset. Tải và cắt một sprite sheet hoặc thêm ảnh vào thư viện.</p>
+                    </div>
+                </div>
+                <div class="asset-export-controls">
+                    <label for="assetExportFolder">Thư mục xuất</label>
+                    <select id="assetExportFolder"></select>
+                    <button id="assetExportZipButton" class="primary-button" type="button" disabled>Tải thư mục dưới dạng ZIP</button>
+                    <button id="assetExportSelectedButton" class="secondary-button" type="button" disabled>Tải asset đã chọn (ZIP)</button>
+                </div>
+                <p id="assetManagerStatus" class="utility-status" role="status" aria-live="polite"></p>
+            </section>
+            <p class="utility-hint asset-privacy-note">Asset chỉ được xử lý trong tab hiện tại; đóng hoặc tải lại trang sẽ xóa dữ liệu chưa xuất.</p>
+        </section>
+        <section id="backgroundRemoverTool" class="tool-panel background-remover-panel"
+            data-tool="background-remover" hidden>
+            <label class="background-upload" for="backgroundSourceFile">
+                <span aria-hidden="true">▧</span>
+                <strong>Chọn ảnh chân dung hoặc sản phẩm</strong>
+                <small>JPG, PNG, WebP · tối đa 20 MB</small>
+                <input id="backgroundSourceFile" type="file"
+                    accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp">
+            </label>
+            <p id="backgroundImageInfo" class="background-image-info" hidden></p>
+
+            <div class="background-preview-grid">
+                <figure class="background-preview-card">
+                    <figcaption>Ảnh gốc</figcaption>
+                    <div class="background-preview-stage">
+                        <img id="backgroundOriginalPreview" alt="Ảnh gốc chưa xử lý" hidden>
+                        <span id="backgroundOriginalPlaceholder">Ảnh gốc sẽ hiển thị ở đây</span>
+                    </div>
+                </figure>
+                <figure class="background-preview-card">
+                    <figcaption>Kết quả đã tách nền</figcaption>
+                    <div id="backgroundResultStage" class="background-preview-stage background-result-stage">
+                        <img id="backgroundReplacementPreview" class="background-replacement-preview"
+                            alt="" hidden>
+                        <img id="backgroundResultPreview" class="background-result-preview"
+                            alt="Chủ thể đã được tách nền" hidden>
+                        <span id="backgroundResultPlaceholder">PNG nền trong suốt sẽ hiển thị ở đây</span>
+                    </div>
+                </figure>
+            </div>
+
+            <div class="background-edit-controls">
+                <div>
+                    <label for="backgroundMode">Nền kết quả</label>
+                    <select id="backgroundMode">
+                        <option value="transparent">Trong suốt (PNG)</option>
+                        <option value="color">Màu đơn sắc</option>
+                        <option value="image">Ảnh tùy chọn</option>
+                    </select>
+                </div>
+                <div id="backgroundColorControl">
+                    <label for="backgroundColor">Màu nền</label>
+                    <input id="backgroundColor" type="color" value="#ffffff">
+                </div>
+                <div id="backgroundImageControl" hidden>
+                    <label for="backgroundImageFile">Tải ảnh nền</label>
+                    <input id="backgroundImageFile" type="file"
+                        accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp">
+                </div>
+                <label class="background-zoom-control" for="backgroundZoom">
+                    Thu phóng <output id="backgroundZoomValue">100%</output>
+                    <input id="backgroundZoom" type="range" min="50" max="150" value="100">
+                </label>
+            </div>
+
+            <div class="background-actions">
+                <button id="backgroundRemoveButton" class="primary-button" type="button" disabled>
+                    Tách nền bằng AI
+                </button>
+                <button id="backgroundDownloadButton" class="secondary-button" type="button" disabled>
+                    Tải PNG
+                </button>
+                <button id="backgroundClearButton" class="secondary-button" type="button">
+                    Xóa ảnh
+                </button>
+            </div>
+            <div id="backgroundProgressWrap" class="background-progress-wrap" hidden>
+                <progress id="backgroundProgress" max="100" value="0"
+                    aria-label="Tiến trình tải mô hình và tách nền"></progress>
+            </div>
+            <p id="backgroundRemoverStatus" class="utility-status"
+                role="status" aria-live="polite"></p>
+            <p class="utility-hint background-privacy-note">
+                Xử lý AI chạy cục bộ; ảnh của bạn không được tải lên máy chủ. Lần đầu cần tải thư viện và mô hình lượng tử hóa khoảng 40 MB từ esm.sh và IMG.LY; cần Internet, các lần sau có thể dùng bộ nhớ đệm. Các máy chủ phân phối chỉ nhận yêu cầu tải tài nguyên thông thường, không nhận ảnh. Thư viện miễn phí theo AGPL phiên bản 3, không có hạn mức dịch vụ đám mây; nếu phân phối ứng dụng, hãy xem
+                <a href="https://github.com/imgly/background-removal-js/blob/main/packages/web/LICENSE.md"
+                    target="_blank" rel="noopener noreferrer">điều khoản giấy phép AGPL-3.0</a>.
+                Nếu thiết bị thiếu bộ nhớ, hãy thử ảnh nhỏ hơn.
+            </p>
+        </section>
+        <section id="qrCodeTool" class="tool-panel qr-code-panel"
+            data-tool="qr-code-generator" hidden>
+            <div class="qr-generator-layout">
+                <div class="qr-controls">
+                    <label for="qrContentType">Loại nội dung</label>
+                    <select id="qrContentType">
+                        <option value="url">URL</option>
+                        <option value="text">Văn bản</option>
+                        <option value="email">Email</option>
+                        <option value="phone">Số điện thoại</option>
+                        <option value="vcard">Thông tin liên hệ (vCard)</option>
+                    </select>
+                    <div id="qrPlainFields">
+                        <label id="qrContentLabel" for="qrContent">Địa chỉ URL</label>
+                        <textarea id="qrContent" maxlength="2000"
+                            placeholder="https://example.com"
+                            aria-describedby="qrInputHint"></textarea>
+                        <p id="qrInputHint" class="utility-hint">Nhập địa chỉ bắt đầu bằng http:// hoặc https://.</p>
+                    </div>
+                    <div id="qrVcardFields" hidden>
+                        <label for="qrContactName">Họ tên *</label>
+                        <input id="qrContactName" type="text" maxlength="120"
+                            autocomplete="name" placeholder="Nguyễn Văn An">
+                        <label for="qrContactPhone">Số điện thoại</label>
+                        <input id="qrContactPhone" type="tel" maxlength="40"
+                            autocomplete="tel" placeholder="+84 912 345 678">
+                        <label for="qrContactEmail">Email</label>
+                        <input id="qrContactEmail" type="email" maxlength="120"
+                            autocomplete="email" placeholder="an@example.com">
+                        <label for="qrContactOrganization">Tổ chức</label>
+                        <input id="qrContactOrganization" type="text" maxlength="120"
+                            autocomplete="organization" placeholder="Công ty">
+                        <p class="utility-hint">Họ tên là thông tin bắt buộc; các trường còn lại có thể để trống.</p>
+                    </div>
+
+                    <div class="qr-options-grid">
+                        <div>
+                            <label for="qrForeground">Màu mã QR</label>
+                            <input id="qrForeground" type="color" value="#102b37">
+                        </div>
+                        <div>
+                            <label for="qrBackground">Màu nền</label>
+                            <input id="qrBackground" type="color" value="#ffffff">
+                        </div>
+                        <div>
+                            <label for="qrSize">Kích thước (px)</label>
+                            <input id="qrSize" type="number" min="128" max="1024"
+                                step="16" value="320" inputmode="numeric">
+                        </div>
+                        <div>
+                            <label for="qrMargin">Lề (module)</label>
+                            <input id="qrMargin" type="number" min="0" max="16"
+                                step="1" value="4" inputmode="numeric">
+                        </div>
+                    </div>
+                    <p class="utility-hint">Kích thước từ 128–1024 px; lề tính theo số ô của mã QR.</p>
+                </div>
+
+                <div class="qr-preview-column">
+                    <div class="qr-preview" aria-label="Bản xem trước mã QR">
+                        <canvas id="qrPreviewCanvas" role="img"
+                            aria-label="Bản xem trước mã QR sẽ hiển thị tại đây" hidden></canvas>
+                        <p id="qrPreviewPlaceholder">Nhập nội dung để tạo mã QR</p>
+                    </div>
+                    <p id="qrWarning" class="qr-warning" role="status"
+                        aria-live="polite" hidden></p>
+                    <p id="qrStatus" class="utility-status" role="status"
+                        aria-live="polite">Mã QR được tạo trên thiết bị của bạn.</p>
+                    <div class="qr-actions">
+                        <button id="qrCopyButton" class="secondary-button" type="button" disabled>
+                            Sao chép ảnh QR
+                        </button>
+                        <button id="qrPngButton" class="primary-button" type="button" disabled>
+                            Tải PNG
+                        </button>
+                        <button id="qrSvgButton" class="secondary-button" type="button" disabled>
+                            Tải SVG
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <p class="utility-hint qr-privacy-note">
+                Dùng qrcode-generator 1.4.4 (MIT), tải từ cdnjs khi sử dụng lần đầu. Nội dung chỉ được xử lý trong trình duyệt, không tải lên máy chủ.
+            </p>
+        </section>
+        <section id="pdfMergeTool" class="tool-panel" data-tool="pdf-merge" hidden>
+            <label for="mergePdfFiles">Chọn ít nhất hai tệp PDF theo thứ tự cần gộp</label>
+            <input id="mergePdfFiles" type="file" accept="application/pdf,.pdf" multiple>
+            <button id="mergePdfButton" class="primary-button" type="button">Gộp và tải PDF</button>
+            <p id="mergePdfStatus" class="utility-status" role="status" aria-live="polite"></p>
+        </section>
+        <section id="pdfSplitTool" class="tool-panel" data-tool="pdf-split" hidden>
+            <label for="splitPdfFile">Chọn tệp PDF</label>
+            <input id="splitPdfFile" type="file" accept="application/pdf,.pdf">
+            <label for="splitPdfPages">Trang cần trích xuất</label>
+            <input id="splitPdfPages" type="text" inputmode="text"
+                placeholder="Ví dụ: 1, 3-5">
+            <p class="utility-hint">Nhập số trang hoặc khoảng trang, phân cách bằng dấu phẩy. Trang bắt đầu từ 1.</p>
+            <button id="splitPdfButton" class="primary-button" type="button">Tách và tải PDF</button>
+            <p id="splitPdfStatus" class="utility-status" role="status" aria-live="polite"></p>
+        </section>
+        <section id="imageToPdfTool" class="tool-panel" data-tool="image-to-pdf" hidden>
+            <label for="imageFiles">Chọn ảnh PNG hoặc JPEG theo thứ tự trang</label>
+            <input id="imageFiles" type="file" accept="image/png,image/jpeg,.png,.jpg,.jpeg" multiple>
+            <label for="imagePageSize">Kích thước trang PDF</label>
+            <select id="imagePageSize">
+                <option value="a4">Vừa trang A4</option>
+                <option value="image">Theo kích thước ảnh</option>
+            </select>
+            <button id="imageToPdfButton" class="primary-button" type="button">Tạo và tải PDF</button>
+            <p id="imageToPdfStatus" class="utility-status" role="status" aria-live="polite"></p>
+        </section>
+        <section id="pdfCompressTool" class="tool-panel" data-tool="pdf-compress" hidden>
+            <label for="compressPdfFile">Chọn tệp PDF</label>
+            <input id="compressPdfFile" type="file" accept="application/pdf,.pdf">
+            <p class="utility-hint">Tối ưu PDF theo cách không làm giảm chất lượng. Không thể đảm bảo tệp sẽ nhỏ hơn nếu PDF gốc đã được nén.</p>
+            <button id="compressPdfButton" class="primary-button" type="button">Tối ưu và tải PDF</button>
+            <p id="compressPdfStatus" class="utility-status" role="status" aria-live="polite"></p>
+        </section>
+        <section id="baseConverter" class="tool-panel" data-tool="base-converter" hidden>
+            <label for="baseInput">Giá trị cần đổi</label>
+            <input id="baseInput" type="text" inputmode="text" autocomplete="off"
+                placeholder="Ví dụ: 255">
+            <label for="sourceBase">Hệ cơ số đầu vào</label>
+            <select id="sourceBase">
+                <option value="2">Nhị phân (2)</option>
+                <option value="8">Bát phân (8)</option>
+                <option value="10" selected>Thập phân (10)</option>
+                <option value="16">Thập lục phân (16)</option>
+            </select>
+            <button id="convertBase" class="primary-button utility-full-button" type="button">Chuyển đổi</button>
+            <div class="base-results" aria-live="polite">
+                <p>Nhị phân (2)<output id="base2">—</output></p>
+                <p>Bát phân (8)<output id="base8">—</output></p>
+                <p>Thập phân (10)<output id="base10">—</output></p>
+                <p>Thập lục phân (16)<output id="base16">—</output></p>
+            </div>
+            <p id="baseStatus" class="utility-status" role="status" aria-live="polite"></p>
+        </section>
+        <section id="pomodoroTool" class="tool-panel" data-tool="pomodoro" hidden>
+            <div class="timer-card">
+                <p id="timerMode" class="timer-mode">Tập trung · 25 phút</p>
+                <div id="timerRing" class="timer-ring" role="timer"
+                    aria-label="Thời gian còn lại" aria-live="off">
+                    <span id="timerDisplay" class="timer-display">25:00</span>
+                    <span id="timerPhaseLabel" class="timer-phase-label">SẴN SÀNG</span>
+                </div>
+                <div class="timer-presets" role="group" aria-label="Chọn chế độ Pomodoro">
+                    <button class="timer-preset-button active" type="button"
+                        data-timer-mode="focus">Pomodoro <span>25p</span></button>
+                    <button class="timer-preset-button" type="button"
+                        data-timer-mode="shortBreak">Nghỉ ngắn <span>5p</span></button>
+                    <button class="timer-preset-button" type="button"
+                        data-timer-mode="longBreak">Nghỉ dài <span>15p</span></button>
+                </div>
+                <div class="timer-controls">
+                    <button id="timerReset" class="timer-reset-button" type="button"
+                        aria-label="Đặt lại bộ đếm">↻</button>
+                    <button id="timerStart" class="timer-start-button" type="button"
+                        aria-label="Bắt đầu bộ đếm">▶</button>
+                    <button id="timerPause" class="timer-reset-button" type="button"
+                        aria-label="Tạm dừng bộ đếm" disabled>Ⅱ</button>
+                </div>
+                <p id="timerStatus" class="utility-status timer-status"
+                    role="status" aria-live="polite">Sẵn sàng bắt đầu phiên học.</p>
+            </div>
+        </section>
+        <section id="todoTool" class="tool-panel" data-tool="todo-list" hidden>
+            <div class="todo-heading">
+                <div>
+                    <span class="panel-eyebrow">KẾ HOẠCH CỦA BẠN</span>
+                    <h3>Việc cần làm <span id="todoCount" class="todo-count">0</span></h3>
+                </div>
+                <button id="clearCompletedTodos" class="text-button" type="button"
+                    disabled>Xóa việc đã xong</button>
+            </div>
+            <form id="todoForm" class="todo-form">
+                <input id="todoInput" type="text" maxlength="200"
+                    placeholder="Thêm một việc bạn muốn hoàn thành..." required>
+                <button class="primary-button" type="submit">＋ Thêm việc</button>
+            </form>
+            <ul id="todoList" class="todo-list" aria-label="Danh sách công việc"></ul>
+            <p id="todoEmpty" class="todo-empty">Mọi thứ đã sẵn sàng. Thêm việc đầu tiên nhé!</p>
+            <p id="todoStatus" class="utility-status" role="status" aria-live="polite">
+                Tự động lưu trên thiết bị này.
+            </p>
+        </section>
+        <section id="notesTool" class="tool-panel" data-tool="quick-notes" hidden>
+            <div class="notes-card">
+                <div class="notes-heading">
+                    <div>
+                        <span class="panel-eyebrow">KHÔNG GIAN CỦA RIÊNG BẠN</span>
+                        <h3>Ghi lại điều bạn nghĩ</h3>
+                    </div>
+                    <span id="notesStatus" class="notes-save-status"
+                        role="status" aria-live="polite">Đã lưu</span>
+                </div>
+                <label class="visually-hidden" for="notesInput">Nội dung ghi chú nhanh</label>
+                <textarea id="notesInput" class="notes-textarea" rows="13"
+                    placeholder="Một ý tưởng, một việc cần nhớ, hay bất cứ điều gì đang ở trong đầu bạn..."></textarea>
+                <div class="notes-footer">
+                    <span>Tự động lưu trên thiết bị này</span>
+                    <button id="copyNotes" class="secondary-button" type="button">⧉ Sao chép tất cả</button>
+                </div>
+            </div>
+        </section>
+        <section id="examCountdownTool" class="tool-panel" data-tool="exam-countdown" hidden>
+            <div class="exam-tool">
+                <form id="examForm" class="exam-form">
+                    <div>
+                        <label for="examName">Tên kỳ thi hoặc sự kiện</label>
+                        <input id="examName" type="text" maxlength="80"
+                            placeholder="Ví dụ: Kỳ thi cuối kỳ" required>
+                    </div>
+                    <div>
+                        <label for="examDate">Ngày và giờ bắt đầu</label>
+                        <input id="examDate" type="datetime-local" required>
+                    </div>
+                    <button class="primary-button" type="submit">Lưu lịch trình</button>
+                </form>
+                <article id="examEventCard" class="exam-event-card" hidden>
+                    <div class="exam-event-heading">
+                        <div>
+                            <span class="panel-eyebrow">SỰ KIỆN SẮP TỚI</span>
+                            <h3 id="examEventTitle"></h3>
+                        </div>
+                        <button id="deleteExam" class="icon-button" type="button"
+                            aria-label="Xóa lịch trình">×</button>
+                    </div>
+                    <p id="examEventDate" class="exam-event-date"></p>
+                    <div class="countdown-grid" aria-label="Thời gian đếm ngược">
+                        <div class="countdown-unit"><strong id="examDays">00</strong><span>Ngày</span></div>
+                        <div class="countdown-unit"><strong id="examHours">00</strong><span>Giờ</span></div>
+                        <div class="countdown-unit"><strong id="examMinutes">00</strong><span>Phút</span></div>
+                        <div class="countdown-unit"><strong id="examSeconds">00</strong><span>Giây</span></div>
+                    </div>
+                    <p id="examCountdownStatus" class="exam-countdown-status"
+                        role="status" aria-live="polite"></p>
+                </article>
+                <p id="examStatus" class="utility-status" role="status" aria-live="polite"></p>
+            </div>
+        </section>
+        <section id="studyTrackerTool" class="tool-panel" data-tool="study-tracker" hidden>
+            <div class="study-card">
+                <div class="study-heading">
+                    <div>
+                        <span class="panel-eyebrow">TỪ THỨ HAI ĐẾN CHỦ NHẬT</span>
+                        <h3>Thời gian học trong tuần</h3>
+                    </div>
+                    <div class="week-controls">
+                        <button id="previousStudyWeek" class="icon-button" type="button"
+                            aria-label="Tuần trước">←</button>
+                        <span id="studyWeekLabel" class="study-week-label"></span>
+                        <button id="nextStudyWeek" class="icon-button" type="button"
+                            aria-label="Tuần sau">→</button>
+                    </div>
+                </div>
+                <div id="studyWeekChart" class="study-week-chart"
+                    aria-label="Biểu đồ giờ học trong tuần"></div>
+                <p id="studyWeekTotal" class="study-week-total"></p>
+                <div id="studyHourInputs" class="study-hour-inputs"></div>
+                <p id="studyStatus" class="utility-status" role="status" aria-live="polite"></p>
+            </div>
+        </section>
+        <section id="timetableTool" class="tool-panel" data-tool="timetable" hidden>
+            <div class="timetable-card">
+                <div class="timetable-heading">
+                    <div>
+                        <span class="panel-eyebrow">LỊCH HỌC CỦA BẠN</span>
+                        <h3>Thời khóa biểu tuần</h3>
+                    </div>
+                    <p>Chọn ô lịch để thêm hoặc chỉnh sửa</p>
+                </div>
+                <div class="timetable-scroll">
+                    <div id="timetableGrid" class="timetable-grid"
+                        role="grid" aria-label="Thời khóa biểu từ thứ hai đến chủ nhật"></div>
+                </div>
+                <form id="classForm" class="class-form" hidden>
+                    <div class="class-form-heading">
+                        <h4 id="classFormTitle">Thêm tiết học</h4>
+                        <span id="classFormSlot" class="class-form-slot"></span>
+                    </div>
+                    <label for="classSubject">Môn học</label>
+                    <input id="classSubject" type="text" maxlength="60"
+                        placeholder="Ví dụ: Toán học">
+                    <label for="classRoom">Phòng học</label>
+                    <input id="classRoom" type="text" maxlength="40"
+                        placeholder="Ví dụ: Phòng A102">
+                    <div class="class-form-actions">
+                        <button id="deleteClass" class="secondary-button" type="button">Xóa tiết</button>
+                        <button class="primary-button" type="submit">Lưu tiết học</button>
+                        <button id="cancelClass" class="secondary-button" type="button">Hủy</button>
+                    </div>
+                </form>
+                <p id="timetableStatus" class="utility-status" role="status" aria-live="polite"></p>
+            </div>
+        </section>
+        <section id="billSplitterTool" class="tool-panel" data-tool="bill-splitter" hidden>
+            <div class="bill-card">
+                <div class="bill-heading">
+                    <span class="panel-eyebrow">CHI TIÊU THÔNG MINH</span>
+                    <h3>Chia hóa đơn thật gọn</h3>
+                    <p>Nhập hóa đơn, chia đều và thêm tip nếu muốn.</p>
+                </div>
+                <form id="billForm" class="bill-form">
+                    <label for="billAmount">Tổng hóa đơn</label>
+                    <div class="bill-input-wrap">
+                        <input id="billAmount" type="number" min="1" step="any"
+                            inputmode="decimal" placeholder="Ví dụ: 500000" required>
+                        <span>₫</span>
+                    </div>
+                    <div class="bill-options">
+                        <div>
+                            <label for="billPeople">Số người</label>
+                            <input id="billPeople" type="number" min="1" max="1000"
+                                step="1" value="2" required>
+                        </div>
+                        <div>
+                            <label for="billTip">Tiền tip</label>
+                            <div class="bill-tip-input">
+                                <input id="billTip" type="number" min="0" max="1000"
+                                    step="any" value="0" required>
+                                <span>%</span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div id="billResult" class="bill-result" aria-live="polite">
+                    <span class="panel-eyebrow">MỖI NGƯỜI THANH TOÁN</span>
+                    <strong id="billPerPerson">—</strong>
+                    <p id="billBreakdown">Nhập hóa đơn để xem kết quả chia tiền.</p>
+                </div>
+                <p id="billStatus" class="utility-status" role="status" aria-live="polite"></p>
+            </div>
+        </section>
+        <p id="dialogNote" class="dialog-note">
+            Công cụ này sẽ được triển khai ở bước tiếp theo.
+        </p>
+        <button id="dialogOk" class="primary-button" type="button">Đã hiểu</button>
+    </dialog>
+</body>
+</html>

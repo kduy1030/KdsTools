@@ -1,0 +1,138 @@
+- generic [active] [ref=f3e1]:
+  - navigation "Truy cập nhanh" [ref=f3e2]:
+    - button "Mở danh sách công việc" [ref=f3e3] [cursor=pointer]: ☑
+    - button "Mở ghi chú nhanh" [ref=f3e4] [cursor=pointer]: ✎
+  - banner [ref=f3e5]:
+    - link "Kd’s Tools" [ref=f3e6] [cursor=pointer]:
+      - /url: "#"
+    - paragraph [ref=f3e7]: Bộ công cụ nhỏ gọn dành cho học tập và công việc.
+  - main [ref=f3e8]:
+    - generic [ref=f3e9]:
+      - generic [ref=f3e10]:
+        - generic [aria-hidden] [ref=f3e11]: ⌕
+        - searchbox "Tìm kiếm công cụ" [ref=f3e12]
+      - paragraph [ref=f3e13]: Hiện có 16 công cụ
+    - navigation "Danh mục công cụ" [ref=f3e14]:
+      - button "Tất cả" [ref=f3e15] [cursor=pointer]
+      - button "IT" [ref=f3e16] [cursor=pointer]
+      - button "Ảnh, video" [ref=f3e17] [cursor=pointer]
+      - button "PDF & Tài liệu" [ref=f3e18] [cursor=pointer]
+      - button "Developer" [ref=f3e19] [cursor=pointer]
+      - button "Năng suất" [ref=f3e20] [cursor=pointer]
+    - generic [ref=f3e21]:
+      - generic [ref=f3e22]:
+        - generic [ref=f3e23]:
+          - generic [aria-hidden] [ref=f3e24]: ⌘
+          - generic [ref=f3e25]:
+            - heading "IT" [level=2] [ref=f3e26]
+            - paragraph [ref=f3e27]: Công cụ hỗ trợ lập trình và công nghệ thông tin
+        - generic [ref=f3e28]:
+          - 'button "{ } Code Formatter Định dạng C, C++, Java, JavaScript và Python ngay trên thiết bị. ↗" [ref=f3e29] [cursor=pointer]':
+            - generic [ref=f3e30]: "{ }"
+            - generic [ref=f3e31]: Code Formatter
+            - generic [ref=f3e32]: Định dạng C, C++, Java, JavaScript và Python ngay trên thiết bị.
+            - generic [ref=f3e33]: ↗
+          - button "O(n) Big-O Calculator Ước lượng độ phức tạp thời gian và bộ nhớ từ code C/C++ cơ bản. ↗" [ref=f3e34] [cursor=pointer]:
+            - generic [ref=f3e35]: O(n)
+            - generic [ref=f3e36]: Big-O Calculator
+            - generic [ref=f3e37]: Ước lượng độ phức tạp thời gian và bộ nhớ từ code C/C++ cơ bản.
+            - generic [ref=f3e38]: ↗
+          - button "▶ Algorithm Visualizer Từng bước trực quan hóa sắp xếp, tìm kiếm và thuật toán đồ thị. ↗" [ref=f3e39] [cursor=pointer]:
+            - generic [ref=f3e40]: ▶
+            - generic [ref=f3e41]: Algorithm Visualizer
+            - generic [ref=f3e42]: Từng bước trực quan hóa sắp xếp, tìm kiếm và thuật toán đồ thị.
+            - generic [ref=f3e43]: ↗
+      - generic [ref=f3e44]:
+        - generic [ref=f3e45]:
+          - generic [aria-hidden] [ref=f3e46]: ▧
+          - generic [ref=f3e47]:
+            - heading "Ảnh, video" [level=2] [ref=f3e48]
+            - paragraph [ref=f3e49]: Công cụ chỉnh sửa và sáng tạo hình ảnh
+        - button "✂ Background Remover Tách chủ thể, tạo PNG trong suốt và thay nền ngay trên thiết bị. ↗" [ref=f3e51] [cursor=pointer]:
+          - generic [ref=f3e52]: ✂
+          - generic [ref=f3e53]: Background Remover
+          - generic [ref=f3e54]: Tách chủ thể, tạo PNG trong suốt và thay nền ngay trên thiết bị.
+          - generic [ref=f3e55]: ↗
+      - generic [ref=f3e56]:
+        - generic [ref=f3e57]:
+          - generic [ref=f3e58]: 📄
+          - generic [ref=f3e59]:
+            - heading "PDF & Tài liệu" [level=2] [ref=f3e60]
+            - paragraph [ref=f3e61]: Xử lý tài liệu nhanh chóng
+        - generic [ref=f3e62]:
+          - button "▤ Gộp PDF Gộp nhiều file PDF thành một. ↗" [ref=f3e63] [cursor=pointer]:
+            - generic [ref=f3e64]: ▤
+            - generic [ref=f3e65]: Gộp PDF
+            - generic [ref=f3e66]: Gộp nhiều file PDF thành một.
+            - generic [ref=f3e67]: ↗
+          - button "⛶ Tách PDF Chia tài liệu theo trang. ↗" [ref=f3e68] [cursor=pointer]:
+            - generic [ref=f3e69]: ⛶
+            - generic [ref=f3e70]: Tách PDF
+            - generic [ref=f3e71]: Chia tài liệu theo trang.
+            - generic [ref=f3e72]: ↗
+          - button "▧ Ảnh sang PDF Đóng gói ảnh thành tài liệu PDF. ↗" [ref=f3e73] [cursor=pointer]:
+            - generic [ref=f3e74]: ▧
+            - generic [ref=f3e75]: Ảnh sang PDF
+            - generic [ref=f3e76]: Đóng gói ảnh thành tài liệu PDF.
+            - generic [ref=f3e77]: ↗
+          - button "⇩ Nén PDF Giảm dung lượng tài liệu. ↗" [ref=f3e78] [cursor=pointer]:
+            - generic [ref=f3e79]: ⇩
+            - generic [ref=f3e80]: Nén PDF
+            - generic [ref=f3e81]: Giảm dung lượng tài liệu.
+            - generic [ref=f3e82]: ↗
+      - generic [ref=f3e83]:
+        - generic [ref=f3e84]:
+          - generic [ref=f3e85]: ⌘
+          - generic [ref=f3e86]:
+            - heading "Developer Tools" [level=2] [ref=f3e87]
+            - paragraph [ref=f3e88]: Tiện ích dành cho lập trình viên
+        - button "01 Bộ đổi hệ cơ số Đổi nhị phân, thập phân, hex. ↗" [ref=f3e90] [cursor=pointer]:
+          - generic [ref=f3e91]: "01"
+          - generic [ref=f3e92]: Bộ đổi hệ cơ số
+          - generic [ref=f3e93]: Đổi nhị phân, thập phân, hex.
+          - generic [ref=f3e94]: ↗
+      - generic [ref=f3e95]:
+        - generic [ref=f3e96]:
+          - generic [ref=f3e97]: ◷
+          - generic [ref=f3e98]:
+            - heading "Năng suất cá nhân" [level=2] [ref=f3e99]
+            - paragraph [ref=f3e100]: Học tập và quản lý thời gian
+        - generic [ref=f3e101]:
+          - button "◷ Pomodoro Timer Tập trung học theo phiên. ↗" [ref=f3e102] [cursor=pointer]:
+            - generic [ref=f3e103]: ◷
+            - generic [ref=f3e104]: Pomodoro Timer
+            - generic [ref=f3e105]: Tập trung học theo phiên.
+            - generic [ref=f3e106]: ↗
+          - button "☑ To-do List Theo dõi công việc cần làm. ↗" [ref=f3e107] [cursor=pointer]:
+            - generic [ref=f3e108]: ☑
+            - generic [ref=f3e109]: To-do List
+            - generic [ref=f3e110]: Theo dõi công việc cần làm.
+            - generic [ref=f3e111]: ↗
+          - button "✎ Ghi chú nhanh Lưu lại ý tưởng và ghi chú. ↗" [ref=f3e112] [cursor=pointer]:
+            - generic [ref=f3e113]: ✎
+            - generic [ref=f3e114]: Ghi chú nhanh
+            - generic [ref=f3e115]: Lưu lại ý tưởng và ghi chú.
+            - generic [ref=f3e116]: ↗
+          - button "⌛ Đếm ngược ngày thi Theo dõi thời gian đến kỳ thi hoặc sự kiện. ↗" [ref=f3e117] [cursor=pointer]:
+            - generic [ref=f3e118]: ⌛
+            - generic [ref=f3e119]: Đếm ngược ngày thi
+            - generic [ref=f3e120]: Theo dõi thời gian đến kỳ thi hoặc sự kiện.
+            - generic [ref=f3e121]: ↗
+          - button "▥ Theo dõi giờ học Ghi nhận và theo dõi giờ học mỗi ngày trong tuần. ↗" [ref=f3e122] [cursor=pointer]:
+            - generic [ref=f3e123]: ▥
+            - generic [ref=f3e124]: Theo dõi giờ học
+            - generic [ref=f3e125]: Ghi nhận và theo dõi giờ học mỗi ngày trong tuần.
+            - generic [ref=f3e126]: ↗
+          - button "▦ Thời khóa biểu Sắp xếp môn học và phòng theo từng tiết, từng ngày. ↗" [ref=f3e127] [cursor=pointer]:
+            - generic [ref=f3e128]: ▦
+            - generic [ref=f3e129]: Thời khóa biểu
+            - generic [ref=f3e130]: Sắp xếp môn học và phòng theo từng tiết, từng ngày.
+            - generic [ref=f3e131]: ↗
+          - button "₫ Chia hóa đơn Tính số tiền mỗi người, bao gồm cả tiền tip. ↗" [ref=f3e132] [cursor=pointer]:
+            - generic [ref=f3e133]: ₫
+            - generic [ref=f3e134]: Chia hóa đơn
+            - generic [ref=f3e135]: Tính số tiền mỗi người, bao gồm cả tiền tip.
+            - generic [ref=f3e136]: ↗
+  - contentinfo [ref=f3e137]:
+    - paragraph [ref=f3e138]: © 2026 Kd’s Tools · Made for learning and productivity.
+    - paragraph [ref=f3e139]: Miễn phí sử dụng · Đang được phát triển
