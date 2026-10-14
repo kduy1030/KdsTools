@@ -202,6 +202,17 @@
                         <span class="tool-description">Giảm dung lượng tài liệu.</span>
                         <span class="tool-arrow">↗</span>
                     </button>
+
+                    <button class="tool-card"
+                        data-tool="pdf-converter"
+                        data-name="PDF sang Word / Excel / PowerPoint"
+                        data-category="pdf"
+                        data-keywords="ocr scan ảnh chuyển đổi docx xlsx pptx văn bản bảng tính trình chiếu">
+                        <span class="tool-icon">⇄</span>
+                        <span class="tool-name">PDF sang Word / Excel / PowerPoint</span>
+                        <span class="tool-description">Trích xuất nội dung PDF, hỗ trợ OCR cho tài liệu scan.</span>
+                        <span class="tool-arrow">↗</span>
+                    </button>
                 </div>
             </section>
 
@@ -312,6 +323,28 @@
                         <span class="tool-icon">₫</span>
                         <span class="tool-name">Chia hóa đơn</span>
                         <span class="tool-description">Tính số tiền mỗi người, bao gồm cả tiền tip.</span>
+                        <span class="tool-arrow">↗</span>
+                    </button>
+
+                    <button class="tool-card"
+                        data-tool="text-to-speech"
+                        data-name="Chuyển văn bản thành giọng nói"
+                        data-category="productivity"
+                        data-keywords="text to speech tts đọc văn bản giọng nói voice ai tiếng việt nghe bài học">
+                        <span class="tool-icon">♫</span>
+                        <span class="tool-name">Chuyển văn bản thành giọng nói</span>
+                        <span class="tool-description">Nghe văn bản với giọng đọc có sẵn trên thiết bị.</span>
+                        <span class="tool-arrow">↗</span>
+                    </button>
+
+                    <button class="tool-card"
+                        data-tool="transfer-hub"
+                        data-name="Cross-Device File Transfer Hub"
+                        data-category="productivity"
+                        data-keywords="cross-device file transfer hub truyền chuyển gửi nhận file tệp đa thiết bị điện thoại máy tính phone computer upload download zip chia sẻ">
+                        <span class="tool-icon">⇄</span>
+                        <span class="tool-name">Cross-Device File Transfer Hub</span>
+                        <span class="tool-description">Quản lý, xem trước và tải file gốc; hỗ trợ tải hàng loạt thành ZIP.</span>
                         <span class="tool-arrow">↗</span>
                     </button>
                 </div>
@@ -966,6 +999,101 @@
             <button id="compressPdfButton" class="primary-button" type="button">Tối ưu và tải PDF</button>
             <p id="compressPdfStatus" class="utility-status" role="status" aria-live="polite"></p>
         </section>
+        <section id="pdfConverterTool" class="tool-panel pdf-converter-panel"
+            data-tool="pdf-converter" hidden>
+            <div class="pdf-converter-upload">
+                <label id="pdfConverterDropZone" class="pdf-converter-dropzone"
+                    for="pdfConverterFile" tabindex="0">
+                    <span class="pdf-converter-upload-icon" aria-hidden="true">⇧</span>
+                    <strong>Kéo thả PDF vào đây hoặc bấm để chọn tệp</strong>
+                    <small>Bạn cũng có thể dán tệp PDF từ clipboard.</small>
+                    <input id="pdfConverterFile" type="file"
+                        accept="application/pdf,.pdf">
+                </label>
+                <div class="pdf-converter-source">
+                    <label for="pdfConverterUrl">Hoặc nhập đường dẫn PDF</label>
+                    <div class="pdf-converter-url-row">
+                        <input id="pdfConverterUrl" type="url"
+                            placeholder="https://example.com/document.pdf"
+                            autocomplete="url">
+                        <button id="pdfConverterLoadUrl" class="secondary-button"
+                            type="button">Tải đường dẫn</button>
+                    </div>
+                    <button id="pdfConverterSample" class="text-button" type="button">
+                        Tải PDF mẫu
+                    </button>
+                </div>
+            </div>
+
+            <div class="pdf-converter-workspace">
+                <div class="pdf-converter-document">
+                    <div class="pdf-converter-file-info">
+                        <strong id="pdfConverterFileName">Chưa chọn tệp PDF</strong>
+                        <span id="pdfConverterFileDetails">Tên tệp, dung lượng và số trang sẽ hiển thị tại đây.</span>
+                    </div>
+                    <div id="pdfConverterViewerCanvasWrap"
+                        class="pdf-converter-canvas-wrap" hidden>
+                        <canvas id="pdfConverterViewerCanvas"
+                            aria-label="Bản xem trước trang đầu của PDF"></canvas>
+                    </div>
+                    <div id="pdfConverterViewerEmpty" class="pdf-converter-viewer-empty">
+                        Bản xem trước PDF sẽ hiển thị tại đây.
+                    </div>
+                </div>
+
+                <div class="pdf-converter-results">
+                    <div class="pdf-converter-options">
+                        <div>
+                            <label for="pdfConverterFormat">Định dạng đầu ra</label>
+                            <select id="pdfConverterFormat">
+                                <option value="docx">Word (.docx)</option>
+                                <option value="xlsx">Excel (.xlsx)</option>
+                                <option value="pptx">PowerPoint (.pptx)</option>
+                            </select>
+                        </div>
+                        <label class="pdf-converter-ocr-option" for="pdfConverterOcr">
+                            <input id="pdfConverterOcr" type="checkbox">
+                            <span>
+                                <strong>Kích hoạt OCR</strong>
+                                <small>Nhận dạng chữ cho trang scan hoặc ảnh</small>
+                            </span>
+                        </label>
+                    </div>
+                    <button id="pdfConverterRun" class="primary-button" type="button" disabled>
+                        Chuyển đổi tài liệu
+                    </button>
+                    <div class="pdf-converter-progress-wrap">
+                        <div class="pdf-converter-progress-label">
+                            <span id="pdfConverterProgressLabel">Sẵn sàng chuyển đổi</span>
+                            <span id="pdfConverterProgressValue">0%</span>
+                        </div>
+                        <progress id="pdfConverterProgress" max="100" value="0"
+                            aria-label="Tiến trình chuyển đổi"></progress>
+                    </div>
+                    <p id="pdfConverterStatus" class="utility-status" role="status"
+                        aria-live="polite"></p>
+
+                    <div class="pdf-converter-output">
+                        <div class="pdf-converter-output-heading">
+                            <div>
+                                <span class="pdf-converter-eyebrow">KẾT QUẢ TRÍCH XUẤT</span>
+                                <h3>Xem trước nội dung</h3>
+                            </div>
+                            <div class="pdf-converter-actions">
+                                <button id="pdfConverterCopy" class="secondary-button"
+                                    type="button" disabled>Sao chép</button>
+                                <button id="pdfConverterDownload" class="primary-button"
+                                    type="button" disabled>Tải xuống</button>
+                            </div>
+                        </div>
+                        <pre id="pdfConverterPreview" class="pdf-converter-preview">Nội dung trích xuất sẽ hiển thị tại đây.</pre>
+                    </div>
+                    <p class="utility-hint pdf-converter-privacy">
+                        Tệp được xử lý ngay trong trình duyệt. PDF.js, Tesseract.js và thư viện xuất tệp chỉ được tải từ CDN khi cần; OCR yêu cầu kết nối mạng lần đầu.
+                    </p>
+                </div>
+            </div>
+        </section>
         <section id="baseConverter" class="tool-panel" data-tool="base-converter" hidden>
             <label for="baseInput">Giá trị cần đổi</label>
             <input id="baseInput" type="text" inputmode="text" autocomplete="off"
@@ -1181,6 +1309,183 @@
                 </div>
                 <p id="billStatus" class="utility-status" role="status" aria-live="polite"></p>
             </div>
+        </section>
+        <section id="textToSpeechTool" class="tool-panel text-to-speech-panel"
+            data-tool="text-to-speech" hidden>
+            <div class="tts-heading">
+                <div>
+                    <span class="panel-eyebrow">ĐỌC VĂN BẢN TRÊN THIẾT BỊ</span>
+                    <h3>Biến nội dung thành giọng đọc</h3>
+                    <p>Giọng đọc được cung cấp bởi trình duyệt và hệ điều hành của bạn.</p>
+                </div>
+                <div id="ttsWaveform" class="tts-waveform" aria-hidden="true">
+                    <span></span><span></span><span></span><span></span><span></span>
+                </div>
+            </div>
+
+            <label class="tts-field-label" for="ttsText">Văn bản cần đọc</label>
+            <textarea id="ttsText" class="tts-textarea"
+                placeholder="Nhập hoặc dán nội dung tại đây..."></textarea>
+            <div class="tts-text-toolbar">
+                <span id="ttsTextStats" class="tts-text-stats" aria-live="polite">
+                    0 từ · 0 ký tự
+                </span>
+                <div>
+                    <button id="ttsSampleButton" class="text-button" type="button">
+                        Dùng văn bản mẫu
+                    </button>
+                    <button id="ttsClearButton" class="text-button" type="button">
+                        Xóa văn bản
+                    </button>
+                </div>
+            </div>
+
+            <div class="tts-settings">
+                <div class="tts-setting tts-voice-setting">
+                    <label for="ttsVoice">Giọng đọc</label>
+                    <select id="ttsVoice">
+                        <option value="">Giọng mặc định của trình duyệt</option>
+                    </select>
+                    <small id="ttsVoiceHint">Đang tải giọng đọc có sẵn...</small>
+                </div>
+                <div class="tts-setting">
+                    <label for="ttsRate">
+                        <span>Tốc độ đọc</span>
+                        <output id="ttsRateValue" for="ttsRate">1.0×</output>
+                    </label>
+                    <input id="ttsRate" type="range" min="0.5" max="2"
+                        step="0.1" value="1">
+                    <div class="tts-range-ends"><span>0.5×</span><span>2×</span></div>
+                </div>
+                <div class="tts-setting">
+                    <label for="ttsPitch">
+                        <span>Độ cao giọng</span>
+                        <output id="ttsPitchValue" for="ttsPitch">1.0</output>
+                    </label>
+                    <input id="ttsPitch" type="range" min="0" max="2"
+                        step="0.1" value="1">
+                    <div class="tts-range-ends"><span>Trầm</span><span>Cao</span></div>
+                </div>
+                <div class="tts-setting">
+                    <label for="ttsVolume">
+                        <span>Âm lượng</span>
+                        <output id="ttsVolumeValue" for="ttsVolume">100%</output>
+                    </label>
+                    <input id="ttsVolume" type="range" min="0" max="1"
+                        step="0.05" value="1">
+                    <div class="tts-range-ends"><span>0%</span><span>100%</span></div>
+                </div>
+            </div>
+
+            <div class="tts-playback">
+                <button id="ttsSpeakButton" class="primary-button" type="button">
+                    <span aria-hidden="true">▶</span> Đọc văn bản
+                </button>
+                <button id="ttsPauseButton" class="secondary-button" type="button"
+                    disabled>Tạm dừng</button>
+                <button id="ttsResumeButton" class="secondary-button" type="button"
+                    disabled>Tiếp tục</button>
+                <button id="ttsStopButton" class="secondary-button" type="button"
+                    disabled>Dừng lại</button>
+                <button id="ttsCopyButton" class="secondary-button" type="button">
+                    Sao chép
+                </button>
+                <button id="ttsDownloadButton" class="secondary-button" type="button">
+                    Tải .txt
+                </button>
+            </div>
+            <p id="ttsStatus" class="utility-status" role="status" aria-live="polite">
+                Sẵn sàng đọc văn bản.
+            </p>
+            <p class="utility-hint tts-privacy-hint">
+                Âm thanh được phát trực tiếp qua Web Speech API; công cụ không tải lên hay lưu văn bản của bạn.
+            </p>
+        </section>
+        <section id="transferHubTool" class="tool-panel transfer-hub-panel"
+            data-tool="transfer-hub" hidden>
+            <div class="transfer-hub-heading">
+                <div>
+                    <span class="panel-eyebrow">QUẢN LÝ TỆP TRÊN THIẾT BỊ</span>
+                    <h3>File Transfer Hub</h3>
+                    <p>Ghép nối hai thiết bị trực tiếp để gửi tệp, hoặc quản lý kho cục bộ.</p>
+                </div>
+                <span class="transfer-hub-badge">P2P · WebRTC</span>
+            </div>
+
+            <div class="transfer-share-card">
+                <div class="transfer-share-copy">
+                    <span class="panel-eyebrow">KẾT NỐI THIẾT BỊ</span>
+                    <h4>Tạo phòng hoặc tham gia bằng mã</h4>
+                    <p>
+                        Tạo phòng trên thiết bị nhận, sau đó mở link hoặc quét QR bằng thiết bị gửi. Tệp được truyền trực tiếp, không tải qua signaling server.
+                    </p>
+                    <div class="transfer-room-controls">
+                        <button id="transferCreateRoomButton" class="secondary-button"
+                            type="button">Tạo phòng mới</button>
+                        <label for="transferRoomCode">Mã phòng</label>
+                        <div class="transfer-room-join">
+                            <input id="transferRoomCode" type="text" maxlength="36"
+                                autocomplete="off" autocapitalize="none" spellcheck="false"
+                                placeholder="Dán mã hoặc mở link mời">
+                            <button id="transferJoinRoomButton" class="primary-button"
+                                type="button">Kết nối</button>
+                        </div>
+                        <button id="transferDisconnectButton" class="transfer-remove-button"
+                            type="button" disabled>Ngắt kết nối</button>
+                    </div>
+                    <div class="transfer-link-row">
+                        <a id="transferShareLink" class="transfer-share-link"
+                            target="_blank" rel="noopener noreferrer">Tạo phòng để tạo link mời.</a>
+                        <button id="transferCopyLinkButton" class="secondary-button"
+                            type="button" disabled>Sao chép link</button>
+                    </div>
+                    <p id="transferShareHint" class="utility-hint">
+                        Kết nối yêu cầu website qua HTTPS và signaling server đang hoạt động.
+                    </p>
+                </div>
+                <div class="transfer-qr-wrap">
+                    <canvas id="transferQrCanvas" width="192" height="192"
+                        role="img" aria-label="Mã QR tham gia phòng truyền tệp"
+                        hidden></canvas>
+                    <span id="transferQrPlaceholder" aria-live="polite">
+                        Tạo phòng để hiện QR mời thiết bị khác.
+                    </span>
+                </div>
+            </div>
+            <p id="transferConnectionStatus" class="transfer-connection-status"
+                role="status" aria-live="polite">Chưa kết nối thiết bị nào.</p>
+
+            <label id="transferDropzone" class="transfer-dropzone" for="transferFiles">
+                <span aria-hidden="true">⇧</span>
+                <strong>Kéo thả tệp vào đây hoặc chọn từ thiết bị</strong>
+                <small>Hỗ trợ nhiều tệp cùng lúc: ảnh, video, PDF, tài liệu và các định dạng khác.</small>
+                <input id="transferFiles" type="file" multiple>
+            </label>
+
+            <div class="transfer-list-heading">
+                <div>
+                    <span class="panel-eyebrow">KHO TỆP CỦA TRÌNH DUYỆT NÀY</span>
+                    <h4 id="transferFileCount">Đang tải danh sách…</h4>
+                </div>
+                <div class="transfer-list-actions">
+                    <button id="transferSendAllButton" class="secondary-button"
+                        type="button" disabled>Gửi tất cả sang thiết bị đã ghép</button>
+                    <button id="transferZipButton" class="primary-button"
+                        type="button" disabled>Tải tất cả thành file ZIP</button>
+                    <button id="transferClearButton" class="secondary-button"
+                        type="button" disabled>Xóa tất cả</button>
+                </div>
+            </div>
+            <p id="transferHubStatus" class="utility-status" role="status"
+                aria-live="polite">Tệp được lưu trong IndexedDB của trình duyệt này.</p>
+            <p id="transferEmptyState" class="transfer-empty-state" hidden>
+                Chưa có tệp nào. Hãy chọn hoặc kéo thả tệp để bắt đầu.
+            </p>
+            <ul id="transferFileList" class="transfer-file-grid"
+                aria-label="Danh sách tệp đã thêm"></ul>
+            <p class="utility-hint transfer-storage-note">
+                Kho tệp lưu trong trình duyệt này. Signaling server chỉ chuyển thông tin ghép nối; tệp đi trực tiếp qua WebRTC DataChannel được mã hóa. Một số mạng cần cấu hình TURN.
+            </p>
         </section>
         <p id="dialogNote" class="dialog-note">
             Công cụ này sẽ được triển khai ở bước tiếp theo.

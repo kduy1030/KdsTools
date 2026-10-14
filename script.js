@@ -59,6 +59,43 @@ const billTip = document.getElementById("billTip");
 const billPerPerson = document.getElementById("billPerPerson");
 const billBreakdown = document.getElementById("billBreakdown");
 const billStatus = document.getElementById("billStatus");
+const ttsToolPanel = document.getElementById("textToSpeechTool");
+const ttsText = document.getElementById("ttsText");
+const ttsTextStats = document.getElementById("ttsTextStats");
+const ttsVoiceSelect = document.getElementById("ttsVoice");
+const ttsVoiceHint = document.getElementById("ttsVoiceHint");
+const ttsRate = document.getElementById("ttsRate");
+const ttsPitch = document.getElementById("ttsPitch");
+const ttsVolume = document.getElementById("ttsVolume");
+const ttsRateValue = document.getElementById("ttsRateValue");
+const ttsPitchValue = document.getElementById("ttsPitchValue");
+const ttsVolumeValue = document.getElementById("ttsVolumeValue");
+const ttsSpeakButton = document.getElementById("ttsSpeakButton");
+const ttsPauseButton = document.getElementById("ttsPauseButton");
+const ttsResumeButton = document.getElementById("ttsResumeButton");
+const ttsStopButton = document.getElementById("ttsStopButton");
+const ttsCopyButton = document.getElementById("ttsCopyButton");
+const ttsDownloadButton = document.getElementById("ttsDownloadButton");
+const ttsStatus = document.getElementById("ttsStatus");
+const transferFilesInput = document.getElementById("transferFiles");
+const transferDropzone = document.getElementById("transferDropzone");
+const transferFileCount = document.getElementById("transferFileCount");
+const transferFileList = document.getElementById("transferFileList");
+const transferEmptyState = document.getElementById("transferEmptyState");
+const transferZipButton = document.getElementById("transferZipButton");
+const transferClearButton = document.getElementById("transferClearButton");
+const transferHubStatus = document.getElementById("transferHubStatus");
+const transferShareLink = document.getElementById("transferShareLink");
+const transferCopyLinkButton = document.getElementById("transferCopyLinkButton");
+const transferShareHint = document.getElementById("transferShareHint");
+const transferQrCanvas = document.getElementById("transferQrCanvas");
+const transferQrPlaceholder = document.getElementById("transferQrPlaceholder");
+const transferRoomCodeInput = document.getElementById("transferRoomCode");
+const transferCreateRoomButton = document.getElementById("transferCreateRoomButton");
+const transferJoinRoomButton = document.getElementById("transferJoinRoomButton");
+const transferDisconnectButton = document.getElementById("transferDisconnectButton");
+const transferSendAllButton = document.getElementById("transferSendAllButton");
+const transferConnectionStatus = document.getElementById("transferConnectionStatus");
 const mergePdfFiles = document.getElementById("mergePdfFiles");
 const splitPdfFile = document.getElementById("splitPdfFile");
 const splitPdfPages = document.getElementById("splitPdfPages");
@@ -224,6 +261,21 @@ const graphProgress = document.getElementById("graphProgress");
 const pdfLibraryUrl =
     "https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js";
 let pdfLibraryPromise = null;
+const pdfJsUrl =
+    "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js";
+const pdfJsWorkerUrl =
+    "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+const tesseractUrl =
+    "https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js";
+const docxUrl =
+    "https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js";
+const xlsxUrl =
+    "https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js";
+const pptxUrl =
+    "https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js";
+const converterLibraryPromises = new Map();
+let pdfConverterSourceFile = null;
+let pdfConverterResult = null;
 const clangFormatterUrl =
     "https://unpkg.com/@wasm-fmt/clang-format@23.1.1/clang-format-web.js";
 const pythonFormatterUrl =
@@ -261,6 +313,27 @@ const qrLibraryUrl =
 let qrLibraryPromise = null;
 let qrRenderRequest = 0;
 let qrSvgMarkup = "";
+const transferZipLibraryUrl =
+    "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js";
+let transferZipLibraryPromise = null;
+let transferDatabasePromise = null;
+let transferFilesState = [];
+let transferObjectUrls = [];
+let transferRenderRequest = 0;
+let transferBusy = false;
+let transferSendBusy = false;
+let transferIncomingBusy = false;
+let transferSignalingSocket = null;
+let transferPeerConnection = null;
+let transferDataChannel = null;
+let transferActiveRoom = "";
+let transferPeerRole = "";
+let transferIncomingFile = null;
+let transferPendingIceCandidates = [];
+let transferDataMessageQueue = Promise.resolve();
+let transferQrRenderRequest = 0;
+const transferChunkSize = 64 * 1024;
+const transferBufferedAmountLimit = 1024 * 1024;
 
 const storageKeys = {
     todos: "kds-tools-todos",
@@ -385,7 +458,14 @@ function openTool(activeTool, name, description) {
         activeTool === "algorithm-visualizer" ||
         activeTool === "background-remover" ||
         activeTool === "qr-code-generator" ||
-        activeTool === "game-asset-helper"
+        activeTool === "game-asset-helper" ||
+        activeTool === "pdf-converter" ||
+        activeTool === "text-to-speech" ||
+        activeTool === "transfer-hub"
+    );
+    toolDialog.classList.toggle(
+        "converter-dialog",
+        activeTool === "pdf-converter"
     );
     toolPanels.forEach((panel, tool) => {
         panel.hidden = tool !== activeTool;
@@ -398,9 +478,25 @@ function openTool(activeTool, name, description) {
         document.getElementById("splitPdfStatus"),
         document.getElementById("imageToPdfStatus"),
         backgroundRemoverStatus,
-        document.getElementById("compressPdfStatus")]
+        document.getElementById("compressPdfStatus"),
+        document.getElementById("pdfConverterStatus")]
         .forEach((status) => setStorageStatus(status, ""));
     toolDialog.showModal();
+
+    if (activeTool === "text-to-speech") {
+        updateTtsVoiceList();
+        setStorageStatus(
+            ttsStatus,
+            ttsSpeechSupported
+                ? "Sẵn sàng đọc văn bản."
+                : "Trình duyệt này không hỗ trợ Web Speech API.",
+            !ttsSpeechSupported
+        );
+        updateTtsPlaybackControls();
+    }
+    if (activeTool === "transfer-hub") {
+        void refreshTransferFiles();
+    }
 
     const focusTargets = {
         "base-converter": baseInput,
@@ -416,6 +512,9 @@ function openTool(activeTool, name, description) {
         "qr-code-generator": qrContentType,
         "game-asset-helper": assetSheetFile,
         "pdf-compress": compressPdfFile,
+        "pdf-converter": document.getElementById("pdfConverterFile"),
+        "text-to-speech": ttsText,
+        "transfer-hub": transferRoomCodeInput,
         "exam-countdown": examName,
         "study-tracker": document.getElementById("previousStudyWeek"),
         "timetable": timetableGrid,
@@ -1014,6 +1113,553 @@ document.getElementById("compressPdfButton").addEventListener("click", () => {
             `Đã tối ưu cấu trúc PDF (${formatFileSize(file.size)} → ${formatFileSize(bytes.byteLength)}, ${sizeMessage}). Tệp đã nén sẵn có thể không nhỏ hơn.`
         );
     });
+});
+
+const pdfConverterFileInput = document.getElementById("pdfConverterFile");
+const pdfConverterDropZone = document.getElementById("pdfConverterDropZone");
+const pdfConverterUrlInput = document.getElementById("pdfConverterUrl");
+const pdfConverterLoadUrlButton = document.getElementById("pdfConverterLoadUrl");
+const pdfConverterSampleButton = document.getElementById("pdfConverterSample");
+const pdfConverterRunButton = document.getElementById("pdfConverterRun");
+const pdfConverterCopyButton = document.getElementById("pdfConverterCopy");
+const pdfConverterDownloadButton = document.getElementById("pdfConverterDownload");
+const pdfConverterFormat = document.getElementById("pdfConverterFormat");
+const pdfConverterOcr = document.getElementById("pdfConverterOcr");
+const pdfConverterStatus = document.getElementById("pdfConverterStatus");
+const pdfConverterProgress = document.getElementById("pdfConverterProgress");
+const pdfConverterProgressLabel =
+    document.getElementById("pdfConverterProgressLabel");
+const pdfConverterProgressValue =
+    document.getElementById("pdfConverterProgressValue");
+const pdfConverterPreview = document.getElementById("pdfConverterPreview");
+const pdfConverterViewerCanvas =
+    document.getElementById("pdfConverterViewerCanvas");
+const pdfConverterViewerCanvasWrap =
+    document.getElementById("pdfConverterViewerCanvasWrap");
+
+function loadConverterLibrary(url, globalName) {
+    if (window[globalName]) {
+        return Promise.resolve(window[globalName]);
+    }
+    if (converterLibraryPromises.has(url)) {
+        return converterLibraryPromises.get(url);
+    }
+
+    const script = document.createElement("script");
+    script.src = url;
+    script.crossOrigin = "anonymous";
+    const loading = new Promise((resolve, reject) => {
+        script.addEventListener("load", () => {
+            if (window[globalName]) {
+                resolve(window[globalName]);
+            } else {
+                reject(new Error("Thư viện chuyển đổi không khởi tạo đúng cách."));
+            }
+        }, { once: true });
+        script.addEventListener("error", () => {
+            reject(new Error("Không tải được thư viện chuyển đổi. Hãy kiểm tra kết nối mạng."));
+        }, { once: true });
+        document.head.append(script);
+    });
+    const cachedLoading = loading.catch((error) => {
+        script.remove();
+        converterLibraryPromises.delete(url);
+        throw error;
+    });
+    converterLibraryPromises.set(url, cachedLoading);
+    return cachedLoading;
+}
+
+function setPdfConverterProgress(value, label) {
+    const progress = Math.max(0, Math.min(100, Math.round(value)));
+    pdfConverterProgress.value = progress;
+    pdfConverterProgressValue.textContent = `${progress}%`;
+    pdfConverterProgressLabel.textContent = label;
+}
+
+function resetPdfConverterResult(message = "Nội dung trích xuất sẽ hiển thị tại đây.") {
+    pdfConverterSourceFile = null;
+    pdfConverterPreview.textContent = message;
+    pdfConverterRunButton.disabled = true;
+    pdfConverterCopyButton.disabled = true;
+    pdfConverterDownloadButton.disabled = true;
+    pdfConverterResult = null;
+    setPdfConverterProgress(0, "Sẵn sàng chuyển đổi");
+}
+
+function selectPdfConverterFile(file) {
+    try {
+        const validFile = requirePdfFile(file);
+        pdfConverterSourceFile = validFile;
+        pdfConverterRunButton.disabled = false;
+        pdfConverterCopyButton.disabled = true;
+        pdfConverterDownloadButton.disabled = true;
+        pdfConverterResult = null;
+        pdfConverterPreview.textContent =
+            "Nội dung trích xuất sẽ hiển thị tại đây sau khi chuyển đổi.";
+        document.getElementById("pdfConverterFileName").textContent =
+            validFile.name;
+        document.getElementById("pdfConverterFileDetails").textContent =
+            `${formatFileSize(validFile.size)} · Đang đọc số trang...`;
+        setStorageStatus(pdfConverterStatus, "");
+        setPdfConverterProgress(0, "Đang tải bản xem trước...");
+
+        pdfConverterViewerCanvas.width = 0;
+        pdfConverterViewerCanvas.height = 0;
+        pdfConverterViewerCanvasWrap.hidden = false;
+        document.getElementById("pdfConverterViewerEmpty").hidden = true;
+
+        loadConverterLibrary(pdfJsUrl, "pdfjsLib")
+            .then(async (pdfjs) => {
+                pdfjs.GlobalWorkerOptions.workerSrc = pdfJsWorkerUrl;
+                const documentProxy = await pdfjs.getDocument({
+                    data: await validFile.arrayBuffer(),
+                }).promise;
+                if (pdfConverterSourceFile !== validFile) {
+                    await documentProxy.destroy();
+                    return;
+                }
+                document.getElementById("pdfConverterFileDetails").textContent =
+                    `${formatFileSize(validFile.size)} · ${documentProxy.numPages} trang`;
+                const firstPage = await documentProxy.getPage(1);
+                const baseViewport = firstPage.getViewport({ scale: 1 });
+                const availableWidth =
+                    pdfConverterViewerCanvasWrap.clientWidth - 28;
+                const scale = Math.max(
+                    0.5,
+                    Math.min(1.3, availableWidth / baseViewport.width)
+                );
+                const viewport = firstPage.getViewport({ scale });
+                pdfConverterViewerCanvas.width = Math.ceil(viewport.width);
+                pdfConverterViewerCanvas.height = Math.ceil(viewport.height);
+                await firstPage.render({
+                    canvasContext: pdfConverterViewerCanvas.getContext("2d"),
+                    viewport,
+                }).promise;
+                await firstPage.cleanup();
+                await documentProxy.destroy();
+                setPdfConverterProgress(0, "Sẵn sàng chuyển đổi");
+            })
+            .catch((error) => {
+                if (pdfConverterSourceFile === validFile) {
+                    document.getElementById("pdfConverterFileDetails").textContent =
+                        formatFileSize(validFile.size);
+                    setStorageStatus(
+                        pdfConverterStatus,
+                        `Không thể đọc PDF để xem trước: ${error.message}`,
+                        true
+                    );
+                    setPdfConverterProgress(0, "Không đọc được tệp");
+                }
+            });
+    } catch (error) {
+        resetPdfConverterResult();
+        setStorageStatus(pdfConverterStatus, error.message, true);
+    }
+}
+
+pdfConverterFileInput.addEventListener("change", () => {
+    if (pdfConverterFileInput.files[0]) {
+        selectPdfConverterFile(pdfConverterFileInput.files[0]);
+    }
+});
+
+pdfConverterDropZone.addEventListener("keydown", (event) => {
+    if (event.target === pdfConverterDropZone &&
+        (event.key === "Enter" || event.key === " ")) {
+        event.preventDefault();
+        pdfConverterFileInput.click();
+    }
+});
+
+["dragenter", "dragover"].forEach((eventName) => {
+    pdfConverterDropZone.addEventListener(eventName, (event) => {
+        event.preventDefault();
+        pdfConverterDropZone.classList.add("is-dragging");
+    });
+});
+
+["dragleave", "drop"].forEach((eventName) => {
+    pdfConverterDropZone.addEventListener(eventName, (event) => {
+        event.preventDefault();
+        pdfConverterDropZone.classList.remove("is-dragging");
+    });
+});
+
+pdfConverterDropZone.addEventListener("drop", (event) => {
+    const file = [...(event.dataTransfer?.files || [])]
+        .find((item) => item.type === "application/pdf" || /\.pdf$/i.test(item.name));
+    if (!file) {
+        setStorageStatus(pdfConverterStatus, "Hãy kéo thả một tệp PDF.", true);
+        return;
+    }
+    selectPdfConverterFile(file);
+});
+
+document.addEventListener("paste", (event) => {
+    if (!toolDialog.open || toolPanels.get("pdf-converter").hidden) {
+        return;
+    }
+    const files = [...(event.clipboardData?.files || [])];
+    const pastedFile = files.find((file) =>
+        file.type === "application/pdf" || /\.pdf$/i.test(file.name)
+    );
+    if (pastedFile) {
+        event.preventDefault();
+        selectPdfConverterFile(pastedFile);
+    }
+});
+
+async function loadPdfFromUrl(url, button) {
+    button.disabled = true;
+    setStorageStatus(pdfConverterStatus, "Đang tải PDF từ đường dẫn...");
+    try {
+        const parsedUrl = new URL(url);
+        if (!["http:", "https:"].includes(parsedUrl.protocol)) {
+            throw new Error("Chỉ hỗ trợ đường dẫn HTTP hoặc HTTPS.");
+        }
+        const response = await fetch(parsedUrl.href);
+        if (!response.ok) {
+            throw new Error(`Máy chủ trả về lỗi HTTP ${response.status}.`);
+        }
+        const blob = await response.blob();
+        const pathName = decodeURIComponent(parsedUrl.pathname.split("/").pop() || "");
+        const filename = /\.pdf$/i.test(pathName) ? pathName : "tai-lieu.pdf";
+        selectPdfConverterFile(new File([blob], filename, {
+            type: blob.type || "application/pdf",
+        }));
+    } catch (error) {
+        setStorageStatus(
+            pdfConverterStatus,
+            `Không thể tải PDF: ${error.message}. Máy chủ có thể chặn tải liên miền (CORS).`,
+            true
+        );
+    } finally {
+        button.disabled = false;
+    }
+}
+
+pdfConverterLoadUrlButton.addEventListener("click", () => {
+    const url = pdfConverterUrlInput.value.trim();
+    if (!url) {
+        setStorageStatus(pdfConverterStatus, "Hãy nhập đường dẫn PDF.", true);
+        pdfConverterUrlInput.focus();
+        return;
+    }
+    loadPdfFromUrl(url, pdfConverterLoadUrlButton);
+});
+
+pdfConverterUrlInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        pdfConverterLoadUrlButton.click();
+    }
+});
+
+pdfConverterSampleButton.addEventListener("click", () => {
+    pdfConverterUrlInput.value =
+        "https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf";
+    loadPdfFromUrl(pdfConverterUrlInput.value, pdfConverterSampleButton);
+});
+
+function getPdfTextLines(textContent) {
+    const rows = [];
+    textContent.items
+        .filter((item) => typeof item.str === "string" && item.str.trim())
+        .map((item) => ({
+            text: item.str.trim(),
+            x: item.transform?.[4] || 0,
+            y: item.transform?.[5] || 0,
+        }))
+        .sort((first, second) => second.y - first.y || first.x - second.x)
+        .forEach((item) => {
+            let row = rows.find((candidate) => Math.abs(candidate.y - item.y) < 2.5);
+            if (!row) {
+                row = { y: item.y, items: [] };
+                rows.push(row);
+            }
+            row.items.push(item);
+        });
+    return rows
+        .sort((first, second) => second.y - first.y)
+        .map((row) => row.items
+            .sort((first, second) => first.x - second.x)
+            .map((item) => item.text)
+            .join(" ")
+            .trim())
+        .filter(Boolean);
+}
+
+async function recognizePdfPage(page, worker) {
+    const baseViewport = page.getViewport({ scale: 1 });
+    const scale = Math.min(
+        1.5,
+        Math.sqrt(12_000_000 / (baseViewport.width * baseViewport.height))
+    );
+    const viewport = page.getViewport({ scale });
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.ceil(viewport.width);
+    canvas.height = Math.ceil(viewport.height);
+    try {
+        await page.render({
+            canvasContext: canvas.getContext("2d"),
+            canvas,
+            viewport,
+        }).promise;
+        const result = await worker.recognize(canvas);
+        return result.data.text
+            .split(/\r?\n/)
+            .map((line) => line.trim())
+            .filter(Boolean);
+    } finally {
+        canvas.width = 0;
+        canvas.height = 0;
+    }
+}
+
+async function extractPdfConverterContent(file) {
+    const pdfjs = await loadConverterLibrary(pdfJsUrl, "pdfjsLib");
+    pdfjs.GlobalWorkerOptions.workerSrc = pdfJsWorkerUrl;
+    const pdf = await pdfjs.getDocument({
+        data: await file.arrayBuffer(),
+    }).promise;
+    let worker = null;
+    const pages = [];
+    try {
+        for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
+            const page = await pdf.getPage(pageNumber);
+            let lines = getPdfTextLines(await page.getTextContent());
+            if (!lines.length && pdfConverterOcr.checked) {
+                if (!worker) {
+                    pdfConverterProgressLabel.textContent =
+                        "Đang tải dữ liệu OCR tiếng Việt và tiếng Anh...";
+                    const tesseract =
+                        await loadConverterLibrary(tesseractUrl, "Tesseract");
+                    worker = await tesseract.createWorker("eng+vie", 1, {
+                        logger: (message) => {
+                            if (message.status &&
+                                message.status !== "recognizing text") {
+                                pdfConverterProgressLabel.textContent =
+                                    `OCR: ${message.status}...`;
+                            }
+                        },
+                    });
+                }
+                pdfConverterProgressLabel.textContent =
+                    `Đang OCR trang ${pageNumber}/${pdf.numPages}...`;
+                lines = await recognizePdfPage(page, worker);
+            }
+            if (!lines.length) {
+                lines = [pdfConverterOcr.checked
+                    ? "[Không nhận dạng được nội dung chữ trên trang này.]"
+                    : "[Trang scan/ảnh — bật OCR để nhận dạng chữ.]"];
+            }
+            pages.push(lines);
+            setPdfConverterProgress(
+                10 + (pageNumber / pdf.numPages) * 80,
+                `Đang quét trang ${pageNumber}/${pdf.numPages}...`
+            );
+            await page.cleanup();
+        }
+    } finally {
+        if (worker) {
+            await worker.terminate();
+        }
+        await pdf.destroy();
+    }
+    return pages;
+}
+
+function makePdfConverterText(pages) {
+    return pages
+        .map((lines, index) => `--- Trang ${index + 1} ---\n${lines.join("\n")}`)
+        .join("\n\n");
+}
+
+async function createPdfConverterDownload(result, format) {
+    const basename = result.sourceName.replace(/\.pdf$/i, "")
+        .replace(/[<>:"/\\|?*\x00-\x1f]/g, "-") || "tai-lieu";
+    let blob;
+    let filename;
+    if (format === "docx") {
+        const docx = await loadConverterLibrary(docxUrl, "docx");
+        const children = [];
+        result.pages.forEach((lines, index) => {
+            children.push(new docx.Paragraph({
+                text: `Trang ${index + 1}`,
+                heading: docx.HeadingLevel.HEADING_1,
+            }));
+            lines.forEach((line) => {
+                children.push(new docx.Paragraph({ text: line }));
+            });
+        });
+        blob = await docx.Packer.toBlob(new docx.Document({
+            sections: [{ children }],
+        }));
+        filename = `${basename}.docx`;
+    } else if (format === "xlsx") {
+        const xlsx = await loadConverterLibrary(xlsxUrl, "XLSX");
+        const rows = [["Trang", "Dòng", "Nội dung"]];
+        result.pages.forEach((lines, pageIndex) => {
+            lines.forEach((line, lineIndex) => {
+                rows.push([pageIndex + 1, lineIndex + 1, line]);
+            });
+        });
+        const worksheet = xlsx.utils.aoa_to_sheet(rows);
+        worksheet["!cols"] = [{ wch: 10 }, { wch: 10 }, { wch: 90 }];
+        const workbook = xlsx.utils.book_new();
+        xlsx.utils.book_append_sheet(workbook, worksheet, "Nội dung PDF");
+        blob = new Blob([xlsx.write(workbook, {
+            bookType: "xlsx",
+            type: "array",
+        })], {
+            type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        });
+        filename = `${basename}.xlsx`;
+    } else {
+        const PptxGenJS = await loadConverterLibrary(pptxUrl, "PptxGenJS");
+        const presentation = new PptxGenJS();
+        presentation.layout = "LAYOUT_WIDE";
+        result.pages.forEach((lines, index) => {
+            const slide = presentation.addSlide();
+            slide.addText(`Trang ${index + 1}`, {
+                x: 0.6, y: 0.35, w: 12, h: 0.45,
+                fontFace: "Aptos Display", fontSize: 22, bold: true,
+                color: "155E75",
+            });
+            slide.addText(lines.join("\n"), {
+                x: 0.7, y: 1, w: 11.9, h: 6,
+                fontFace: "Aptos", fontSize: 16, color: "243C47",
+                breakLine: false, valign: "top", fit: "shrink",
+                margin: 0.12,
+            });
+        });
+        const presentationBlob =
+            await presentation.write({ outputType: "blob" });
+        blob = new Blob([presentationBlob], {
+            type: "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+        });
+        filename = `${basename}.pptx`;
+    }
+    if (!(blob instanceof Blob)) {
+        throw new Error("Thư viện không tạo được tệp đầu ra hợp lệ.");
+    }
+    return { blob, filename };
+}
+
+function downloadConverterBlob(blob, filename) {
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = filename;
+    document.body.append(link);
+    link.click();
+    link.remove();
+    window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+pdfConverterRunButton.addEventListener("click", async () => {
+    if (!pdfConverterSourceFile) {
+        setStorageStatus(pdfConverterStatus, "Hãy chọn một tệp PDF trước.", true);
+        return;
+    }
+    pdfConverterRunButton.disabled = true;
+    pdfConverterCopyButton.disabled = true;
+    pdfConverterDownloadButton.disabled = true;
+    setStorageStatus(pdfConverterStatus, "Đang tải thư viện và xử lý tài liệu...");
+    setPdfConverterProgress(5, "Đang mở PDF...");
+    try {
+        const sourceFile = pdfConverterSourceFile;
+        const pages = await extractPdfConverterContent(sourceFile);
+        const text = makePdfConverterText(pages);
+        pdfConverterResult = {
+            pages,
+            text,
+            sourceName: sourceFile.name,
+        };
+        pdfConverterPreview.textContent = text;
+        setPdfConverterProgress(90, "Đang chuẩn bị tệp đầu ra...");
+        const { blob, filename } = await createPdfConverterDownload(
+            pdfConverterResult,
+            pdfConverterFormat.value
+        );
+        pdfConverterResult.downloadBlob = blob;
+        pdfConverterResult.downloadName = filename;
+        pdfConverterCopyButton.disabled = false;
+        pdfConverterDownloadButton.disabled = false;
+        setPdfConverterProgress(100, "Chuyển đổi hoàn tất");
+        setStorageStatus(
+            pdfConverterStatus,
+            `Đã trích xuất ${pages.length} trang. Tệp ${filename} đã sẵn sàng tải xuống.`
+        );
+    } catch (error) {
+        pdfConverterResult = null;
+        setStorageStatus(
+            pdfConverterStatus,
+            `Không thể chuyển đổi PDF: ${error.message}`,
+            true
+        );
+        setPdfConverterProgress(0, "Chuyển đổi thất bại");
+    } finally {
+        pdfConverterRunButton.disabled = !pdfConverterSourceFile;
+    }
+});
+
+pdfConverterCopyButton.addEventListener("click", async () => {
+    if (!pdfConverterResult) {
+        return;
+    }
+    try {
+        await navigator.clipboard.writeText(pdfConverterResult.text);
+        setStorageStatus(pdfConverterStatus, "Đã sao chép!");
+    } catch (error) {
+        setStorageStatus(
+            pdfConverterStatus,
+            `Không thể sao chép: ${error.message}. Hãy cấp quyền clipboard hoặc sao chép nội dung từ khung xem trước.`,
+            true
+        );
+    }
+});
+
+pdfConverterDownloadButton.addEventListener("click", async () => {
+    if (!pdfConverterResult) {
+        return;
+    }
+    const format = pdfConverterFormat.value;
+    const expectedExtension = `.${format}`;
+    if (pdfConverterResult.downloadName.endsWith(expectedExtension)) {
+        downloadConverterBlob(
+            pdfConverterResult.downloadBlob,
+            pdfConverterResult.downloadName
+        );
+        return;
+    }
+    pdfConverterDownloadButton.disabled = true;
+    try {
+        const { blob, filename } = await createPdfConverterDownload(
+            pdfConverterResult,
+            format
+        );
+        pdfConverterResult.downloadBlob = blob;
+        pdfConverterResult.downloadName = filename;
+        downloadConverterBlob(blob, filename);
+        setStorageStatus(pdfConverterStatus, `Đã tải xuống ${filename}.`);
+    } catch (error) {
+        setStorageStatus(
+            pdfConverterStatus,
+            `Không thể tạo tệp tải xuống: ${error.message}`,
+            true
+        );
+    } finally {
+        pdfConverterDownloadButton.disabled = false;
+    }
+});
+
+pdfConverterFormat.addEventListener("change", () => {
+    if (pdfConverterResult) {
+        pdfConverterResult.downloadName = "";
+        pdfConverterResult.downloadBlob = null;
+    }
 });
 
 function formatFileSize(bytes) {
@@ -3360,6 +4006,331 @@ document.getElementById("billForm").addEventListener("submit", (event) => {
 loadTodos();
 loadNotes();
 
+const ttsSpeechSynthesis =
+    "speechSynthesis" in window ? window.speechSynthesis : null;
+const ttsSpeechSupported =
+    Boolean(ttsSpeechSynthesis) && "SpeechSynthesisUtterance" in window;
+let ttsVoices = [];
+let ttsVoiceById = new Map();
+let ttsQueue = [];
+let ttsQueueIndex = 0;
+let ttsSessionId = 0;
+let ttsPlaybackState = "idle";
+
+function updateTtsTextStats() {
+    const text = ttsText.value;
+    const words = text.trim() ? text.trim().split(/\s+/u).length : 0;
+    const characters = typeof Intl.Segmenter === "function"
+        ? [...new Intl.Segmenter(undefined, { granularity: "grapheme" })
+            .segment(text)].length
+        : Array.from(text).length;
+    ttsTextStats.textContent =
+        `${words.toLocaleString("vi-VN")} từ · ${characters.toLocaleString("vi-VN")} ký tự`;
+    updateTtsPlaybackControls();
+}
+
+function updateTtsVoiceList() {
+    if (!ttsSpeechSupported) {
+        ttsVoiceHint.textContent = "Web Speech API không khả dụng trong trình duyệt này.";
+        return;
+    }
+
+    const selectedVoiceId = ttsVoiceSelect.value;
+    ttsVoices = ttsSpeechSynthesis.getVoices()
+        .slice()
+        .sort((first, second) => {
+            const firstVietnamese = /^vi(?:-|$)/i.test(first.lang) ? 0 : 1;
+            const secondVietnamese = /^vi(?:-|$)/i.test(second.lang) ? 0 : 1;
+            return firstVietnamese - secondVietnamese ||
+                first.lang.localeCompare(second.lang) ||
+                first.name.localeCompare(second.name);
+        });
+    ttsVoiceById = new Map();
+    ttsVoiceSelect.replaceChildren(
+        new Option("Giọng mặc định của trình duyệt", "")
+    );
+
+    ttsVoices.forEach((voice, index) => {
+        const id = `${voice.voiceURI || voice.name}|${voice.lang}|${index}`;
+        ttsVoiceById.set(id, voice);
+        const label = `${voice.name}${voice.lang ? ` (${voice.lang})` : ""}` +
+            (voice.default ? " · Mặc định" : "");
+        ttsVoiceSelect.add(new Option(label, id));
+    });
+
+    const vietnameseVoice = [...ttsVoiceById.entries()]
+        .find(([, voice]) => /^vi(?:-|$)/i.test(voice.lang));
+    if (selectedVoiceId && ttsVoiceById.has(selectedVoiceId)) {
+        ttsVoiceSelect.value = selectedVoiceId;
+    } else {
+        ttsVoiceSelect.value = vietnameseVoice?.[0] || "";
+    }
+
+    if (!ttsVoices.length) {
+        ttsVoiceHint.textContent =
+            "Chưa có giọng đọc được cung cấp; hãy kiểm tra cài đặt giọng nói của thiết bị.";
+    } else {
+        const vietnameseCount = ttsVoices.filter((voice) =>
+            /^vi(?:-|$)/i.test(voice.lang)
+        ).length;
+        ttsVoiceHint.textContent = vietnameseCount
+            ? `${vietnameseCount} giọng tiếng Việt trong ${ttsVoices.length} giọng có sẵn.`
+            : `Không tìm thấy giọng tiếng Việt trong ${ttsVoices.length} giọng có sẵn.`;
+    }
+}
+
+function updateTtsPlaybackControls() {
+    const hasText = Boolean(ttsText.value.trim());
+    ttsSpeakButton.disabled = !ttsSpeechSupported || !hasText;
+    ttsCopyButton.disabled = !hasText;
+    ttsDownloadButton.disabled = !hasText;
+    ttsPauseButton.disabled = !ttsSpeechSupported ||
+        ttsPlaybackState !== "speaking";
+    ttsResumeButton.disabled = !ttsSpeechSupported ||
+        ttsPlaybackState !== "paused";
+    ttsStopButton.disabled = !ttsSpeechSupported ||
+        ttsPlaybackState === "idle";
+    ttsToolPanel.classList.toggle(
+        "is-speaking",
+        ttsPlaybackState === "speaking"
+    );
+    ttsToolPanel.classList.toggle(
+        "is-paused",
+        ttsPlaybackState === "paused"
+    );
+}
+
+function splitTtsText(text, maxLength = 1800) {
+    const chunks = [];
+    let start = 0;
+    while (start < text.length) {
+        let end = Math.min(start + maxLength, text.length);
+        if (end < text.length) {
+            const breakAt = Math.max(
+                text.lastIndexOf(" ", end),
+                text.lastIndexOf("\n", end),
+                text.lastIndexOf("\t", end)
+            );
+            if (breakAt > start + maxLength / 2) {
+                end = breakAt;
+            }
+        }
+        const chunk = text.slice(start, end).trim();
+        if (chunk) {
+            chunks.push(chunk);
+        }
+        start = end;
+        while (start < text.length && /\s/u.test(text[start])) {
+            start++;
+        }
+    }
+    return chunks;
+}
+
+function speakTtsQueueChunk(sessionId) {
+    if (sessionId !== ttsSessionId) {
+        return;
+    }
+    if (ttsQueueIndex >= ttsQueue.length) {
+        ttsPlaybackState = "idle";
+        setStorageStatus(ttsStatus, "Đã đọc xong văn bản.");
+        updateTtsPlaybackControls();
+        return;
+    }
+
+    const utterance = new SpeechSynthesisUtterance(ttsQueue[ttsQueueIndex]);
+    const voice = ttsVoiceById.get(ttsVoiceSelect.value);
+    if (voice) {
+        utterance.voice = voice;
+        utterance.lang = voice.lang;
+    } else {
+        utterance.lang = navigator.language || "vi-VN";
+    }
+    utterance.rate = Number(ttsRate.value);
+    utterance.pitch = Number(ttsPitch.value);
+    utterance.volume = Number(ttsVolume.value);
+    utterance.onstart = () => {
+        if (sessionId !== ttsSessionId) {
+            return;
+        }
+        ttsPlaybackState = "speaking";
+        setStorageStatus(
+            ttsStatus,
+            `Đang đọc đoạn ${ttsQueueIndex + 1}/${ttsQueue.length}` +
+                (voice?.lang ? ` · ${voice.lang}` : "")
+        );
+        updateTtsPlaybackControls();
+    };
+    utterance.onend = () => {
+        if (sessionId !== ttsSessionId) {
+            return;
+        }
+        ttsQueueIndex++;
+        speakTtsQueueChunk(sessionId);
+    };
+    utterance.onerror = (event) => {
+        if (sessionId !== ttsSessionId) {
+            return;
+        }
+        ttsPlaybackState = "idle";
+        setStorageStatus(
+            ttsStatus,
+            `Không thể phát giọng đọc: ${event.error || "lỗi không xác định"}.`,
+            true
+        );
+        updateTtsPlaybackControls();
+    };
+
+    try {
+        ttsSpeechSynthesis.speak(utterance);
+    } catch (error) {
+        if (sessionId === ttsSessionId) {
+            ttsPlaybackState = "idle";
+            setStorageStatus(
+                ttsStatus,
+                `Không thể phát giọng đọc: ${error.message}`,
+                true
+            );
+            updateTtsPlaybackControls();
+        }
+    }
+}
+
+function stopTtsReading(message = "Đã dừng đọc.") {
+    ttsSessionId++;
+    ttsQueue = [];
+    ttsQueueIndex = 0;
+    if (ttsSpeechSupported) {
+        ttsSpeechSynthesis.cancel();
+    }
+    ttsPlaybackState = "idle";
+    updateTtsPlaybackControls();
+    if (message) {
+        setStorageStatus(ttsStatus, message);
+    }
+}
+
+function startTtsReading() {
+    const text = ttsText.value.trim();
+    if (!text || !ttsSpeechSupported) {
+        if (!text) {
+            setStorageStatus(ttsStatus, "Hãy nhập văn bản trước khi đọc.", true);
+        }
+        updateTtsPlaybackControls();
+        return;
+    }
+
+    ttsSessionId++;
+    const sessionId = ttsSessionId;
+    ttsSpeechSynthesis.cancel();
+    ttsQueue = splitTtsText(text);
+    ttsQueueIndex = 0;
+    ttsPlaybackState = "speaking";
+    setStorageStatus(ttsStatus, "Đang chuẩn bị giọng đọc...");
+    updateTtsPlaybackControls();
+    speakTtsQueueChunk(sessionId);
+}
+
+function downloadTtsText() {
+    const blob = new Blob([ttsText.value], {
+        type: "text/plain;charset=utf-8",
+    });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "van-ban-giong-noi.txt";
+    document.body.append(link);
+    link.click();
+    link.remove();
+    window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+ttsText.addEventListener("input", updateTtsTextStats);
+ttsSpeakButton.addEventListener("click", startTtsReading);
+ttsPauseButton.addEventListener("click", () => {
+    if (ttsPlaybackState !== "speaking" || !ttsSpeechSupported) {
+        return;
+    }
+    ttsSpeechSynthesis.pause();
+    ttsPlaybackState = "paused";
+    setStorageStatus(ttsStatus, "Đã tạm dừng.");
+    updateTtsPlaybackControls();
+});
+ttsResumeButton.addEventListener("click", () => {
+    if (ttsPlaybackState !== "paused" || !ttsSpeechSupported) {
+        return;
+    }
+    ttsSpeechSynthesis.resume();
+    ttsPlaybackState = "speaking";
+    setStorageStatus(ttsStatus, "Đang tiếp tục đọc...");
+    updateTtsPlaybackControls();
+});
+ttsStopButton.addEventListener("click", () => stopTtsReading());
+document.getElementById("ttsClearButton").addEventListener("click", () => {
+    stopTtsReading(null);
+    ttsText.value = "";
+    updateTtsTextStats();
+    setStorageStatus(ttsStatus, "Đã xóa văn bản.");
+    ttsText.focus();
+});
+document.getElementById("ttsSampleButton").addEventListener("click", () => {
+    stopTtsReading(null);
+    ttsText.value =
+        "Xin chào! Đây là công cụ chuyển văn bản thành giọng nói của Kd's Tools. " +
+        "Bạn có thể chọn giọng đọc, điều chỉnh tốc độ, độ cao và âm lượng " +
+        "ngay trên thiết bị của mình.";
+    updateTtsTextStats();
+    setStorageStatus(ttsStatus, "Đã tải văn bản mẫu.");
+    ttsText.focus();
+});
+ttsCopyButton.addEventListener("click", async () => {
+    try {
+        await navigator.clipboard.writeText(ttsText.value);
+        setStorageStatus(ttsStatus, "Đã sao chép văn bản!");
+    } catch (error) {
+        setStorageStatus(
+            ttsStatus,
+            `Không thể sao chép văn bản: ${error.message}`,
+            true
+        );
+    }
+});
+ttsDownloadButton.addEventListener("click", downloadTtsText);
+ttsVoiceSelect.addEventListener("change", () => {
+    const voice = ttsVoiceById.get(ttsVoiceSelect.value);
+    setStorageStatus(
+        ttsStatus,
+        voice ? `Đã chọn giọng ${voice.name} (${voice.lang}).` :
+            "Đang dùng giọng mặc định của trình duyệt."
+    );
+});
+
+[
+    [ttsRate, ttsRateValue, (value) => `${Number(value).toFixed(1)}×`],
+    [ttsPitch, ttsPitchValue, (value) => Number(value).toFixed(1)],
+    [ttsVolume, ttsVolumeValue, (value) =>
+        `${Math.round(Number(value) * 100)}%`],
+].forEach(([input, output, format]) => {
+    const update = () => {
+        output.textContent = format(input.value);
+    };
+    input.addEventListener("input", update);
+    update();
+});
+
+if (ttsSpeechSupported) {
+    if (typeof ttsSpeechSynthesis.addEventListener === "function") {
+        ttsSpeechSynthesis.addEventListener(
+            "voiceschanged",
+            updateTtsVoiceList
+        );
+    } else {
+        ttsSpeechSynthesis.onvoiceschanged = updateTtsVoiceList;
+    }
+}
+updateTtsVoiceList();
+updateTtsTextStats();
+
 function closeToolDialog() {
     if (toolDialog.open) {
         toolDialog.close();
@@ -3378,7 +4349,1118 @@ toolDialog.addEventListener("click", (event) => {
 toolDialog.addEventListener("close", () => {
     pauseAlgorithmPlayback();
     stopAssetAnimation();
+    if (ttsPlaybackState !== "idle") {
+        stopTtsReading("Đã dừng đọc khi đóng công cụ.");
+    }
 });
+
+function openTransferDatabase() {
+    if (!window.indexedDB) {
+        return Promise.reject(new Error("Trình duyệt này không hỗ trợ IndexedDB."));
+    }
+    if (!transferDatabasePromise) {
+        transferDatabasePromise = new Promise((resolve, reject) => {
+            const request = window.indexedDB.open("kds-tools-transfer-hub", 1);
+            request.addEventListener("upgradeneeded", () => {
+                const database = request.result;
+                if (!database.objectStoreNames.contains("files")) {
+                    database.createObjectStore("files", {
+                        keyPath: "id",
+                        autoIncrement: true,
+                    });
+                }
+            });
+            request.addEventListener("success", () => {
+                const database = request.result;
+                database.addEventListener("versionchange", () => database.close());
+                resolve(database);
+            }, { once: true });
+            request.addEventListener("error", () => {
+                reject(request.error || new Error("Không thể mở kho tệp của trình duyệt."));
+            }, { once: true });
+            request.addEventListener("blocked", () => {
+                reject(new Error("Kho tệp đang bị chặn bởi một tab KdsTools khác. Hãy đóng tab cũ rồi thử lại."));
+            }, { once: true });
+        }).catch((error) => {
+            transferDatabasePromise = null;
+            throw new Error(`Không thể truy cập kho tệp cục bộ: ${error.message}`);
+        });
+    }
+    return transferDatabasePromise;
+}
+
+async function runTransferTransaction(mode, operation) {
+    const database = await openTransferDatabase();
+    return new Promise((resolve, reject) => {
+        let transaction;
+        let request;
+        try {
+            transaction = database.transaction("files", mode);
+            request = operation(transaction.objectStore("files"));
+        } catch (error) {
+            reject(error);
+            return;
+        }
+        transaction.addEventListener("complete", () => {
+            resolve(request?.result);
+        }, { once: true });
+        transaction.addEventListener("error", () => {
+            reject(transaction.error || request?.error ||
+                new Error("Không thể hoàn tất thao tác với kho tệp."));
+        }, { once: true });
+        transaction.addEventListener("abort", () => {
+            reject(transaction.error || request?.error ||
+                new Error("Thao tác với kho tệp đã bị hủy."));
+        }, { once: true });
+    });
+}
+
+function formatTransferFileSize(bytes) {
+    if (bytes === 0) {
+        return "0 B";
+    }
+    const units = ["B", "KB", "MB", "GB", "TB"];
+    const unitIndex = Math.min(
+        Math.floor(Math.log(bytes) / Math.log(1024)),
+        units.length - 1
+    );
+    const value = bytes / (1024 ** unitIndex);
+    return `${value.toLocaleString("vi-VN", {
+        maximumFractionDigits: unitIndex === 0 ? 0 : 1,
+    })} ${units[unitIndex]}`;
+}
+
+function transferFileKind(file) {
+    const extension = file.name.includes(".")
+        ? file.name.split(".").pop().toLowerCase()
+        : "";
+    if (file.type.startsWith("image/") ||
+        ["apng", "avif", "bmp", "gif", "heic", "heif", "jpeg", "jpg", "png", "svg", "webp"].includes(extension)) {
+        return "image";
+    }
+    if (file.type.startsWith("video/") ||
+        ["avi", "m4v", "mkv", "mov", "mp4", "mpeg", "mpg", "webm"].includes(extension)) {
+        return "video";
+    }
+    if (file.type === "application/pdf" || extension === "pdf") {
+        return "PDF";
+    }
+    if (["doc", "docx", "odt", "rtf"].includes(extension)) {
+        return "DOC";
+    }
+    if (["ppt", "pptx", "odp"].includes(extension)) {
+        return "PPT";
+    }
+    if (["xls", "xlsx", "ods", "csv"].includes(extension)) {
+        return "XLS";
+    }
+    if (["7z", "rar", "tar", "gz", "zip"].includes(extension)) {
+        return "ZIP";
+    }
+    return extension ? extension.slice(0, 4).toUpperCase() : "FILE";
+}
+
+function updateTransferControls() {
+    const hasFiles = transferFilesState.length > 0;
+    const storageBusy = transferBusy || transferIncomingBusy;
+    const peerReady = transferDataChannel?.readyState === "open";
+    transferZipButton.disabled = !hasFiles || storageBusy || transferSendBusy;
+    transferClearButton.disabled = !hasFiles || storageBusy || transferSendBusy;
+    transferFilesInput.disabled = storageBusy;
+    transferSendAllButton.disabled = !hasFiles || !peerReady ||
+        storageBusy || transferSendBusy;
+    transferCreateRoomButton.disabled = Boolean(transferSignalingSocket);
+    transferJoinRoomButton.disabled = Boolean(transferSignalingSocket);
+    transferRoomCodeInput.disabled = Boolean(transferSignalingSocket);
+    transferDisconnectButton.disabled = !transferSignalingSocket;
+    transferDropzone.setAttribute("aria-busy", String(storageBusy));
+    transferFileList.querySelectorAll("button").forEach((button) => {
+        button.disabled = storageBusy ||
+            (button.dataset.transferAction === "send" &&
+                (!peerReady || transferSendBusy));
+    });
+}
+
+function renderTransferFiles(files) {
+    transferObjectUrls.forEach((url) => URL.revokeObjectURL(url));
+    transferObjectUrls = [];
+    transferFilesState = files;
+    transferFileList.replaceChildren();
+    transferFileCount.textContent = files.length === 1
+        ? "1 tệp"
+        : `${files.length.toLocaleString("vi-VN")} tệp`;
+    transferEmptyState.hidden = files.length > 0;
+
+    files.forEach((file) => {
+        const item = document.createElement("li");
+        item.className = "transfer-file-card";
+
+        const preview = document.createElement("div");
+        preview.className = "transfer-file-preview";
+        const kind = transferFileKind(file);
+        if (kind === "image" || kind === "video") {
+            const media = document.createElement(kind === "image" ? "img" : "video");
+            const url = URL.createObjectURL(file.blob);
+            transferObjectUrls.push(url);
+            media.src = url;
+            if (kind === "image") {
+                media.alt = `Xem trước ${file.name}`;
+                media.loading = "lazy";
+                media.decoding = "async";
+            } else {
+                media.muted = true;
+                media.controls = true;
+                media.preload = "metadata";
+                media.setAttribute("playsinline", "");
+                media.setAttribute("aria-label", `Xem trước video ${file.name}`);
+            }
+            preview.append(media);
+        } else {
+            const badge = document.createElement("span");
+            badge.className = "transfer-file-kind";
+            badge.textContent = kind;
+            preview.append(badge);
+        }
+
+        const details = document.createElement("div");
+        details.className = "transfer-file-details";
+        const name = document.createElement("strong");
+        name.className = "transfer-file-name";
+        name.textContent = file.name;
+        name.title = file.name;
+        const metadata = document.createElement("span");
+        metadata.textContent = `${formatTransferFileSize(file.size)} · ${kind === "image" || kind === "video" ? file.type || kind.toUpperCase() : kind}`;
+        details.append(name, metadata);
+
+        const actions = document.createElement("div");
+        actions.className = "transfer-file-actions";
+        const downloadButton = document.createElement("button");
+        downloadButton.className = "secondary-button";
+        downloadButton.type = "button";
+        downloadButton.dataset.transferAction = "download";
+        downloadButton.dataset.transferId = String(file.id);
+        downloadButton.textContent = "Tải xuống";
+        downloadButton.setAttribute("aria-label", `Tải xuống ${file.name}`);
+        const sendButton = document.createElement("button");
+        sendButton.className = "secondary-button";
+        sendButton.type = "button";
+        sendButton.dataset.transferAction = "send";
+        sendButton.dataset.transferId = String(file.id);
+        sendButton.textContent = "Gửi";
+        sendButton.setAttribute("aria-label", `Gửi ${file.name} sang thiết bị đã ghép`);
+        const removeButton = document.createElement("button");
+        removeButton.className = "transfer-remove-button";
+        removeButton.type = "button";
+        removeButton.dataset.transferAction = "remove";
+        removeButton.dataset.transferId = String(file.id);
+        removeButton.textContent = "Xóa";
+        removeButton.setAttribute("aria-label", `Xóa ${file.name}`);
+        actions.append(downloadButton, sendButton, removeButton);
+
+        item.append(preview, details, actions);
+        transferFileList.append(item);
+    });
+    updateTransferControls();
+}
+
+async function refreshTransferFiles() {
+    const request = ++transferRenderRequest;
+    try {
+        const files = await runTransferTransaction("readonly", (store) => store.getAll());
+        if (request === transferRenderRequest) {
+            renderTransferFiles(files);
+        }
+    } catch (error) {
+        if (request === transferRenderRequest) {
+            transferFileCount.textContent = "Không thể tải danh sách";
+            transferEmptyState.hidden = true;
+            setStorageStatus(
+                transferHubStatus,
+                `Không thể đọc kho tệp: ${error.message}`,
+                true
+            );
+        }
+    }
+}
+
+function setTransferBusy(isBusy) {
+    transferBusy = isBusy;
+    updateTransferControls();
+}
+
+async function addTransferFiles(fileList) {
+    const files = [...fileList];
+    if (!files.length || transferBusy) {
+        return;
+    }
+    setTransferBusy(true);
+    let savedCount = 0;
+    const failures = [];
+    try {
+        for (const [index, file] of files.entries()) {
+            setStorageStatus(
+                transferHubStatus,
+                `Đang lưu tệp ${index + 1}/${files.length}: ${file.name}`
+            );
+            try {
+                await runTransferTransaction("readwrite", (store) => store.add({
+                    name: file.name,
+                    size: file.size,
+                    type: file.type,
+                    lastModified: file.lastModified,
+                    blob: file,
+                }));
+                savedCount += 1;
+            } catch (error) {
+                failures.push(`${file.name}: ${error.message}`);
+            }
+        }
+        await refreshTransferFiles();
+        const failureSummary = failures.slice(0, 2).join("; ");
+        const remainingFailures = failures.length > 2
+            ? `; cùng ${failures.length - 2} tệp khác`
+            : "";
+        const message = [
+            savedCount ? `Đã lưu ${savedCount}/${files.length} tệp trên thiết bị này.` : "",
+            failures.length ? `Không lưu được: ${failureSummary}${remainingFailures}` : "",
+        ].filter(Boolean).join(" ");
+        setStorageStatus(transferHubStatus, message, failures.length > 0);
+    } finally {
+        setTransferBusy(false);
+        transferFilesInput.value = "";
+    }
+}
+
+function downloadTransferBlob(blob, filename) {
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = filename;
+    document.body.append(link);
+    link.click();
+    link.remove();
+    window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function loadTransferZipLibrary() {
+    if (typeof window.JSZip === "function") {
+        return Promise.resolve(window.JSZip);
+    }
+    if (transferZipLibraryPromise) {
+        return transferZipLibraryPromise;
+    }
+    const script = document.createElement("script");
+    script.src = transferZipLibraryUrl;
+    script.crossOrigin = "anonymous";
+    const loading = new Promise((resolve, reject) => {
+        script.addEventListener("load", () => {
+            if (typeof window.JSZip === "function") {
+                resolve(window.JSZip);
+                return;
+            }
+            reject(new Error("Thư viện JSZip không khởi tạo đúng cách."));
+        }, { once: true });
+        script.addEventListener("error", () => {
+            reject(new Error("Không tải được JSZip. Hãy kiểm tra kết nối mạng rồi thử lại."));
+        }, { once: true });
+        document.head.append(script);
+    });
+    transferZipLibraryPromise = loading.catch((error) => {
+        script.remove();
+        transferZipLibraryPromise = null;
+        throw error;
+    });
+    return transferZipLibraryPromise;
+}
+
+function getUniqueZipName(filename, usedNames) {
+    const dotIndex = filename.lastIndexOf(".");
+    const base = dotIndex > 0 ? filename.slice(0, dotIndex) : filename;
+    const extension = dotIndex > 0 ? filename.slice(dotIndex) : "";
+    let candidate = filename;
+    let suffix = 2;
+    while (usedNames.has(candidate.toLocaleLowerCase())) {
+        candidate = `${base} (${suffix})${extension}`;
+        suffix += 1;
+    }
+    usedNames.add(candidate.toLocaleLowerCase());
+    return candidate;
+}
+
+function setTransferConnectionStatus(message, isError = false) {
+    setStorageStatus(transferConnectionStatus, message, isError);
+}
+
+function isValidTransferRoomCode(roomCode) {
+    return /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+        .test(roomCode);
+}
+
+function sendTransferSignalingMessage(message) {
+    if (transferSignalingSocket?.readyState !== WebSocket.OPEN) {
+        throw new Error("Kết nối signaling đã đóng.");
+    }
+    transferSignalingSocket.send(JSON.stringify(message));
+}
+
+async function fetchTransferIceServers() {
+    const response = await fetch("/ice-servers", { cache: "no-store" });
+    if (!response.ok) {
+        throw new Error(`Không thể tải cấu hình ICE (${response.status}).`);
+    }
+    const config = await response.json();
+    if (!Array.isArray(config.iceServers) || !config.iceServers.length) {
+        throw new Error("Máy chủ không trả về cấu hình STUN/TURN hợp lệ.");
+    }
+    return config.iceServers;
+}
+
+function createTransferDataChannel(channel) {
+    transferDataChannel = channel;
+    transferDataMessageQueue = Promise.resolve();
+    channel.binaryType = "arraybuffer";
+    channel.bufferedAmountLowThreshold = transferBufferedAmountLimit / 2;
+    channel.addEventListener("open", () => {
+        if (transferDataChannel !== channel) {
+            return;
+        }
+        setTransferConnectionStatus(
+            "Đã ghép nối P2P an toàn. Chọn tệp trong kho rồi bấm Gửi để chuyển."
+        );
+        updateTransferControls();
+    });
+    channel.addEventListener("close", () => {
+        if (transferDataChannel !== channel) {
+            return;
+        }
+        transferDataChannel = null;
+        if (transferIncomingFile) {
+            transferIncomingFile = null;
+            transferIncomingBusy = false;
+            setTransferConnectionStatus("Kênh truyền đã đóng; tệp đang nhận chưa hoàn tất.", true);
+        }
+        updateTransferControls();
+    });
+    channel.addEventListener("error", () => {
+        setTransferConnectionStatus("Kênh truyền WebRTC gặp lỗi.", true);
+    });
+    channel.addEventListener("message", (event) => {
+        transferDataMessageQueue = transferDataMessageQueue
+            .then(() => handleTransferDataMessage(event.data, channel))
+            .catch((error) => {
+                setTransferConnectionStatus(`Lỗi khi nhận tệp: ${error.message}`, true);
+                if (channel.readyState === "open") {
+                    channel.close();
+                }
+            });
+    });
+    updateTransferControls();
+}
+
+function resetTransferPeerConnection() {
+    transferIncomingFile = null;
+    transferIncomingBusy = false;
+    transferDataChannel = null;
+    transferPendingIceCandidates = [];
+    transferPeerConnection?.close();
+    transferPeerConnection = null;
+    transferPeerRole = "";
+    updateTransferControls();
+}
+
+async function startTransferPeerConnection(role) {
+    if (!["initiator", "answerer"].includes(role)) {
+        throw new Error("Vai trò thiết bị không hợp lệ.");
+    }
+    const socket = transferSignalingSocket;
+    const iceServers = await fetchTransferIceServers();
+    if (socket !== transferSignalingSocket || socket?.readyState !== WebSocket.OPEN) {
+        return;
+    }
+
+    resetTransferPeerConnection();
+    transferPeerRole = role;
+    const peer = new RTCPeerConnection({ iceServers });
+    transferPeerConnection = peer;
+    peer.addEventListener("icecandidate", (event) => {
+        if (event.candidate && peer === transferPeerConnection) {
+            try {
+                sendTransferSignalingMessage({
+                    type: "signal",
+                    payload: { candidate: event.candidate.toJSON() },
+                });
+            } catch (error) {
+                setTransferConnectionStatus(error.message, true);
+            }
+        }
+    });
+    peer.addEventListener("connectionstatechange", () => {
+        if (peer !== transferPeerConnection) {
+            return;
+        }
+        if (peer.connectionState === "failed") {
+            setTransferConnectionStatus(
+                "Không thể thiết lập P2P. Hãy kiểm tra mạng hoặc cấu hình TURN trên signaling server.",
+                true
+            );
+        } else if (peer.connectionState === "disconnected") {
+            setTransferConnectionStatus("Kết nối P2P bị gián đoạn; đang thử khôi phục.", true);
+        }
+    });
+
+    if (role === "initiator") {
+        createTransferDataChannel(peer.createDataChannel("kds-file-transfer", {
+            ordered: true,
+        }));
+    } else {
+        peer.addEventListener("datachannel", (event) => {
+            createTransferDataChannel(event.channel);
+        }, { once: true });
+    }
+
+    setTransferConnectionStatus("Thiết bị đã ghép phòng. Đang thiết lập kết nối P2P…");
+    if (role === "initiator") {
+        const offer = await peer.createOffer();
+        await peer.setLocalDescription(offer);
+        if (peer === transferPeerConnection) {
+            sendTransferSignalingMessage({
+                type: "signal",
+                payload: { description: peer.localDescription },
+            });
+        }
+    }
+}
+
+async function handleTransferSignalingMessage(message) {
+    if (!message || typeof message !== "object") {
+        throw new Error("Máy chủ gửi thông điệp signaling không hợp lệ.");
+    }
+    if (message.type === "waiting") {
+        setTransferConnectionStatus("Đang chờ thiết bị thứ hai tham gia phòng…");
+        return;
+    }
+    if (message.type === "paired") {
+        await startTransferPeerConnection(message.role);
+        return;
+    }
+    if (message.type === "signal") {
+        const peer = transferPeerConnection;
+        if (!peer || !message.payload || typeof message.payload !== "object") {
+            throw new Error("Nhận tín hiệu trước khi kết nối WebRTC sẵn sàng.");
+        }
+        if (message.payload.description) {
+            const description = message.payload.description;
+            await peer.setRemoteDescription(description);
+            for (const candidate of transferPendingIceCandidates.splice(0)) {
+                await peer.addIceCandidate(candidate);
+            }
+            if (description.type === "offer") {
+                const answer = await peer.createAnswer();
+                await peer.setLocalDescription(answer);
+                sendTransferSignalingMessage({
+                    type: "signal",
+                    payload: { description: peer.localDescription },
+                });
+            }
+            return;
+        }
+        if (message.payload.candidate) {
+            const candidate = new RTCIceCandidate(message.payload.candidate);
+            if (!peer.remoteDescription) {
+                transferPendingIceCandidates.push(candidate);
+            } else {
+                await peer.addIceCandidate(candidate);
+            }
+        }
+        return;
+    }
+    if (message.type === "peer-left") {
+        closeTransferSession();
+        setTransferConnectionStatus("Thiết bị kia đã ngắt kết nối.", true);
+        return;
+    }
+    if (message.type === "error") {
+        setTransferConnectionStatus(
+            message.message || "Máy chủ signaling từ chối thao tác.",
+            true
+        );
+        if (message.close) {
+            closeTransferSession();
+        }
+        return;
+    }
+    throw new Error("Loại thông điệp signaling không được hỗ trợ.");
+}
+
+async function joinTransferRoom(roomCode) {
+    const normalizedCode = roomCode.trim().toLowerCase();
+    if (!isValidTransferRoomCode(normalizedCode)) {
+        throw new Error("Mã phòng không hợp lệ. Hãy dùng link mời hoặc mã UUID đầy đủ.");
+    }
+    if (!window.isSecureContext) {
+        throw new Error("WebRTC yêu cầu HTTPS; HTTP chỉ được hỗ trợ trên localhost.");
+    }
+    if (!("WebSocket" in window) || !("RTCPeerConnection" in window)) {
+        throw new Error("Trình duyệt này không hỗ trợ WebRTC/WebSocket.");
+    }
+    if (transferSignalingSocket) {
+        throw new Error("Hãy ngắt phiên hiện tại trước khi tham gia phòng khác.");
+    }
+
+    const signalingUrl = new URL("/signal", window.location.href);
+    signalingUrl.protocol = signalingUrl.protocol === "https:" ? "wss:" : "ws:";
+    signalingUrl.hash = "";
+    const socket = new WebSocket(signalingUrl);
+    transferSignalingSocket = socket;
+    transferActiveRoom = normalizedCode;
+    transferPendingIceCandidates = [];
+    transferRoomCodeInput.value = normalizedCode;
+    transferJoinRoomButton.disabled = true;
+    transferCreateRoomButton.disabled = true;
+    transferConnectionStatus.classList.remove("status-error");
+    setTransferConnectionStatus("Đang kết nối signaling server…");
+    void renderTransferShareQr(normalizedCode);
+    updateTransferControls();
+
+    socket.addEventListener("open", () => {
+        if (socket !== transferSignalingSocket) {
+            return;
+        }
+        try {
+            sendTransferSignalingMessage({ type: "join", room: normalizedCode });
+        } catch (error) {
+            setTransferConnectionStatus(
+                `Không thể tham gia phòng: ${error.message}`,
+                true
+            );
+            closeTransferSession();
+        }
+    });
+    socket.addEventListener("message", (event) => {
+        let message;
+        try {
+            message = JSON.parse(event.data);
+        } catch (error) {
+            setTransferConnectionStatus(
+                `Signaling server trả về JSON không hợp lệ: ${error.message}`,
+                true
+            );
+            return;
+        }
+        void handleTransferSignalingMessage(message).catch((error) => {
+            setTransferConnectionStatus(`Không thể ghép nối: ${error.message}`, true);
+            closeTransferSession();
+        });
+    });
+    socket.addEventListener("error", () => {
+        setTransferConnectionStatus(
+            "Không kết nối được signaling server. Hãy kiểm tra server và HTTPS.",
+            true
+        );
+    });
+    socket.addEventListener("close", (event) => {
+        if (socket !== transferSignalingSocket) {
+            return;
+        }
+        resetTransferPeerConnection();
+        transferSignalingSocket = null;
+        transferActiveRoom = "";
+        void renderTransferShareQr();
+        updateTransferControls();
+        if (event.code !== 1000) {
+            setTransferConnectionStatus(
+                "Signaling server đã đóng kết nối. Hãy tạo hoặc tham gia lại phòng.",
+                true
+            );
+        }
+    });
+}
+
+function closeTransferSession() {
+    const socket = transferSignalingSocket;
+    transferSignalingSocket = null;
+    transferActiveRoom = "";
+    transferPendingIceCandidates = [];
+    resetTransferPeerConnection();
+    if (socket && socket.readyState < WebSocket.CLOSING) {
+        socket.close(1000, "User disconnected");
+    }
+    void renderTransferShareQr();
+    updateTransferControls();
+}
+
+function sendTransferControlMessage(message) {
+    if (transferDataChannel?.readyState !== "open") {
+        throw new Error("Chưa có kết nối P2P sẵn sàng.");
+    }
+    transferDataChannel.send(JSON.stringify(message));
+}
+
+async function waitForTransferBuffer(channel) {
+    while (channel.readyState === "open" &&
+        channel.bufferedAmount > transferBufferedAmountLimit) {
+        await new Promise((resolve) => window.setTimeout(resolve, 40));
+    }
+    if (channel.readyState !== "open") {
+        throw new Error("Kết nối P2P đã đóng trong lúc gửi.");
+    }
+}
+
+async function sendTransferFile(file) {
+    const channel = transferDataChannel;
+    if (transferSendBusy) {
+        setStorageStatus(transferHubStatus, "Đang có một tệp khác được gửi.", true);
+        return;
+    }
+    if (!channel || channel.readyState !== "open") {
+        setStorageStatus(transferHubStatus, "Hãy ghép nối thiết bị trước khi gửi tệp.", true);
+        return;
+    }
+
+    const transferId = crypto.randomUUID();
+    transferSendBusy = true;
+    updateTransferControls();
+    try {
+        channel.send(JSON.stringify({
+            kind: "file-start",
+            transferId,
+            name: file.name,
+            size: file.size,
+            type: file.type,
+            lastModified: file.lastModified,
+        }));
+        let lastReportedPercent = -1;
+        for (let offset = 0; offset < file.size; offset += transferChunkSize) {
+            await waitForTransferBuffer(channel);
+            const chunk = await file.blob.slice(
+                offset,
+                Math.min(offset + transferChunkSize, file.size)
+            ).arrayBuffer();
+            if (channel.readyState !== "open") {
+                throw new Error("Kết nối P2P đã đóng trong lúc gửi.");
+            }
+            channel.send(chunk);
+            const percent = Math.floor(
+                (Math.min(offset + chunk.byteLength, file.size) / Math.max(file.size, 1)) * 100
+            );
+            if (percent !== lastReportedPercent && percent % 5 === 0) {
+                lastReportedPercent = percent;
+                setStorageStatus(
+                    transferHubStatus,
+                    `Đang gửi ${file.name}… ${percent}%`
+                );
+            }
+        }
+        channel.send(JSON.stringify({ kind: "file-end", transferId }));
+        setStorageStatus(
+            transferHubStatus,
+            `Đã gửi ${file.name}; đang chờ thiết bị kia lưu tệp.`
+        );
+    } catch (error) {
+        setStorageStatus(
+            transferHubStatus,
+            `Không thể gửi ${file.name}: ${error.message}`,
+            true
+        );
+    } finally {
+        transferSendBusy = false;
+        updateTransferControls();
+    }
+}
+
+async function handleTransferDataMessage(data, channel) {
+    if (typeof data !== "string") {
+        if (!transferIncomingFile) {
+            throw new Error("Nhận dữ liệu nhị phân khi chưa có thông tin tệp.");
+        }
+        const chunk = data instanceof ArrayBuffer ? data : await data.arrayBuffer();
+        if (transferIncomingFile.received + chunk.byteLength > transferIncomingFile.size) {
+            throw new Error("Dữ liệu nhận vượt quá kích thước tệp đã khai báo.");
+        }
+        transferIncomingFile.chunks.push(new Blob([chunk]));
+        transferIncomingFile.received += chunk.byteLength;
+        const progress = Math.floor(
+            (transferIncomingFile.received / Math.max(transferIncomingFile.size, 1)) * 100
+        );
+        if (progress % 5 === 0) {
+            setTransferConnectionStatus(
+                `Đang nhận ${transferIncomingFile.name}… ${progress}%`
+            );
+        }
+        return;
+    }
+
+    let message;
+    try {
+        message = JSON.parse(data);
+    } catch (error) {
+        throw new Error(`Thông tin truyền tệp không hợp lệ: ${error.message}`);
+    }
+    if (message.kind === "file-start") {
+        if (transferIncomingFile) {
+            throw new Error("Đã có một tệp khác đang được nhận.");
+        }
+        if (typeof message.transferId !== "string" ||
+            typeof message.name !== "string" ||
+            !Number.isSafeInteger(message.size) || message.size < 0 ||
+            typeof message.type !== "string" ||
+            !Number.isFinite(message.lastModified)) {
+            throw new Error("Metadata của tệp nhận không hợp lệ.");
+        }
+        transferIncomingFile = {
+            id: message.transferId,
+            name: message.name,
+            size: message.size,
+            type: message.type,
+            lastModified: message.lastModified,
+            received: 0,
+            chunks: [],
+        };
+        transferIncomingBusy = true;
+        updateTransferControls();
+        setTransferConnectionStatus(`Đang nhận ${message.name}… 0%`);
+        return;
+    }
+    if (message.kind === "file-end") {
+        const incoming = transferIncomingFile;
+        if (!incoming || incoming.id !== message.transferId) {
+            throw new Error("Thông điệp kết thúc không khớp với tệp đang nhận.");
+        }
+        if (incoming.received !== incoming.size) {
+            throw new Error(
+                `Tệp nhận chưa đủ dữ liệu (${incoming.received}/${incoming.size} byte).`
+            );
+        }
+        const blob = new Blob(incoming.chunks, { type: incoming.type });
+        transferIncomingFile = null;
+        try {
+            await runTransferTransaction("readwrite", (store) => store.add({
+                name: incoming.name,
+                size: incoming.size,
+                type: incoming.type,
+                lastModified: incoming.lastModified,
+                blob,
+            }));
+            await refreshTransferFiles();
+            sendTransferControlMessage({
+                kind: "file-received",
+                transferId: incoming.id,
+                name: incoming.name,
+            });
+            setTransferConnectionStatus(
+                `Đã nhận và lưu ${incoming.name} trong kho cục bộ.`
+            );
+        } catch (error) {
+            let notificationError = "";
+            try {
+                sendTransferControlMessage({
+                    kind: "file-error",
+                    transferId: incoming.id,
+                    message: error.message,
+                });
+            } catch (signalError) {
+                notificationError = `; không gửi được thông báo cho thiết bị kia: ${signalError.message}`;
+            }
+            setTransferConnectionStatus(
+                `Không thể lưu ${incoming.name}: ${error.message}${notificationError}`,
+                true
+            );
+        } finally {
+            transferIncomingBusy = false;
+            updateTransferControls();
+        }
+        return;
+    }
+    if (message.kind === "file-received") {
+        setStorageStatus(
+            transferHubStatus,
+            `Thiết bị kia đã lưu ${message.name || "tệp"} thành công.`
+        );
+        return;
+    }
+    if (message.kind === "file-error") {
+        setStorageStatus(
+            transferHubStatus,
+            `Thiết bị kia không thể lưu tệp: ${message.message || "lỗi không xác định"}`,
+            true
+        );
+        return;
+    }
+    throw new Error("Loại dữ liệu truyền không được hỗ trợ.");
+}
+
+function sendAllTransferFiles() {
+    if (!transferDataChannel || transferDataChannel.readyState !== "open") {
+        setStorageStatus(transferHubStatus, "Hãy ghép nối thiết bị trước khi gửi tệp.", true);
+        return;
+    }
+    void (async () => {
+        for (const file of transferFilesState) {
+            await sendTransferFile(file);
+            if (!transferDataChannel || transferDataChannel.readyState !== "open") {
+                break;
+            }
+        }
+    })();
+}
+
+async function downloadTransferZip() {
+    if (transferBusy || !transferFilesState.length) {
+        return;
+    }
+    setTransferBusy(true);
+    try {
+        setStorageStatus(transferHubStatus, "Đang tải JSZip để tạo tệp nén…");
+        const JSZip = await loadTransferZipLibrary();
+        const archive = new JSZip();
+        const usedNames = new Set();
+        transferFilesState.forEach((file) => {
+            archive.file(
+                getUniqueZipName(file.name, usedNames),
+                file.blob,
+                { binary: true }
+            );
+        });
+        const blob = await archive.generateAsync(
+            { type: "blob", compression: "STORE", streamFiles: true },
+            (progress) => {
+                setStorageStatus(
+                    transferHubStatus,
+                    `Đang tạo ZIP… ${Math.round(progress.percent)}%`
+                );
+            }
+        );
+        downloadTransferBlob(blob, "kds-tools-files.zip");
+        setStorageStatus(
+            transferHubStatus,
+            `Đã tạo ZIP gồm ${transferFilesState.length} tệp. Dữ liệu bên trong được giữ nguyên; tệp ZIP cần thêm bộ nhớ tạm khi tạo.`
+        );
+    } catch (error) {
+        setStorageStatus(
+            transferHubStatus,
+            `Không thể tạo hoặc tải ZIP: ${error.message}`,
+            true
+        );
+    } finally {
+        setTransferBusy(false);
+    }
+}
+
+async function renderTransferShareQr(roomCode = "") {
+    const request = ++transferQrRenderRequest;
+    transferQrCanvas.hidden = true;
+    transferQrPlaceholder.hidden = false;
+    transferShareLink.removeAttribute("href");
+    transferCopyLinkButton.disabled = true;
+    if (!roomCode) {
+        transferShareLink.textContent = "Tạo phòng để tạo link mời.";
+        transferQrPlaceholder.textContent = "Tạo phòng để hiện QR mời thiết bị khác.";
+        transferShareHint.textContent =
+            "Mã phòng ngẫu nhiên sẽ được tạo trên thiết bị này.";
+        return;
+    }
+    if (!/^https?:$/.test(window.location.protocol)) {
+        transferShareLink.textContent = "Cần mở KdsTools từ địa chỉ website.";
+        transferShareLink.removeAttribute("href");
+        transferQrPlaceholder.textContent = "Cần mở KdsTools từ địa chỉ website để tạo QR.";
+        transferShareHint.textContent = "Đường dẫn dạng file:// không thể tạo kết nối WebRTC.";
+        return;
+    }
+
+    const shareUrl = new URL(window.location.href);
+    shareUrl.hash = new URLSearchParams({ transfer: roomCode }).toString();
+    const address = shareUrl.href;
+    transferShareLink.textContent = address;
+    transferShareLink.href = address;
+    transferCopyLinkButton.disabled = false;
+    const isLocalAddress = /^(localhost|127(?:\.\d{1,3}){3}|::1)$/i.test(
+        window.location.hostname
+    );
+    transferShareHint.textContent = isLocalAddress
+        ? "Địa chỉ localhost chỉ mở được trên máy này. Để ghép điện thoại, hãy triển khai app qua HTTPS và dùng cùng địa chỉ trên cả hai thiết bị."
+        : "Link này mở sẵn mã phòng để thiết bị kia tham gia. Hãy chia sẻ chỉ với người nhận dự định.";
+
+    try {
+        const qrFactory = await loadQrLibrary();
+        if (request !== transferQrRenderRequest) {
+            return;
+        }
+        const qr = qrFactory(0, "M");
+        const utf8Data = Array.from(new TextEncoder().encode(address),
+            (byte) => String.fromCharCode(byte)).join("");
+        qr.addData(utf8Data, "Byte");
+        qr.make();
+        const count = qr.getModuleCount();
+        const margin = 4;
+        const moduleSize = Math.floor(transferQrCanvas.width / (count + margin * 2));
+        if (!moduleSize) {
+            throw new Error("Đường dẫn quá dài để tạo mã QR.");
+        }
+        const context = transferQrCanvas.getContext("2d");
+        if (!context) {
+            throw new Error("Trình duyệt không thể tạo ảnh mã QR.");
+        }
+        context.fillStyle = "#ffffff";
+        context.fillRect(0, 0, transferQrCanvas.width, transferQrCanvas.height);
+        context.fillStyle = "#102b37";
+        const offset = Math.floor((transferQrCanvas.width - count * moduleSize) / 2);
+        for (let row = 0; row < count; row += 1) {
+            for (let column = 0; column < count; column += 1) {
+                if (qr.isDark(row, column)) {
+                    context.fillRect(
+                        offset + column * moduleSize,
+                        offset + row * moduleSize,
+                        moduleSize,
+                        moduleSize
+                    );
+                }
+            }
+        }
+        transferQrCanvas.hidden = false;
+        transferQrPlaceholder.hidden = true;
+    } catch (error) {
+        if (request !== transferQrRenderRequest) {
+            return;
+        }
+        transferQrPlaceholder.textContent = `Không thể tạo mã QR: ${error.message}`;
+        transferShareHint.textContent =
+            "Bạn vẫn có thể sao chép link mời để tham gia phòng.";
+    }
+}
+
+transferFilesInput.addEventListener("change", () => {
+    void addTransferFiles(transferFilesInput.files);
+});
+transferCreateRoomButton.addEventListener("click", async () => {
+    try {
+        if (!crypto.randomUUID) {
+            throw new Error("Trình duyệt này không thể tạo mã phòng an toàn.");
+        }
+        const roomCode = crypto.randomUUID();
+        transferRoomCodeInput.value = roomCode;
+        await joinTransferRoom(roomCode);
+    } catch (error) {
+        setTransferConnectionStatus(`Không thể tạo phòng: ${error.message}`, true);
+    }
+});
+transferJoinRoomButton.addEventListener("click", async () => {
+    try {
+        await joinTransferRoom(transferRoomCodeInput.value);
+    } catch (error) {
+        setTransferConnectionStatus(error.message, true);
+    }
+});
+transferDisconnectButton.addEventListener("click", () => {
+    closeTransferSession();
+    setTransferConnectionStatus("Đã ngắt kết nối P2P.");
+});
+transferSendAllButton.addEventListener("click", sendAllTransferFiles);
+transferDropzone.addEventListener("dragover", (event) => {
+    event.preventDefault();
+    transferDropzone.classList.add("drag-over");
+});
+transferDropzone.addEventListener("dragleave", (event) => {
+    if (!transferDropzone.contains(event.relatedTarget)) {
+        transferDropzone.classList.remove("drag-over");
+    }
+});
+transferDropzone.addEventListener("drop", (event) => {
+    event.preventDefault();
+    transferDropzone.classList.remove("drag-over");
+    void addTransferFiles(event.dataTransfer.files);
+});
+transferFileList.addEventListener("click", async (event) => {
+    const button = event.target.closest("[data-transfer-action]");
+    if (!button || transferBusy || transferIncomingBusy) {
+        return;
+    }
+    const fileId = Number(button.dataset.transferId);
+    const file = transferFilesState.find((item) => item.id === fileId);
+    if (!file) {
+        return;
+    }
+    if (button.dataset.transferAction === "download") {
+        try {
+            downloadTransferBlob(file.blob, file.name);
+            setStorageStatus(transferHubStatus, `Đang tải xuống ${file.name}.`);
+        } catch (error) {
+            setStorageStatus(
+                transferHubStatus,
+                `Không thể tải ${file.name}: ${error.message}`,
+                true
+            );
+        }
+        return;
+    }
+    if (button.dataset.transferAction === "send") {
+        await sendTransferFile(file);
+        return;
+    }
+    if (button.dataset.transferAction === "remove") {
+        setTransferBusy(true);
+        try {
+            await runTransferTransaction("readwrite", (store) => store.delete(fileId));
+            await refreshTransferFiles();
+            setStorageStatus(transferHubStatus, `Đã xóa ${file.name} khỏi kho trên thiết bị này.`);
+        } catch (error) {
+            setStorageStatus(
+                transferHubStatus,
+                `Không thể xóa ${file.name}: ${error.message}`,
+                true
+            );
+        } finally {
+            setTransferBusy(false);
+        }
+    }
+});
+transferZipButton.addEventListener("click", downloadTransferZip);
+transferClearButton.addEventListener("click", async () => {
+    if (transferBusy || !transferFilesState.length ||
+        !window.confirm(`Xóa toàn bộ ${transferFilesState.length} tệp khỏi kho trên thiết bị này?`)) {
+        return;
+    }
+    setTransferBusy(true);
+    try {
+        await runTransferTransaction("readwrite", (store) => store.clear());
+        await refreshTransferFiles();
+        setStorageStatus(transferHubStatus, "Đã xóa toàn bộ tệp khỏi kho trên thiết bị này.");
+    } catch (error) {
+        setStorageStatus(
+            transferHubStatus,
+            `Không thể xóa kho tệp: ${error.message}`,
+            true
+        );
+    } finally {
+        setTransferBusy(false);
+    }
+});
+transferCopyLinkButton.addEventListener("click", async () => {
+    try {
+        await navigator.clipboard.writeText(transferShareLink.href);
+        setStorageStatus(transferHubStatus, "Đã sao chép link mời vào phòng P2P.");
+    } catch (error) {
+        setStorageStatus(
+            transferHubStatus,
+            `Không thể sao chép đường dẫn: ${error.message}`,
+            true
+        );
+    }
+});
+
+void refreshTransferFiles();
+void renderTransferShareQr();
+const transferRoomFromLink =
+    new URLSearchParams(window.location.hash.slice(1)).get("transfer");
+if (transferRoomFromLink && isValidTransferRoomCode(transferRoomFromLink)) {
+    transferRoomCodeInput.value = transferRoomFromLink;
+    const transferCard = document.querySelector('.tool-card[data-tool="transfer-hub"]');
+    openTool(
+        transferCard.dataset.tool,
+        transferCard.dataset.name,
+        transferCard.querySelector(".tool-description").textContent
+    );
+    setTransferConnectionStatus("Đã nạp mã phòng từ link mời. Bấm Kết nối để tham gia.");
+}
 
 function loadQrLibrary() {
     if (typeof window.qrcode === "function") {
