@@ -5,7 +5,7 @@ import WebSocket from "ws";
 
 const require = createRequire(import.meta.url);
 const { createTransferServer } = require("../server.js");
-const testRoom = "123e4567-e89b-42d3-a456-426614174000";
+const testRoom = "kds-share_room-26";
 
 function listen(server) {
     return new Promise((resolve, reject) => {
@@ -85,6 +85,15 @@ test("pairs two peers and relays only signaling messages", async (t) => {
     first.close();
     second.close();
     third.close();
+
+    const invalidRoomClient = await openClient(url, origin);
+    const invalidRoom = waitForMessage(
+        invalidRoomClient,
+        (message) => message.type === "error"
+    );
+    invalidRoomClient.send(JSON.stringify({ type: "join", room: "bad room" }));
+    assert.match((await invalidRoom).message, /Invalid room code/);
+    invalidRoomClient.close();
 });
 
 test("serves a health check and short-lived TURN credentials when configured", async (t) => {

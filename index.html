@@ -1417,7 +1417,7 @@
                     <span class="panel-eyebrow">KẾT NỐI THIẾT BỊ</span>
                     <h4>Tạo phòng hoặc tham gia bằng mã</h4>
                     <p>
-                        Tạo phòng trên thiết bị nhận, sau đó mở link hoặc quét QR bằng thiết bị gửi. Tệp được truyền trực tiếp, không tải qua signaling server.
+                        Tạo phòng trên thiết bị nhận, sau đó mở link hoặc quét QR bằng điện thoại hay máy tính khác. Tệp được truyền trực tiếp, không tải qua signaling server.
                     </p>
                     <div class="transfer-room-controls">
                         <button id="transferCreateRoomButton" class="secondary-button"
@@ -1426,10 +1426,14 @@
                         <div class="transfer-room-join">
                             <input id="transferRoomCode" type="text" maxlength="36"
                                 autocomplete="off" autocapitalize="none" spellcheck="false"
-                                placeholder="Dán mã hoặc mở link mời">
+                                placeholder="Nhập mã tùy chọn hoặc dán link mời"
+                                aria-describedby="transferRoomCodeHint">
                             <button id="transferJoinRoomButton" class="primary-button"
                                 type="button">Kết nối</button>
                         </div>
+                        <small id="transferRoomCodeHint" class="utility-hint">
+                            Dùng 4–36 ký tự chữ/số, dấu - hoặc _. Để trống rồi bấm Tạo phòng mới để tạo mã ngẫu nhiên.
+                        </small>
                         <button id="transferDisconnectButton" class="transfer-remove-button"
                             type="button" disabled>Ngắt kết nối</button>
                     </div>
@@ -1440,7 +1444,7 @@
                             type="button" disabled>Sao chép link</button>
                     </div>
                     <p id="transferShareHint" class="utility-hint">
-                        Kết nối yêu cầu website qua HTTPS và signaling server đang hoạt động.
+                        Cần mở website qua HTTPS và máy chủ KdsTools có bật WebSocket signaling.
                     </p>
                 </div>
                 <div class="transfer-qr-wrap">

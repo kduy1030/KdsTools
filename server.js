@@ -29,7 +29,7 @@ const MIME_TYPES = {
     ".woff2": "font/woff2",
 };
 const ROOM_CODE_PATTERN =
-    /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+    /^[a-z0-9][a-z0-9_-]{3,35}$/i;
 const MAX_ROOMS = 1000;
 const MAX_ROOM_WAIT_MS = 10 * 60 * 1000;
 const MAX_MESSAGES_PER_WINDOW = 100;

@@ -3921,6 +3921,11 @@ button {
     margin: 0;
 }
 
+.transfer-room-controls > .utility-hint {
+    grid-column: 1 / -1;
+    margin: 0 !important;
+}
+
 .transfer-room-join {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;

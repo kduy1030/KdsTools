@@ -324,6 +324,7 @@ let transferBusy = false;
 let transferSendBusy = false;
 let transferIncomingBusy = false;
 let transferSignalingSocket = null;
+let transferReconnectTimer = null;
 let transferPeerConnection = null;
 let transferDataChannel = null;
 let transferActiveRoom = "";
@@ -334,6 +335,7 @@ let transferDataMessageQueue = Promise.resolve();
 let transferQrRenderRequest = 0;
 const transferChunkSize = 64 * 1024;
 const transferBufferedAmountLimit = 1024 * 1024;
+const transferSignalingRetryDelays = [750, 1500, 3000];
 
 const storageKeys = {
     todos: "kds-tools-todos",
@@ -4469,10 +4471,13 @@ function updateTransferControls() {
     transferFilesInput.disabled = storageBusy;
     transferSendAllButton.disabled = !hasFiles || !peerReady ||
         storageBusy || transferSendBusy;
-    transferCreateRoomButton.disabled = Boolean(transferSignalingSocket);
-    transferJoinRoomButton.disabled = Boolean(transferSignalingSocket);
-    transferRoomCodeInput.disabled = Boolean(transferSignalingSocket);
-    transferDisconnectButton.disabled = !transferSignalingSocket;
+    const transferSessionActive = Boolean(
+        transferSignalingSocket || transferReconnectTimer || transferActiveRoom
+    );
+    transferCreateRoomButton.disabled = transferSessionActive;
+    transferJoinRoomButton.disabled = transferSessionActive;
+    transferRoomCodeInput.disabled = transferSessionActive;
+    transferDisconnectButton.disabled = !transferSessionActive;
     transferDropzone.setAttribute("aria-busy", String(storageBusy));
     transferFileList.querySelectorAll("button").forEach((button) => {
         button.disabled = storageBusy ||
@@ -4692,8 +4697,7 @@ function setTransferConnectionStatus(message, isError = false) {
 }
 
 function isValidTransferRoomCode(roomCode) {
-    return /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
-        .test(roomCode);
+    return /^[a-z0-9][a-z0-9_-]{3,35}$/i.test(roomCode);
 }
 
 function sendTransferSignalingMessage(message) {
@@ -4884,9 +4888,7 @@ async function handleTransferSignalingMessage(message) {
             message.message || "Máy chủ signaling từ chối thao tác.",
             true
         );
-        if (message.close) {
-            closeTransferSession();
-        }
+        closeTransferSession();
         return;
     }
     throw new Error("Loại thông điệp signaling không được hỗ trợ.");
@@ -4895,7 +4897,9 @@ async function handleTransferSignalingMessage(message) {
 async function joinTransferRoom(roomCode) {
     const normalizedCode = roomCode.trim().toLowerCase();
     if (!isValidTransferRoomCode(normalizedCode)) {
-        throw new Error("Mã phòng không hợp lệ. Hãy dùng link mời hoặc mã UUID đầy đủ.");
+        throw new Error(
+            "Mã phòng cần dài 4–36 ký tự, bắt đầu bằng chữ/số và chỉ dùng chữ, số, dấu gạch ngang hoặc gạch dưới."
+        );
     }
     if (!window.isSecureContext) {
         throw new Error("WebRTC yêu cầu HTTPS; HTTP chỉ được hỗ trợ trên localhost.");
@@ -4903,31 +4907,53 @@ async function joinTransferRoom(roomCode) {
     if (!("WebSocket" in window) || !("RTCPeerConnection" in window)) {
         throw new Error("Trình duyệt này không hỗ trợ WebRTC/WebSocket.");
     }
-    if (transferSignalingSocket) {
+    if (transferSignalingSocket || transferActiveRoom) {
         throw new Error("Hãy ngắt phiên hiện tại trước khi tham gia phòng khác.");
     }
 
-    const signalingUrl = new URL("/signal", window.location.href);
-    signalingUrl.protocol = signalingUrl.protocol === "https:" ? "wss:" : "ws:";
-    signalingUrl.hash = "";
-    const socket = new WebSocket(signalingUrl);
-    transferSignalingSocket = socket;
     transferActiveRoom = normalizedCode;
     transferPendingIceCandidates = [];
     transferRoomCodeInput.value = normalizedCode;
-    transferJoinRoomButton.disabled = true;
-    transferCreateRoomButton.disabled = true;
     transferConnectionStatus.classList.remove("status-error");
     setTransferConnectionStatus("Đang kết nối signaling server…");
     void renderTransferShareQr(normalizedCode);
     updateTransferControls();
 
+    connectTransferSignaling(normalizedCode, 0);
+}
+
+function connectTransferSignaling(roomCode, attempt) {
+    if (transferActiveRoom !== roomCode) {
+        return;
+    }
+    transferReconnectTimer = null;
+    let socket;
+    try {
+        const signalingUrl = new URL("/signal", window.location.href);
+        signalingUrl.protocol = signalingUrl.protocol === "https:" ? "wss:" : "ws:";
+        signalingUrl.hash = "";
+        socket = new WebSocket(signalingUrl);
+    } catch (error) {
+        finishTransferSignalingFailure(roomCode, error.message);
+        return;
+    }
+    transferSignalingSocket = socket;
+    let didOpen = false;
+    let roomPaired = false;
+    const connectionTimeout = window.setTimeout(() => {
+        if (socket === transferSignalingSocket && !didOpen) {
+            socket.close();
+        }
+    }, 10000);
+
     socket.addEventListener("open", () => {
         if (socket !== transferSignalingSocket) {
             return;
         }
+        didOpen = true;
+        window.clearTimeout(connectionTimeout);
         try {
-            sendTransferSignalingMessage({ type: "join", room: normalizedCode });
+            sendTransferSignalingMessage({ type: "join", room: roomCode });
         } catch (error) {
             setTransferConnectionStatus(
                 `Không thể tham gia phòng: ${error.message}`,
@@ -4947,33 +4973,64 @@ async function joinTransferRoom(roomCode) {
             );
             return;
         }
+        if (message.type === "paired") {
+            roomPaired = true;
+        }
         void handleTransferSignalingMessage(message).catch((error) => {
             setTransferConnectionStatus(`Không thể ghép nối: ${error.message}`, true);
             closeTransferSession();
         });
     });
     socket.addEventListener("error", () => {
-        setTransferConnectionStatus(
-            "Không kết nối được signaling server. Hãy kiểm tra server và HTTPS.",
-            true
-        );
+        if (didOpen) {
+            setTransferConnectionStatus("Kết nối signaling gặp lỗi.", true);
+        }
     });
     socket.addEventListener("close", (event) => {
+        window.clearTimeout(connectionTimeout);
         if (socket !== transferSignalingSocket) {
             return;
         }
         resetTransferPeerConnection();
         transferSignalingSocket = null;
-        transferActiveRoom = "";
-        void renderTransferShareQr();
-        updateTransferControls();
-        if (event.code !== 1000) {
+        if (!roomPaired && attempt < transferSignalingRetryDelays.length &&
+            transferActiveRoom === roomCode) {
+            const delay = transferSignalingRetryDelays[attempt];
             setTransferConnectionStatus(
-                "Signaling server đã đóng kết nối. Hãy tạo hoặc tham gia lại phòng.",
-                true
+                `Signaling chưa kết nối được; đang tự thử lại (${attempt + 1}/${transferSignalingRetryDelays.length})…`
             );
+            transferReconnectTimer = window.setTimeout(() => {
+                connectTransferSignaling(roomCode, attempt + 1);
+            }, delay);
+            updateTransferControls();
+            return;
         }
+        finishTransferSignalingFailure(
+            roomCode,
+            didOpen
+                ? `Signaling server đã đóng kết nối (mã ${event.code}).`
+                : "Không kết nối được signaling server sau vài lần thử."
+        );
     });
+}
+
+function finishTransferSignalingFailure(roomCode, reason) {
+    if (transferActiveRoom !== roomCode) {
+        return;
+    }
+    transferSignalingSocket = null;
+    transferActiveRoom = "";
+    transferPendingIceCandidates = [];
+    if (transferReconnectTimer) {
+        window.clearTimeout(transferReconnectTimer);
+        transferReconnectTimer = null;
+    }
+    void renderTransferShareQr();
+    updateTransferControls();
+    setTransferConnectionStatus(
+        `${reason} Hãy kiểm tra máy chủ đang chạy và reverse proxy hỗ trợ WebSocket tại /signal, sau đó thử lại.`,
+        true
+    );
 }
 
 function closeTransferSession() {
@@ -4981,6 +5038,10 @@ function closeTransferSession() {
     transferSignalingSocket = null;
     transferActiveRoom = "";
     transferPendingIceCandidates = [];
+    if (transferReconnectTimer) {
+        window.clearTimeout(transferReconnectTimer);
+        transferReconnectTimer = null;
+    }
     resetTransferPeerConnection();
     if (socket && socket.readyState < WebSocket.CLOSING) {
         socket.close(1000, "User disconnected");
@@ -5333,10 +5394,19 @@ transferFilesInput.addEventListener("change", () => {
 });
 transferCreateRoomButton.addEventListener("click", async () => {
     try {
-        if (!crypto.randomUUID) {
-            throw new Error("Trình duyệt này không thể tạo mã phòng an toàn.");
+        let roomCode = transferRoomCodeInput.value.trim();
+        if (!roomCode) {
+            if (typeof crypto.randomUUID === "function") {
+                roomCode = crypto.randomUUID();
+            } else if (typeof crypto.getRandomValues === "function") {
+                const bytes = crypto.getRandomValues(new Uint8Array(16));
+                roomCode = Array.from(bytes, (byte) =>
+                    byte.toString(16).padStart(2, "0")
+                ).join("");
+            } else {
+                throw new Error("Trình duyệt này không thể tạo mã phòng an toàn.");
+            }
         }
-        const roomCode = crypto.randomUUID();
         transferRoomCodeInput.value = roomCode;
         await joinTransferRoom(roomCode);
     } catch (error) {
